@@ -80,6 +80,16 @@ _Avoid_: gotcha, tip (too vague)
 A short piece that teaches one Rule.
 _Avoid_: article, theory page
 
+## Learners
+
+**Learner**:
+A person preparing for the Theory Exam with KETGO. A Learner exists from their first tap on Start, with or without an Account.
+_Avoid_: user, student, guest
+
+**Account**:
+An email address attached to a Learner, so their progress is safe and can be opened on another device.
+_Avoid_: profile, registration, login
+
 ## Growth
 
 **Partner**:
