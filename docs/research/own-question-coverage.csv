@@ -1,0 +1,275 @@
+id,theme,ket_chapter,has_image,select_mode,n_options,n_correct
+gen-0001,Right of way & passing,XVIII Intersections,no,single,3,1
+gen-0002,Risk associated with driving,XV Speed,no,single,3,1
+gen-0003,Right of way & passing,XIV Position on the road and lanes,no,single,2,1
+gen-0004,Signs / markings / lights / signals,X Traffic lights and controller signals,no,single,3,1
+gen-0005,Risk associated with driving,SEAKĮ (Road Traffic Safety Law),no,single,2,1
+gen-0006,General KET & legal,SEAKĮ (Road Traffic Safety Law),no,single,3,1
+gen-0007,Knowledge about vehicles,SEAKĮ (Road Traffic Safety Law),no,single,3,1
+gen-0008,Right of way & passing,XVI Overtaking and passing,no,multi,4,3
+gen-0009,Behaviour on public roads,XVII Stopping and parking,no,multi,4,3
+gen-0010,Responsible & eco driving,XXV Carrying passengers,no,multi,4,3
+gen-0011,Risk associated with driving,SEAKĮ (Road Traffic Safety Law),no,single,2,1
+gen-0012,Behaviour on public roads,XV Speed,no,single,2,1
+gen-0013,Safe driving & critical situations,XI Warning signals,no,single,2,1
+gen-0014,Behaviour on public roads,XV Speed,no,single,3,1
+gen-0015,Safe driving & critical situations,XXVI Seat belts and other safety equipment,no,single,2,1
+gen-0016,Safe driving & critical situations,XXVI Seat belts and other safety equipment,no,single,2,1
+gen-0017,Right of way & passing,V Drivers and pedestrians,no,single,3,1
+gen-0018,Special roads / users / manoeuvres,XIX Railway crossings,no,multi,4,3
+gen-0019,Special roads / users / manoeuvres,XXI Residential zones,no,multi,4,3
+gen-0020,Right of way & passing,XVI Overtaking and passing,no,multi,4,3
+gen-0021,Signs / markings / lights / signals,Annex 1 Road signs,yes,single,2,1
+gen-0022,Signs / markings / lights / signals,Annex 1 Road signs,yes,single,2,1
+gen-0023,Signs / markings / lights / signals,Annex 1 Road signs,yes,single,2,1
+gen-0024,Signs / markings / lights / signals,Annex 1 Road signs,yes,single,2,1
+gen-0025,Signs / markings / lights / signals,Annex 3 Road markings,yes,single,2,1
+gen-0026,Signs / markings / lights / signals,Annex 1 Road signs,yes,multi,3,2
+gen-0027,Signs / markings / lights / signals,Annex 1 Road signs,yes,single,3,1
+gen-0028,Signs / markings / lights / signals,Annex 1 Road signs,yes,single,3,1
+gen-0029,Signs / markings / lights / signals,X Traffic lights and controller signals,no,single,3,1
+gen-0030,Behaviour on public roads,XVII Stopping and parking,no,single,2,1
+gen-0031,Right of way & passing,XVIII Intersections,no,multi,3,2
+gen-0032,Right of way & passing,XVIII Intersections,no,single,2,1
+gen-0033,Right of way & passing,XXIV Special (emergency) vehicles,no,multi,3,2
+gen-0034,Signs / markings / lights / signals,X Traffic lights and controller signals,no,single,2,1
+gen-0035,Right of way & passing,XVIII Intersections,no,single,3,1
+gen-0036,Special roads / users / manoeuvres,XX Motorways and expressways,no,single,3,1
+gen-0037,Safe driving & critical situations,XXIX After a road accident,no,single,3,1
+gen-0038,Right of way & passing,V Drivers and pedestrians,no,single,3,1
+gen-0039,Special roads / users / manoeuvres,VI Pedestrians,no,multi,4,2
+gen-0040,Special roads / users / manoeuvres,VIII Cyclists,no,multi,4,2
+gen-0041,Knowledge about vehicles,XXX Vehicle requirements,no,multi,4,3
+gen-0042,General KET & legal,IV Duties of drivers and vehicle owners,no,multi,4,3
+gen-0043,Safe driving & critical situations,XXIX After a road accident,no,single,3,1
+gen-0044,Special roads / users / manoeuvres,VI Pedestrians,no,multi,3,2
+gen-0045,Special roads / users / manoeuvres,XXVIII Towing,no,multi,3,2
+gen-0046,Special roads / users / manoeuvres,II Definitions,no,single,3,1
+gen-0047,Special roads / users / manoeuvres,SEAKĮ (Road Traffic Safety Law),no,multi,4,3
+gen-0048,Signs / markings / lights / signals,Annex 1 Road signs,no,single,3,1
+gen-0049,Signs / markings / lights / signals,Annex 1 Road signs,yes,single,3,1
+gen-0050,Signs / markings / lights / signals,Annex 1 Road signs,yes,single,4,1
+gen-0086,Special roads / users / manoeuvres,XIX Railway crossings,no,multi,4,3
+gen-0087,Safe driving & critical situations,XI Warning signals,no,multi,4,3
+gen-0088,Behaviour on public roads,XV Speed,no,multi,4,3
+gen-0089,Behaviour on public roads,XIV Position on the road and lanes,no,single,3,1
+gen-0090,Right of way & passing,XVIII Intersections,no,single,3,1
+gen-0091,Behaviour on public roads,VII Passengers,no,single,3,1
+gen-0092,General KET & legal,SEAKĮ (Road Traffic Safety Law),no,single,3,1
+gen-0093,Right of way & passing,II Definitions,no,single,3,1
+gen-0094,General KET & legal,II Definitions,no,single,3,1
+gen-0095,Signs / markings / lights / signals,Annex 1 Road signs,no,single,2,1
+gen-0096,Signs / markings / lights / signals,Annex 3 Road markings,yes,single,3,1
+gen-0097,Signs / markings / lights / signals,Annex 1 Road signs,yes,single,2,1
+gen-0098,Signs / markings / lights / signals,Annex 1 Road signs,yes,multi,4,2
+gen-0099,Signs / markings / lights / signals,Annex 1 Road signs,yes,multi,4,2
+gen-0100,Signs / markings / lights / signals,Annex 1 Road signs,yes,single,3,1
+gen-0101,Right of way & passing,XIII Starting and manoeuvring,no,single,3,1
+gen-0102,Right of way & passing,XIII Starting and manoeuvring,no,single,3,1
+gen-0103,Right of way & passing,XVI Overtaking and passing,no,single,3,1
+gen-0104,Safe driving & critical situations,XIX Railway crossings,no,multi,4,2
+gen-0105,Behaviour on public roads,XII Use of lights,no,multi,3,3
+gen-0106,Right of way & passing,XVIII Intersections,no,single,2,1
+gen-0107,Right of way & passing,XVIII Intersections,no,single,3,1
+gen-0108,Signs / markings / lights / signals,Annex 1 Road signs,yes,single,3,1
+gen-0109,Signs / markings / lights / signals,Annex 1 Road signs,yes,single,3,1
+gen-0110,Signs / markings / lights / signals,Annex 1 Road signs,yes,multi,3,2
+gen-0111,Behaviour on public roads,XIII Starting and manoeuvring,no,single,3,1
+gen-0112,Right of way & passing,V Drivers and pedestrians,no,single,2,1
+gen-0113,Risk associated with driving,XII Use of lights,no,single,3,1
+gen-0114,Risk associated with driving,XVII Stopping and parking,no,single,2,1
+gen-0115,Behaviour on public roads,XI Warning signals,no,multi,3,2
+gen-0116,Behaviour on public roads,XII Use of lights,no,multi,3,2
+gen-0117,Right of way & passing,XIII Starting and manoeuvring,no,single,3,1
+gen-0118,Right of way & passing,XIII Starting and manoeuvring,no,single,3,1
+gen-0119,Behaviour on public roads,XIV Position on the road and lanes,no,multi,4,3
+gen-0120,Right of way & passing,XVIII Intersections,no,multi,3,2
+gen-0121,Signs / markings / lights / signals,Annex 1 Road signs,yes,single,3,1
+gen-0122,Signs / markings / lights / signals,Annex 1 Road signs,yes,single,3,1
+gen-0123,Signs / markings / lights / signals,Annex 1 Road signs,yes,single,4,1
+gen-0124,Signs / markings / lights / signals,Annex 1 Road signs,yes,multi,4,2
+gen-0125,Signs / markings / lights / signals,Annex 3 Road markings,yes,single,3,1
+gen-0126,Behaviour on public roads,IV Duties of drivers and vehicle owners,no,single,2,1
+gen-0127,Behaviour on public roads,XI Warning signals,no,multi,3,2
+gen-0128,Right of way & passing,XI Warning signals,no,single,2,1
+gen-0129,Behaviour on public roads,XIII Starting and manoeuvring,no,multi,4,3
+gen-0130,Behaviour on public roads,XV Speed,no,single,2,1
+gen-0131,Special roads / users / manoeuvres,VI Pedestrians,no,single,3,1
+gen-0132,Special roads / users / manoeuvres,XXI Residential zones,no,single,3,1
+gen-0133,Safe driving & critical situations,IV Duties of drivers and vehicle owners,no,single,3,1
+gen-0134,Safe driving & critical situations,XXVI Seat belts and other safety equipment,no,single,3,1
+gen-0135,Right of way & passing,XVI Overtaking and passing,no,single,2,1
+gen-0136,Special roads / users / manoeuvres,XXIV Special (emergency) vehicles,no,single,2,1
+gen-0137,Safe driving & critical situations,XVII Stopping and parking,no,multi,3,2
+gen-0138,Right of way & passing,XIII Starting and manoeuvring,no,single,3,1
+gen-0139,Right of way & passing,XIII Starting and manoeuvring,no,single,3,1
+gen-0140,Signs / markings / lights / signals,Annex 3 Road markings,yes,single,3,1
+gen-0141,Right of way & passing,XVIII Intersections,no,single,2,1
+gen-0142,Right of way & passing,V Drivers and pedestrians,no,multi,3,2
+gen-0143,Behaviour on public roads,XIII Starting and manoeuvring,no,multi,3,2
+gen-0144,Right of way & passing,XIII Starting and manoeuvring,no,single,3,1
+gen-0145,General KET & legal,X Traffic lights and controller signals,no,single,2,1
+gen-0146,Special roads / users / manoeuvres,VIII Cyclists,no,single,3,1
+gen-0147,Special roads / users / manoeuvres,VI Pedestrians,no,multi,3,2
+gen-0148,Special roads / users / manoeuvres,XXIV Special (emergency) vehicles,no,multi,3,2
+gen-0149,Knowledge about vehicles,XXX Vehicle requirements,no,single,3,1
+gen-0150,Responsible & eco driving,XXV Carrying passengers,no,single,3,1
+gen-0151,Special roads / users / manoeuvres,VIII Cyclists,no,single,2,1
+gen-0152,General KET & legal,III General duties of road users,no,single,2,1
+gen-0153,General KET & legal,III General duties of road users,no,single,2,1
+gen-0154,Behaviour on public roads,XIII Starting and manoeuvring,no,single,2,1
+gen-0155,Signs / markings / lights / signals,Annex 3 Road markings,yes,single,3,1
+gen-0156,Behaviour on public roads,XII Use of lights,no,multi,3,2
+gen-0157,Behaviour on public roads,XI Warning signals,no,multi,3,3
+gen-0158,Behaviour on public roads,XI Warning signals,no,single,3,1
+gen-0159,Behaviour on public roads,XI Warning signals,no,single,3,1
+gen-0160,Special roads / users / manoeuvres,VI Pedestrians,no,single,2,1
+gen-0161,Special roads / users / manoeuvres,VIII Cyclists,no,single,3,1
+gen-0162,Special roads / users / manoeuvres,VIII Cyclists,no,single,3,1
+gen-0163,Knowledge about vehicles,XXX Vehicle requirements,no,single,2,1
+gen-0164,General KET & legal,XXX Vehicle requirements,no,single,2,1
+gen-0165,Special roads / users / manoeuvres,XXI Residential zones,no,single,2,1
+gen-0166,Right of way & passing,XXI Residential zones,no,multi,3,2
+gen-0167,Special roads / users / manoeuvres,XI Warning signals,no,single,2,1
+gen-0168,Responsible & eco driving,XXVII Carrying cargo,no,multi,3,2
+gen-0169,Special roads / users / manoeuvres,VI Pedestrians,no,single,2,1
+gen-0170,Special roads / users / manoeuvres,VI Pedestrians,no,single,3,1
+gen-0171,Signs / markings / lights / signals,Annex 1 Road signs,yes,single,3,1
+gen-0172,Signs / markings / lights / signals,Annex 3 Road markings,yes,single,3,1
+gen-0173,General KET & legal,II Definitions,no,multi,3,3
+gen-0174,Right of way & passing,II Definitions,no,single,2,1
+gen-0175,Right of way & passing,XVIII Intersections,no,single,2,1
+gen-0176,Special roads / users / manoeuvres,XIX Railway crossings,no,multi,3,2
+gen-0177,Signs / markings / lights / signals,X Traffic lights and controller signals,no,single,3,1
+gen-0178,General KET & legal,III General duties of road users,no,multi,3,2
+gen-0179,General KET & legal,III General duties of road users,no,single,2,1
+gen-0180,Signs / markings / lights / signals,XVIII Intersections,no,single,3,1
+gen-0181,Signs / markings / lights / signals,V Drivers and pedestrians,no,single,2,1
+gen-0182,Right of way & passing,III General duties of road users,no,multi,3,2
+gen-0183,Special roads / users / manoeuvres,VI Pedestrians,no,single,2,1
+gen-0184,General KET & legal,III General duties of road users,no,single,2,1
+gen-0185,General KET & legal,I General provisions,no,single,2,1
+gen-0186,Signs / markings / lights / signals,Annex 1 Road signs,yes,single,3,1
+gen-0187,Signs / markings / lights / signals,Annex 3 Road markings,yes,single,3,1
+gen-0188,General KET & legal,II Definitions,no,single,3,1
+gen-0189,Special roads / users / manoeuvres,II Definitions,no,single,3,1
+gen-0190,Special roads / users / manoeuvres,VI Pedestrians,no,multi,3,2
+gen-0191,Right of way & passing,V Drivers and pedestrians,no,single,3,1
+gen-0192,Special roads / users / manoeuvres,VIII¹ Electric micro-mobility (e-scooters),no,single,2,1
+gen-0193,Right of way & passing,XVIII Intersections,no,single,3,1
+gen-0194,Behaviour on public roads,XIII Starting and manoeuvring,no,single,3,1
+gen-0195,Signs / markings / lights / signals,X Traffic lights and controller signals,no,single,3,1
+gen-0196,Behaviour on public roads,XIII Starting and manoeuvring,no,single,3,1
+gen-0197,Behaviour on public roads,XIV Position on the road and lanes,no,single,3,1
+gen-0198,Risk associated with driving,IV Duties of drivers and vehicle owners,no,multi,4,3
+gen-0199,Risk associated with driving,IV Duties of drivers and vehicle owners,no,multi,4,3
+gen-0200,General KET & legal,XXX Vehicle requirements,no,multi,4,3
+gen-0201,Signs / markings / lights / signals,Annex 1 Road signs,yes,single,3,1
+gen-0202,Signs / markings / lights / signals,Annex 3 Road markings,yes,single,3,1
+gen-0203,Right of way & passing,II Definitions,no,single,3,1
+gen-0204,Right of way & passing,II Definitions,no,single,2,1
+gen-0205,Special roads / users / manoeuvres,XXII Public transport,no,single,3,1
+gen-0206,Special roads / users / manoeuvres,XXII Public transport,no,multi,5,2
+gen-0207,Special roads / users / manoeuvres,XXII Public transport,no,single,3,1
+gen-0208,Signs / markings / lights / signals,X Traffic lights and controller signals,no,multi,4,3
+gen-0209,Behaviour on public roads,XIV Position on the road and lanes,no,multi,4,2
+gen-0210,Behaviour on public roads,XIV Position on the road and lanes,no,single,3,1
+gen-0211,Behaviour on public roads,XIV Position on the road and lanes,no,single,3,1
+gen-0212,Behaviour on public roads,XIV Position on the road and lanes,no,multi,4,3
+gen-0213,Responsible & eco driving,IV Duties of drivers and vehicle owners,no,single,2,1
+gen-0214,Signs / markings / lights / signals,X Traffic lights and controller signals,no,single,2,1
+gen-0215,Knowledge about vehicles,IV Duties of drivers and vehicle owners,no,multi,4,3
+gen-0216,Signs / markings / lights / signals,Annex 1 Road signs,yes,single,3,1
+gen-0217,General KET & legal,II Definitions,no,single,2,1
+gen-0218,Risk associated with driving,V Drivers and pedestrians,no,multi,3,2
+gen-0219,Safe driving & critical situations,XXVI Seat belts and other safety equipment,no,single,3,1
+gen-0220,Safe driving & critical situations,XXVI Seat belts and other safety equipment,no,single,3,1
+gen-0221,Responsible & eco driving,XXV Carrying passengers,no,multi,4,3
+gen-0222,Safe driving & critical situations,XXVI Seat belts and other safety equipment,no,single,3,1
+gen-0223,Safe driving & critical situations,XXVI Seat belts and other safety equipment,no,single,3,1
+gen-0224,Knowledge about vehicles,XXX Vehicle requirements,no,single,3,1
+gen-0225,Responsible & eco driving,IV Duties of drivers and vehicle owners,no,single,3,1
+gen-0226,Knowledge about vehicles,XXVII Carrying cargo,no,single,2,1
+gen-0227,Responsible & eco driving,XXVII Carrying cargo,no,multi,3,2
+gen-0228,Responsible & eco driving,XXVII Carrying cargo,no,single,3,1
+gen-0229,Safe driving & critical situations,XXIX After a road accident,no,multi,4,3
+gen-0230,Safe driving & critical situations,XXIX After a road accident,no,single,3,1
+gen-0231,General KET & legal,II Definitions,no,single,3,1
+gen-0232,Behaviour on public roads,XVII Stopping and parking,no,multi,3,2
+gen-0233,Behaviour on public roads,XVII Stopping and parking,no,single,3,1
+gen-0234,Behaviour on public roads,XVII Stopping and parking,no,single,3,1
+gen-0235,Behaviour on public roads,XVII Stopping and parking,no,single,3,1
+gen-0236,Behaviour on public roads,XVII Stopping and parking,no,multi,4,3
+gen-0237,Behaviour on public roads,XVII Stopping and parking,no,multi,3,2
+gen-0238,Behaviour on public roads,XVII Stopping and parking,no,single,3,1
+gen-0239,Behaviour on public roads,XVII Stopping and parking,no,multi,3,2
+gen-0240,Special roads / users / manoeuvres,XVII Stopping and parking,no,single,3,1
+gen-0241,Special roads / users / manoeuvres,XXVIII Towing,no,single,3,1
+gen-0242,Special roads / users / manoeuvres,XXVIII Towing,no,single,3,1
+gen-0243,Special roads / users / manoeuvres,XXVIII Towing,no,single,3,1
+gen-0244,Special roads / users / manoeuvres,XXVIII Towing,no,single,2,1
+gen-0245,Safe driving & critical situations,IV Duties of drivers and vehicle owners,no,multi,4,3
+gen-0246,Special roads / users / manoeuvres,II Definitions,no,single,3,1
+gen-0247,Special roads / users / manoeuvres,XXI¹ Bicycle streets,no,single,2,1
+gen-0248,Special roads / users / manoeuvres,XXI¹ Bicycle streets,no,single,3,1
+gen-0249,Special roads / users / manoeuvres,XXI¹ Bicycle streets,no,multi,4,2
+gen-0250,Special roads / users / manoeuvres,XXI Residential zones,no,multi,4,2
+gen-0251,Special roads / users / manoeuvres,VIII Cyclists,no,single,3,1
+gen-0252,Special roads / users / manoeuvres,VIII¹ Electric micro-mobility (e-scooters),no,single,3,1
+gen-0253,Special roads / users / manoeuvres,VIII¹ Electric micro-mobility (e-scooters),no,multi,4,3
+gen-0254,Special roads / users / manoeuvres,VIII¹ Electric micro-mobility (e-scooters),no,single,3,1
+gen-0255,Special roads / users / manoeuvres,VIII¹ Electric micro-mobility (e-scooters),no,single,3,1
+gen-0256,Special roads / users / manoeuvres,VIII¹ Electric micro-mobility (e-scooters),no,single,3,1
+gen-0257,Special roads / users / manoeuvres,VIII¹ Electric micro-mobility (e-scooters),no,single,3,1
+gen-0258,Signs / markings / lights / signals,Annex 1 Road signs,yes,single,3,1
+gen-0259,Signs / markings / lights / signals,Annex 3 Road markings,yes,multi,4,3
+gen-0260,Special roads / users / manoeuvres,II Definitions,no,single,3,1
+gen-0261,Special roads / users / manoeuvres,II Definitions,no,single,3,1
+gen-0262,Special roads / users / manoeuvres,VIII Cyclists,no,single,2,1
+gen-0263,Special roads / users / manoeuvres,VI Pedestrians,no,multi,4,3
+gen-0265,Responsible & eco driving,XXVI Seat belts and other safety equipment,no,multi,3,2
+gen-0268,Special roads / users / manoeuvres,IX Riders and animal drovers,no,multi,4,3
+gen-0269,Special roads / users / manoeuvres,IX Riders and animal drovers,no,single,3,1
+gen-0270,Responsible & eco driving,XXV Carrying passengers,no,single,2,1
+gen-0271,Risk associated with driving,IV Duties of drivers and vehicle owners,no,single,3,1
+gen-0272,Signs / markings / lights / signals,Annex 1 Road signs,yes,single,3,1
+gen-0273,Signs / markings / lights / signals,Annex 1 Road signs,yes,single,3,1
+gen-0274,General KET & legal,II Definitions,no,multi,4,3
+gen-0275,Risk associated with driving,V Drivers and pedestrians,no,multi,3,2
+gen-0276,Special roads / users / manoeuvres,XXIII Vehicles of people with disabilities,no,multi,4,3
+gen-0277,Special roads / users / manoeuvres,XXIII Vehicles of people with disabilities,no,single,2,1
+gen-0279,Knowledge about vehicles,IV Duties of drivers and vehicle owners,no,multi,3,2
+gen-0281,Knowledge about vehicles,XXX Vehicle requirements,no,single,2,1
+gen-0282,Knowledge about vehicles,XXX Vehicle requirements,no,single,3,1
+gen-0284,Responsible & eco driving,XXVII Carrying cargo,no,single,2,1
+gen-0285,Special roads / users / manoeuvres,XIX Railway crossings,no,single,3,1
+gen-0286,Signs / markings / lights / signals,Annex 1 Road signs,yes,single,3,1
+gen-0287,Signs / markings / lights / signals,Annex 1 Road signs,yes,single,3,1
+gen-0288,General KET & legal,II Definitions,no,single,3,1
+gen-0289,General KET & legal,II Definitions,no,single,3,1
+gen-0290,Safe driving & critical situations,III General duties of road users,no,multi,4,3
+gen-0291,Right of way & passing,XVIII Intersections,no,single,2,1
+gen-0292,Safe driving & critical situations,XV Speed,no,single,3,1
+gen-0293,Behaviour on public roads,IV Duties of drivers and vehicle owners,no,multi,4,3
+gen-0294,Behaviour on public roads,XIV Position on the road and lanes,no,multi,3,2
+gen-0295,Special roads / users / manoeuvres,XXIV Special (emergency) vehicles,no,single,2,1
+gen-0296,Special roads / users / manoeuvres,XXII Public transport,no,single,2,1
+gen-0297,Responsible & eco driving,XVII Stopping and parking,no,single,3,1
+gen-0298,Signs / markings / lights / signals,Annex 1 Road signs,yes,single,3,1
+gen-0299,Signs / markings / lights / signals,Annex 1 Road signs,yes,single,2,1
+gen-0300,Signs / markings / lights / signals,Annex 3 Road markings,yes,multi,4,3
+gen-0301,Right of way & passing,XVIII Intersections,no,single,3,1
+gen-0302,Behaviour on public roads,XV Speed,no,single,3,1
+gen-0303,Signs / markings / lights / signals,X Traffic lights and controller signals,no,multi,4,2
+gen-0304,Behaviour on public roads,XVII Stopping and parking,no,single,3,1
+gen-0305,Special roads / users / manoeuvres,XXVIII Towing,no,multi,4,2
+gen-0306,Signs / markings / lights / signals,III General duties of road users,no,single,2,1
+gen-0307,Behaviour on public roads,XIII Starting and manoeuvring,no,multi,3,2
+gen-0308,General KET & legal,III General duties of road users,no,single,2,1
+gen-0309,Behaviour on public roads,XI Warning signals,no,single,2,1
+gen-0310,Responsible & eco driving,XXV Carrying passengers,no,multi,4,2
+gen-0311,Signs / markings / lights / signals,Annex 1 Road signs,yes,single,3,1
+gen-0312,Signs / markings / lights / signals,Annex 1 Road signs,yes,single,3,1
+gen-0313,Signs / markings / lights / signals,Annex 1 Road signs,yes,single,3,1
+gen-0314,Signs / markings / lights / signals,Annex 1 Road signs,yes,single,3,1
+gen-0315,Signs / markings / lights / signals,Annex 3 Road markings,yes,single,3,1
