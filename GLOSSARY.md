@@ -12,10 +12,18 @@ _Avoid_: test, ticket, bilietas (when you mean the real exam)
 The class of driving licence an exam is for (A, B, C, D…). KETGO launches with category B only.
 _Avoid_: type, class
 
+**Theme**:
+One of the nine subject areas the Theory Exam draws its Questions from, each with a fixed number of Questions per exam.
+_Avoid_: topic, tema, chapter
+
 ## Content
 
+**Rule**:
+One thing a learner must know to answer a Question correctly, such as the right-hand rule or what sign 204 STOP means. Grounded in one or more KET points, but not the same as a KET point.
+_Avoid_: KET point, topic (when you mean this unit)
+
 **Question**:
-A stem (text, usually with an image) plus up to four Options, of which one or more are correct.
+A stem (text, usually with an image) plus up to four Options, of which one or more are correct. Each Question has one main Rule.
 _Avoid_: ticket, item
 
 **Option**:
@@ -40,8 +48,28 @@ _Avoid_: question bank, ketbilietai questions (when you mean content we serve)
 
 ## Learning
 
+**Program**:
+A learner's route through every Rule: a numbered sequence of Lessons in a curated order, taken at the learner's own pace. Reviews mix every Rule met so far.
+_Avoid_: plan, course, path
+
+**Lesson**:
+One numbered, named step of the Program: a small group of related new Rules, each met first as a Question and then taught, with due Rules mixed in.
+_Avoid_: unit, level, day, session
+
+**Review**:
+A short round of Questions on Rules that are due again, so they are not forgotten.
+_Avoid_: repeat, revision, mistakes mode
+
+**Mock Exam**:
+A practice run of the Theory Exam under the same conditions, with feedback only at the end.
+_Avoid_: test, ticket, bilietas, simulation
+
+**Remembered**:
+The state of a Rule the learner is predicted to still recall on their exam day. Answering it right once or twice is not enough; a miss drops it back to learning.
+_Avoid_: learned, mastered, done
+
 **Memory Hook**:
-A short trick for remembering one rule: an image, a rhyme, or a "think of it as…".
+A short trick for remembering one Rule: an image, a rhyme, or a "think of it as…".
 _Avoid_: mnemonic, tip (too vague)
 
 **Exam Trap**:
@@ -49,8 +77,8 @@ A warning about wording or detail that commonly catches learners out in the Theo
 _Avoid_: gotcha, tip (too vague)
 
 **Rule Explainer**:
-A short lesson that teaches one rule before the learner practises it.
-_Avoid_: lesson, article, theory page
+A short piece that teaches one Rule.
+_Avoid_: article, theory page
 
 ## Growth
 
