@@ -22,6 +22,14 @@ _Avoid_: ticket, item
 One of the choices offered on a Question; it is either correct or not.
 _Avoid_: answer (ambiguous with the learner's act of answering)
 
+**Distractor**:
+An Option that is not correct.
+_Avoid_: wrong answer
+
+**Distractor Pool**:
+All the Distractors written for one Question. Each time the Question is shown, it draws a different mix from its pool, so learners recognise the rule rather than the look of the answer.
+_Avoid_: answer variants
+
 **Own Question**:
 A Question written by the KETGO team. Only Own Questions are ever shown to learners.
 _Avoid_: our questions, KETGO bank
