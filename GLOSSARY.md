@@ -38,6 +38,20 @@ _Avoid_: our questions, KETGO bank
 The exported ketbilietai.lt question database, used only to spot topics our Own Questions don't cover yet. Never shown to learners and never reworded into Own Questions.
 _Avoid_: question bank, ketbilietai questions (when you mean content we serve)
 
+## Learning
+
+**Memory Hook**:
+A short trick for remembering one rule: an image, a rhyme, or a "think of it as…".
+_Avoid_: mnemonic, tip (too vague)
+
+**Exam Trap**:
+A warning about wording or detail that commonly catches learners out in the Theory Exam.
+_Avoid_: gotcha, tip (too vague)
+
+**Rule Explainer**:
+A short lesson that teaches one rule before the learner practises it.
+_Avoid_: lesson, article, theory page
+
 ## Growth
 
 **Partner**:
