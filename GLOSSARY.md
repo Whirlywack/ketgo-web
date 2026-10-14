@@ -68,6 +68,10 @@ _Avoid_: test, ticket, bilietas, simulation
 The state of a Rule the learner is predicted to still recall on their exam day. Answering it right once or twice is not enough; a miss drops it back to learning.
 _Avoid_: learned, mastered, done
 
+**Readiness**:
+KETGO's estimate of how many of the 30 Theory Exam Questions a learner would get right on exam day, shown as a likely range against the pass mark. It appears only once there is enough evidence, and stays an estimate until checked against real exam results.
+_Avoid_: score, pass rate, percent ready
+
 **Memory Hook**:
 A short trick for remembering one Rule: an image, a rhyme, or a "think of it as…".
 _Avoid_: mnemonic, tip (too vague)
