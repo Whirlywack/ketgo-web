@@ -1,0 +1,720 @@
+<meta charset="utf-8">
+<title>KETGO Question Screen</title>
+<!--
+  PROTOTYPE, throwaway. Ticket: "Question screen on a phone" (Whirlywack/ketgo-web#11).
+  Question: how should the Question screen behave on a phone (ticking, Check, "Spėju", the reveal and
+  the "why", a new Rule met question-first, repeats that change, and the Mock Exam with its timer)?
+  Three variants of the feedback layout, switchable from the bottom bar or #a / #b / #c (#mock-b opens
+  the Mock Exam): A = verdict in the bottom dock, "why" under the Options; B = a sheet from the bottom;
+  C = verdict and "why" between the question and the Options. Everything else behaves the same in all three.
+  Built from DESIGN.md (Teal) on main. Content: real Own Questions (gen-0001, -0004, -0017, -0100, -0129,
+  -0142, -0195, -0275, -0304); feedback notes and key sentences are prototype drafts. No persistence.
+-->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible+Next:wght@400;700&display=swap">
+<style>
+/* Layout: a phone frame on desktop with notes beside it; the bare app on a phone. KETGO Teal tokens from DESIGN.md. */
+:root {
+  /* prototype chrome */
+  --ui-bg: #E6E7EA; --ui-fg: #17181B; --ui-muted: #555963; --ui-line: #CDD0D6;
+  --ui-bar: #17181B; --ui-bar-fg: #FFFFFF; --ui-bar-dim: #A3A7B0; --ui-bar-on: #FFFFFF; --ui-bar-on-fg: #17181B;
+  /* KETGO · Teal */
+  --bg: #F4F7F5; --surface: #FFFFFF; --surface-2: #EBF1EE;
+  --ink: #142627; --ink2: #3E5557; --line: #D5E0DB; --line-strong: #6B847D;
+  --teal: #145457; --teal-hover: #0F4346; --teal-press: #0A3436; --on-teal: #FFFFFF;
+  --teal-soft: #E0EDEA; --teal-soft-2: #CFE3DE; --teal-ink: #145457;
+  --lime: #CCFF00; --on-lime: #142627;
+  --ok: #16703A; --ok-bg: #E2F3E5; --on-ok: #FFFFFF;
+  --bad: #B3261E; --bad-bg: #FBE8E6; --on-bad: #FFFFFF;
+  --warn: #7F4A00; --warn-bg: #FFF0D4;
+  --focus: #145457;
+  --s-ground: #D3E2DA; --s-road: #FFFFFF; --s-edge: #A3BDB2; --s-mark: #BACCC3; --s-me: #145457; --s-other: #6F8B86; --s-path: #3E5557; --s-hit: #B3261E; --s-key: #145457; --s-pole: #6B847D;
+}
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) {
+  --ui-bg: #111214; --ui-fg: #ECEDEF; --ui-muted: #A3A7B0; --ui-line: #2B2D33;
+  --ui-bar: #F1F2F4; --ui-bar-fg: #17181B; --ui-bar-dim: #5A5E68; --ui-bar-on: #17181B; --ui-bar-on-fg: #FFFFFF;
+  --bg: #0E1B1C; --surface: #162728; --surface-2: #1D3233;
+  --ink: #EEF4F1; --ink2: #B0C4BE; --line: #27403F; --line-strong: #6E8C86;
+  --teal: #5CC3B8; --teal-hover: #74D0C6; --teal-press: #4AAFA4; --on-teal: #0E1B1C;
+  --teal-soft: #1B3536; --teal-soft-2: #22413F; --teal-ink: #8FDCD3;
+  --lime: #CCFF00; --on-lime: #142627;
+  --ok: #6FDC97; --ok-bg: #173A2A; --on-ok: #0E1B1C;
+  --bad: #FF8F86; --bad-bg: #432222; --on-bad: #0E1B1C;
+  --warn: #FFC56B; --warn-bg: #3A2A10;
+  --focus: #8FDCD3;
+  --s-ground: #1F3A39; --s-road: #375253; --s-edge: #4B6868; --s-mark: #6A8685; --s-me: #5CC3B8; --s-other: #9DB5A9; --s-path: #EEF4F1; --s-hit: #FF8F86; --s-key: #8FDCD3; --s-pole: #6E8C86;
+  color-scheme: dark;
+} }
+:root[data-theme="dark"] {
+  --ui-bg: #111214; --ui-fg: #ECEDEF; --ui-muted: #A3A7B0; --ui-line: #2B2D33;
+  --ui-bar: #F1F2F4; --ui-bar-fg: #17181B; --ui-bar-dim: #5A5E68; --ui-bar-on: #17181B; --ui-bar-on-fg: #FFFFFF;
+  --bg: #0E1B1C; --surface: #162728; --surface-2: #1D3233;
+  --ink: #EEF4F1; --ink2: #B0C4BE; --line: #27403F; --line-strong: #6E8C86;
+  --teal: #5CC3B8; --teal-hover: #74D0C6; --teal-press: #4AAFA4; --on-teal: #0E1B1C;
+  --teal-soft: #1B3536; --teal-soft-2: #22413F; --teal-ink: #8FDCD3;
+  --lime: #CCFF00; --on-lime: #142627;
+  --ok: #6FDC97; --ok-bg: #173A2A; --on-ok: #0E1B1C;
+  --bad: #FF8F86; --bad-bg: #432222; --on-bad: #0E1B1C;
+  --warn: #FFC56B; --warn-bg: #3A2A10;
+  --focus: #8FDCD3;
+  --s-ground: #1F3A39; --s-road: #375253; --s-edge: #4B6868; --s-mark: #6A8685; --s-me: #5CC3B8; --s-other: #9DB5A9; --s-path: #EEF4F1; --s-hit: #FF8F86; --s-key: #8FDCD3; --s-pole: #6E8C86;
+  color-scheme: dark;
+}
+
+/* ---------- prototype chrome ---------- */
+html, body { height: 100%; }
+body { background: var(--ui-bg); color: var(--ui-fg); display: grid; grid-template-rows: minmax(0, 1fr) auto; overflow: hidden; }
+.stage { display: flex; justify-content: center; align-items: center; gap: 40px; min-height: 0; padding-block: 16px; padding-inline: 16px; }
+.notes { width: 340px; max-height: 100%; overflow: auto; flex: none; font: 15px/1.5 system-ui, sans-serif; color: var(--ui-fg); }
+.notes h2 { font-size: 20px; line-height: 1.25; margin: 0 0 6px; text-wrap: balance; }
+.notes h3 { font-size: 16px; margin: 16px 0 6px; }
+.notes p { margin: 0 0 10px; }
+.notes :is(ul, ol) { margin: 0 0 10px; padding-left: 20px; }
+.notes .muted { color: var(--ui-muted); }
+.log { list-style: none; padding: 0 !important; display: grid; gap: 8px; }
+.log li { border: 1px solid var(--ui-line); border-radius: 10px; padding: 8px 10px; font-size: 14px; line-height: 1.45; }
+.log li b { display: block; }
+.device { width: 390px; height: min(844px, 100%); flex: none; border-radius: 40px; border: 10px solid #0B0B0C; overflow: hidden; position: relative; box-shadow: 0 18px 50px -12px rgb(0 0 0 / .35); background: #0B0B0C; }
+.viewport { height: 100%; overflow-y: auto; overscroll-behavior: contain; container-type: size; }
+.switcher { background: var(--ui-bar); color: var(--ui-bar-fg); font: 600 14px/1.2 system-ui, sans-serif; padding: 8px 12px calc(8px + env(safe-area-inset-bottom, 0px)); display: flex; flex-wrap: wrap; gap: 8px 14px; justify-content: center; align-items: center; }
+.switcher button { font: inherit; color: inherit; background: transparent; border: 1px solid var(--ui-bar-dim); border-radius: 999px; min-height: 44px; padding: 0 14px; cursor: pointer; }
+.switcher button[aria-pressed="true"] { background: var(--ui-bar-on); color: var(--ui-bar-on-fg); border-color: var(--ui-bar-on); }
+.switcher button:focus-visible { outline: 2px solid var(--ui-bar-fg); outline-offset: 2px; }
+.switcher .group { display: flex; gap: 4px; flex-wrap: wrap; justify-content: center; align-items: center; }
+.switcher .lbl { color: var(--ui-bar-dim); margin-right: 4px; }
+.switcher .info { display: none; }
+@media (max-width: 760px) {
+  .stage { padding: 0; }
+  .notes { display: none; position: absolute; inset: 0 0 auto 0; z-index: 20; width: auto; background: var(--ui-bg); padding: 20px; max-height: 100%; box-shadow: 0 10px 30px rgb(0 0 0 / .3); }
+  body.show-notes .notes { display: block; }
+  .device { width: 100%; height: 100%; border: 0; border-radius: 0; box-shadow: none; }
+  .switcher { font-size: 13px; gap: 6px 8px; padding-inline: 8px; }
+  .switcher button { min-height: 40px; min-width: 40px; padding: 0 10px; }
+  .switcher .lbl, .switcher .long { display: none; }
+  .switcher .info { display: inline-block; }
+}
+
+/* ---------- app mechanics ---------- */
+.app *, .app *::before, .app *::after { box-sizing: border-box; }
+.app { min-height: 100%; font-family: "Atkinson Hyperlegible Next", "Segoe UI", system-ui, sans-serif; background: var(--bg); color: var(--ink); overflow-wrap: break-word; }
+.screen { min-height: 100%; display: flex; flex-direction: column; font-size: 18px; line-height: 1.5; }
+:where(.screen) :is(h1, h2, h3, p, figure, ol, ul) { margin: 0; }
+:where(.screen) :is(h1, h2, h3) { text-wrap: balance; }
+:where(.screen) button { font: inherit; cursor: pointer; }
+:where(.screen) :is(ol, ul) { padding: 0; list-style: none; }
+fieldset.q-opts { border: 0; margin: 0; min-width: 0; }
+.grow { flex: 1; }
+.dock { position: sticky; bottom: 0; z-index: 5; }
+.k-opt input { position: absolute; opacity: 0; width: 1px; height: 1px; }
+.scene svg { display: block; width: 100%; height: auto; }
+.scene .hit { opacity: 0; }
+.is-after .scene .hit { opacity: 1; }
+.sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); }
+.icon { width: 24px; height: 24px; stroke: currentColor; fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; flex: none; }
+.num { font-variant-numeric: tabular-nums; }
+.app mark { background: var(--lime); color: var(--on-lime); border-radius: 4px; padding: 0 .12em; -webkit-box-decoration-break: clone; box-decoration-break: clone; }
+
+/* ---------- components (from DESIGN.md) ---------- */
+.k-btn { display: inline-flex; align-items: center; justify-content: center; gap: 10px; width: 100%; min-height: 56px; padding: 0 20px; border-radius: 14px; border: 0; background: var(--teal); color: var(--on-teal); font-weight: 700; font-size: 18px; line-height: 1.2; transition: background-color .12s ease-out, color .12s ease-out; -webkit-tap-highlight-color: transparent; }
+.k-btn:hover { background: var(--teal-hover); }
+.k-btn:active { background: var(--teal-press); }
+.k-btn:focus-visible { outline: 3px solid var(--focus); outline-offset: 3px; }
+.k-btn .icon { width: 20px; height: 20px; stroke-width: 2.4; }
+.k-btn--secondary { background: var(--surface); color: var(--ink); box-shadow: inset 0 0 0 1.5px var(--line); }
+.k-btn--secondary:hover { background: var(--surface-2); }
+.k-btn--secondary:active { background: var(--teal-soft-2); }
+.k-btn--text { width: auto; min-height: 48px; padding: 0 12px; background: transparent; color: var(--teal-ink); }
+.k-btn--text:hover { background: var(--teal-soft); }
+.k-btn--text:active { background: var(--teal-soft-2); }
+.k-btn:disabled, .k-btn:disabled:hover { background: var(--teal-soft); color: var(--ink2); box-shadow: none; cursor: not-allowed; }
+.k-ibtn { width: 48px; height: 48px; flex: none; display: grid; place-items: center; border-radius: 14px; border: 0; background: var(--surface); color: var(--ink); box-shadow: inset 0 0 0 1px var(--line); transition: background-color .12s ease-out; }
+.k-ibtn:hover { background: var(--surface-2); }
+.k-ibtn:focus-visible { outline: 3px solid var(--focus); outline-offset: 2px; }
+.k-chip { display: inline-flex; align-items: center; gap: 6px; align-self: flex-start; min-height: 32px; padding: 4px 12px; border-radius: 999px; background: var(--teal-soft); color: var(--teal-ink); font-size: 15px; font-weight: 700; line-height: 1.3; }
+.k-chip .icon { width: 16px; height: 16px; stroke-width: 2.4; }
+.k-chip--plain { background: var(--surface); color: var(--ink); box-shadow: inset 0 0 0 1.5px var(--line); }
+.k-chip--hook { background: var(--lime); color: var(--on-lime); }
+.k-progress { flex: 1; height: 8px; border-radius: 4px; background: var(--teal-soft); overflow: hidden; }
+.k-progress i { display: block; height: 100%; border-radius: 4px; background: var(--teal); transition: width .12s ease-out; }
+/* option: always a checkbox card */
+.k-opt { position: relative; display: grid; grid-template-columns: 28px 1fr; gap: 6px 14px; align-items: start; min-height: 56px; padding: 14px 16px; border-radius: 18px; background: var(--surface); box-shadow: inset 0 0 0 1.5px var(--line); cursor: pointer; transition: box-shadow .12s ease-out, background-color .12s ease-out; -webkit-tap-highlight-color: transparent; }
+.k-opt:hover { box-shadow: inset 0 0 0 1.5px var(--line-strong); }
+.k-opt .box { width: 28px; height: 28px; border-radius: 8px; border: 2px solid var(--line-strong); background: var(--surface); color: transparent; display: grid; place-items: center; }
+.k-opt .box .icon { width: 18px; height: 18px; stroke-width: 2.8; }
+.k-opt .box .x { display: none; }
+.k-opt:has(input:checked) { background: var(--teal-soft); box-shadow: inset 0 0 0 2.5px var(--teal); }
+.k-opt:has(input:checked) .box { background: var(--teal); border-color: var(--teal); color: var(--on-teal); }
+.k-opt:has(input:focus-visible) { outline: 3px solid var(--focus); outline-offset: 2px; }
+.k-opt:has(input:disabled) { cursor: default; }
+.k-opt .verdict { grid-column: 2; display: none; align-items: center; gap: 6px; font-size: 16px; font-weight: 700; line-height: 1.3; }
+.k-opt .verdict .icon { width: 18px; height: 18px; stroke-width: 2.6; }
+.k-opt .note { grid-column: 2; font-size: 16px; line-height: 1.45; color: var(--ink); }
+.is-after .k-opt, .is-after .k-opt:hover { background: var(--surface); box-shadow: inset 0 0 0 1.5px var(--line); }
+.is-after .k-opt.muted .txt { color: var(--ink2); }
+.is-after .k-opt.hit { background: var(--ok-bg); box-shadow: inset 0 0 0 2.5px var(--ok); }
+.is-after .k-opt.hit .box { background: var(--ok); border-color: var(--ok); color: var(--on-ok); }
+.is-after .k-opt.missed { background: var(--ok-bg); box-shadow: none; outline: 2.5px dashed var(--ok); outline-offset: -2.5px; }
+.is-after .k-opt.missed .box { border-color: var(--ok); background: var(--surface); color: transparent; }
+.is-after .k-opt.bad { background: var(--bad-bg); box-shadow: inset 0 0 0 2.5px var(--bad); }
+.is-after .k-opt.bad .box { background: var(--bad); border-color: var(--bad); color: var(--on-bad); }
+.is-after .k-opt.bad .box .ck { display: none; }
+.is-after .k-opt.bad .box .x { display: block; }
+.is-after .k-opt.hit .verdict, .is-after .k-opt.missed .verdict { display: flex; color: var(--ok); }
+.is-after .k-opt.bad .verdict { display: flex; color: var(--bad); }
+/* result line */
+.k-result { display: grid; grid-template-columns: 40px 1fr; gap: 12px; align-items: center; }
+.k-result:focus { outline: none; }
+.k-result .ic { width: 40px; height: 40px; border-radius: 50%; display: grid; place-items: center; }
+.k-result .ic .icon { width: 22px; height: 22px; stroke-width: 2.8; }
+.k-result b { display: block; font-size: 20px; line-height: 1.2; }
+.k-result span:not(.ic) { display: block; font-size: 16px; line-height: 1.4; color: var(--ink); font-weight: 700; margin-top: 2px; }
+.k-result--ok .ic { background: var(--ok); color: var(--on-ok); }
+.k-result--ok b { color: var(--ok); }
+.k-result--bad .ic { background: var(--bad); color: var(--on-bad); }
+.k-result--bad b { color: var(--bad); }
+/* learning blocks */
+.k-why { display: grid; gap: 8px; }
+.k-why h3 { font-size: 16px; color: var(--teal-ink); }
+.k-why .key { font-size: 21px; line-height: 1.4; font-weight: 700; }
+.ket { font-weight: 700; color: var(--teal-ink); white-space: nowrap; }
+.k-disc summary, .k-more summary { list-style: none; cursor: pointer; display: flex; align-items: center; gap: 8px; min-height: 48px; font-weight: 700; color: var(--teal-ink); -webkit-tap-highlight-color: transparent; }
+.k-disc summary::-webkit-details-marker, .k-more summary::-webkit-details-marker { display: none; }
+.k-disc summary:focus-visible, .k-more summary:focus-visible { outline: 3px solid var(--focus); outline-offset: 2px; border-radius: 14px; }
+.k-disc .chev, .k-more .chev { width: 20px; height: 20px; transition: transform .12s ease-out; }
+.k-disc[open] .chev, .k-more[open] .chev { transform: rotate(90deg); }
+.k-disc[open] summary { margin-bottom: 4px; }
+.k-more { border-radius: 18px; background: var(--teal-soft); }
+.k-more summary { padding: 4px 16px; min-height: 56px; color: var(--ink); }
+.k-more summary .t { flex: 1; }
+.k-more summary .icon:first-child { color: var(--teal-ink); width: 20px; height: 20px; }
+.k-more > .in { padding: 0 18px 18px; display: grid; gap: 12px; }
+.k-more > .in > p { font-size: 17px; color: var(--ink2); }
+.k-block { padding: 18px; border-radius: 18px; display: grid; gap: 8px; }
+.k-block h3 { font-size: 18px; line-height: 1.3; display: flex; align-items: center; gap: 8px; }
+.k-block p { font-size: 17px; }
+.k-explainer { background: var(--teal-soft); }
+.k-explainer h3 .icon { color: var(--teal-ink); width: 20px; height: 20px; }
+.k-explainer p { color: var(--ink2); }
+.k-hook { background: var(--surface); box-shadow: inset 0 0 0 1.5px var(--line); }
+.k-hook p { font-size: 19px; font-weight: 700; line-height: 1.4; }
+.k-trap { background: var(--warn-bg); }
+.k-trap h3 { color: var(--warn); }
+.k-trap h3 .icon { width: 20px; height: 20px; }
+.k-note { display: flex; gap: 10px; align-items: flex-start; font-size: 16px; line-height: 1.45; color: var(--ink2); }
+.k-note .icon { width: 20px; height: 20px; margin-top: 1px; }
+.k-row { display: flex; align-items: center; gap: 14px; width: 100%; min-height: 72px; padding: 12px 14px 12px 12px; border: 0; border-radius: 20px; background: var(--surface); box-shadow: inset 0 0 0 1px var(--line); color: var(--ink); text-align: left; transition: background-color .12s ease-out; }
+.k-row:hover { background: var(--surface-2); }
+.k-row:focus-visible { outline: 3px solid var(--focus); outline-offset: 2px; }
+.k-row .tile { width: 48px; height: 48px; border-radius: 14px; display: grid; place-items: center; flex: none; }
+.k-row .tile.ok { background: var(--ok-bg); color: var(--ok); }
+.k-row .tile.bad { background: var(--bad-bg); color: var(--bad); }
+.k-row .txt { flex: 1; display: grid; min-width: 0; }
+.k-row .txt b { font-size: 17px; line-height: 1.35; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+.k-row small { color: var(--ink2); font-size: 16px; }
+.k-row > .icon { color: var(--ink2); }
+
+/* ---------- question screen ---------- */
+.q-top { display: flex; align-items: center; gap: 12px; padding: 12px 20px; }
+.q-count { font-size: 16px; font-weight: 700; color: var(--ink2); font-variant-numeric: tabular-nums; }
+.q-chip { margin: 4px 20px 12px; }
+.q-scene { margin: 0 20px; border-radius: 18px; overflow: hidden; }
+.q-stem { padding: 18px 20px 12px; font-size: 22px; line-height: 1.3; }
+.q-tip { padding: 0 20px 14px; }
+.q-opts { display: grid; gap: 10px; padding: 0 20px; }
+.q-after { padding: 22px 20px 0; display: grid; gap: 14px; }
+.q-dock { padding: 14px 20px calc(14px + env(safe-area-inset-bottom, 0px)); background: var(--bg); box-shadow: 0 -1px 0 var(--line); display: grid; grid-template-columns: 1fr 1.6fr; gap: 12px 10px; margin-top: 18px; }
+.q-dock.one { grid-template-columns: 1fr; }
+.q-dock.even { grid-template-columns: 1fr 1fr; }
+/* B: sheet from the bottom; a line, not a shadow (One Shadow Rule) */
+.q-sheet { margin-top: 18px; max-height: 74cqh; display: flex; flex-direction: column; background: var(--surface); border-radius: 24px 24px 0 0; box-shadow: inset 0 1px 0 var(--line), 0 -1px 0 var(--line); }
+.q-sheet-body { overflow-y: auto; overscroll-behavior: contain; padding: 20px 20px 4px; display: grid; gap: 14px; }
+.q-sheet-foot { padding: 12px 20px calc(14px + env(safe-area-inset-bottom, 0px)); display: grid; grid-template-columns: 1fr; gap: 10px; }
+.q-sheet-foot.two { grid-template-columns: 1fr 1.6fr; }
+.q-sheet h2 { font-size: 22px; line-height: 1.3; }
+/* C: verdict and "why" between the question and the Options */
+.q-card { margin: 0 20px 16px; padding: 18px; border-radius: 20px; background: var(--surface); box-shadow: inset 0 0 0 1px var(--line); display: grid; gap: 12px; scroll-margin: 8px 0 110px; }
+
+/* ---------- mock exam ---------- */
+.m-timer { display: inline-flex; align-items: center; gap: 6px; font-weight: 700; font-size: 18px; font-variant-numeric: tabular-nums; margin-right: auto; }
+.m-timer .icon { width: 20px; height: 20px; color: var(--ink2); }
+.m-note { margin: 0 20px 10px; padding: 10px 14px; border-radius: 14px; background: var(--teal-soft); font-weight: 700; font-size: 16px; }
+.m-note:empty { display: none; }
+.m-strip { display: flex; gap: 8px; overflow-x: auto; padding: 2px 20px 12px; scrollbar-width: none; }
+.m-strip button { flex: none; width: 48px; height: 48px; border-radius: 14px; border: 0; background: var(--surface); box-shadow: inset 0 0 0 1.5px var(--line); color: var(--ink); font-weight: 700; font-variant-numeric: tabular-nums; display: grid; place-items: center; position: relative; }
+.m-strip button.done { background: var(--teal-soft); box-shadow: inset 0 0 0 1.5px var(--teal-soft-2); }
+.m-strip button.done::after { content: ""; position: absolute; bottom: 6px; width: 6px; height: 6px; border-radius: 50%; background: var(--teal); }
+.m-strip button[aria-current] { box-shadow: inset 0 0 0 2.5px var(--teal); }
+.m-strip button:focus-visible { outline: 3px solid var(--focus); outline-offset: 2px; }
+.m-finish { margin: 14px auto 0; }
+.m-start, .e-wrap { padding: 24px 20px 0; display: grid; gap: 16px; }
+.m-start h1, .e-wrap h1 { font-size: 28px; line-height: 1.2; letter-spacing: -0.01em; }
+.m-start > p, .e-wrap > p { color: var(--ink2); }
+.m-facts { display: grid; gap: 12px; }
+.m-facts li { display: flex; align-items: center; gap: 14px; }
+.m-facts .t { width: 44px; height: 44px; border-radius: 14px; background: var(--teal-soft); color: var(--teal-ink); display: grid; place-items: center; flex: none; font-weight: 700; font-variant-numeric: tabular-nums; }
+.m-res { padding: 24px 20px 0; display: grid; gap: 16px; }
+.m-res .k-result .ic { width: 48px; height: 48px; }
+.m-res .k-result { grid-template-columns: 48px 1fr; }
+.m-res .k-result b { font-size: 28px; }
+.m-res h2 { font-size: 20px; margin-top: 8px; }
+.m-list { display: grid; gap: 10px; }
+.e-list { display: grid; gap: 10px; }
+.e-list li { display: flex; justify-content: space-between; align-items: center; gap: 12px; padding: 12px 16px; border-radius: 18px; background: var(--surface); box-shadow: inset 0 0 0 1px var(--line); font-size: 17px; }
+.e-list .k-chip { flex: none; }
+.e-ic { width: 56px; height: 56px; border-radius: 18px; background: var(--teal-soft); color: var(--teal-ink); display: grid; place-items: center; }
+.dock-col { display: grid; gap: 4px; justify-items: center; }
+</style>
+
+<main class="stage">
+  <aside class="notes" id="notes">
+    <h2>Question screen</h2>
+    <p>A clickable prototype of how the KETGO Question screen behaves. App text is Lithuanian, as in the app.</p>
+    <p><b>A, B and C</b> differ only in where the explanation appears after Check. Switch while an answer is showing to compare.</p>
+    <ul>
+      <li><b>A Below:</b> marks on the Options; verdict and key sentence in the bottom bar; explanation under the Options.</li>
+      <li><b>B Sheet:</b> a panel at the bottom holds the verdict and explanation. The marked Options stay above it.</li>
+      <li><b>C Above:</b> verdict and explanation sit between the question and the Options.</li>
+    </ul>
+    <h3>Try this</h3>
+    <ol>
+      <li>Question 1 is a new Rule. Guess, or tap "Pirma išmokti" to read the Rule first.</li>
+      <li>Answer one Question with "Spėju" (not sure): the explanation stays open. Answer sure and right: it folds away.</li>
+      <li>Get Question 3 (U-turns) wrong. It comes back two Questions later with other Options.</li>
+      <li>Open the Mock Exam: skip, go back, finish early, try "Be laiko ribos", or fast-forward the timer.</li>
+    </ol>
+    <p class="muted">The Lesson end and Mock Exam results screens are placeholders: they are designed during the build.</p>
+    <h3>What KETGO records</h3>
+    <ol class="log" id="log"></ol>
+  </aside>
+  <div class="device"><div class="viewport" id="vp"><div class="app" lang="lt" id="app"></div></div></div>
+</main>
+
+<nav class="switcher" aria-label="Prototype controls">
+  <span class="group"><span class="lbl">Feedback</span>
+    <button type="button" data-variant="A">A<span class="long"> Below</span></button>
+    <button type="button" data-variant="B">B<span class="long"> Sheet</span></button>
+    <button type="button" data-variant="C">C<span class="long"> Above</span></button>
+  </span>
+  <span class="group">
+    <button type="button" data-mode="lesson">Lesson</button>
+    <button type="button" data-mode="mock">Mock<span class="long"> Exam</span></button>
+  </span>
+  <button type="button" id="restart" aria-label="Restart">↺<span class="long"> Restart</span></button>
+  <button type="button" id="ff" hidden aria-label="Fast-forward the timer">⏩<span class="long"> Timer</span></button>
+  <button type="button" id="theme" aria-label="Theme: follows phone">◐<span class="long"> Phone</span></button>
+  <button type="button" class="info" id="info" aria-pressed="false">Notes</button>
+</nav>
+
+<script>
+(() => {
+  const $ = s => document.querySelector(s);
+  const app = $('#app'), vp = $('#vp'), root = document.documentElement;
+
+  const IC = {
+    ck: '<path d="M5 12l5 5 9-10"/>', x: '<path d="M7 7l10 10M17 7L7 17"/>', close: '<path d="M6 6l12 12M18 6L6 18"/>',
+    arrow: '<path d="M5 12h14M13 6l6 6-6 6"/>', back: '<path d="M19 12H5M11 6l-6 6 6 6"/>', chev: '<path d="M9 6l6 6-6 6"/>',
+    book: '<path d="M4 5.5A2.5 2.5 0 0 1 6.5 3H20v15H6.5A2.5 2.5 0 0 0 4 20.5zM4 20.5A2.5 2.5 0 0 0 6.5 23H20"/>',
+    spark: '<path d="M12 3l2.2 5.8L20 11l-5.8 2.2L12 19l-2.2-5.8L4 11l5.8-2.2z"/>',
+    again: '<path d="M20 11a8 8 0 0 0-14.3-4.9L4 8M4 4v4h4M4 13a8 8 0 0 0 14.3 4.9L20 16M20 20v-4h-4"/>',
+    alert: '<path d="M12 4l9 16H3zM12 10v4M12 17.5v.01"/>', clock: '<circle cx="12" cy="12" r="8.5"/><path d="M12 7.5V12l3 2"/>',
+    info: '<circle cx="12" cy="12" r="9"/><path d="M12 11v5M12 7.5v.01"/>', list: '<path d="M9 6h11M9 12h11M9 18h11M4 6h.01M4 12h.01M4 18h.01"/>',
+  };
+  const ic = (k, c = '') => `<svg class="icon ${c}" viewBox="0 0 24 24" aria-hidden="true">${IC[k]}</svg>`;
+
+  const SCENES = {
+    cross: `<svg viewBox="0 0 320 190" role="img" aria-label="Lygiareikšmių kelių sankryža: tu važiuoji tiesiai, automobilis artėja iš dešinės">
+      <rect width="320" height="190" fill="var(--s-ground)"/><rect x="0" y="70" width="320" height="52" fill="var(--s-road)"/><rect x="134" y="0" width="52" height="190" fill="var(--s-road)"/>
+      <path d="M0 70H134V0M186 0V70H320M0 122H134V190M186 190V122H320" fill="none" stroke="var(--s-edge)" stroke-width="2.5"/>
+      <path d="M0 96H120M200 96H320M160 0V56M160 136V190" stroke="var(--s-mark)" stroke-width="2" stroke-dasharray="10 9" fill="none"/>
+      <path d="M173 150V18" stroke="var(--s-path)" stroke-width="2.5" stroke-dasharray="4 6" fill="none"/><path d="M286 83H40" stroke="var(--s-path)" stroke-width="2.5" stroke-dasharray="4 6" fill="none"/>
+      <path d="M168 26l5-9 5 9M48 78l-9 5 9 5" fill="none" stroke="var(--s-path)" stroke-width="2.5" stroke-linejoin="round" stroke-linecap="round"/>
+      <g transform="translate(164 148)"><rect width="18" height="32" rx="5" fill="var(--s-me)"/><rect x="3" y="5" width="12" height="7" rx="2" fill="var(--s-ground)" opacity=".7"/></g>
+      <g transform="translate(270 74)"><rect width="32" height="18" rx="5" fill="var(--s-other)"/><rect x="4" y="3" width="7" height="12" rx="2" fill="var(--s-ground)" opacity=".7"/></g>
+      <g class="hit"><circle cx="173" cy="83" r="13" fill="none" stroke="var(--s-hit)" stroke-width="3"/><text x="194" y="64" font-size="13" font-weight="700" fill="var(--s-hit)" font-family="system-ui, sans-serif">kertasi</text></g></svg>`,
+    // sign 533 drawn after KET annex 1; sign colours are the sign's own, the same in both themes
+    sign533: `<svg viewBox="0 0 320 170" role="img" aria-label="Kelio ženklas: mėlynas kvadratas, jame baltas trikampis su pėsčiuoju ant zebro">
+      <rect width="320" height="170" fill="var(--s-ground)"/><rect x="157" y="112" width="6" height="58" fill="var(--s-pole)"/>
+      <g transform="translate(110 14)"><rect width="100" height="100" rx="9" fill="#FFFFFF"/><rect x="4" y="4" width="92" height="92" rx="7" fill="#1E5EAD"/><path d="M50 12L90 86H10Z" fill="#FFFFFF"/>
+      <path d="M22 80h9M37 80h9M52 80h9M67 80h9" stroke="#142627" stroke-width="5"/><circle cx="52" cy="33" r="5" fill="#142627"/>
+      <path d="M51 40l-3 15 6 7 1 9M48 55l-6 15M50 44l-8 8M52 44l8 7" stroke="#142627" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/></g>
+      <g class="hit"><rect x="102" y="6" width="116" height="116" rx="14" fill="none" stroke="var(--s-key)" stroke-width="3" stroke-dasharray="7 6"/><text x="226" y="36" font-size="13" font-weight="700" fill="var(--s-key)" font-family="system-ui, sans-serif">kvadratas</text></g></svg>`,
+  };
+
+  const RULES = {
+    r155: { name: 'Dešinės rankos taisyklė', text: 'Kai sankryžoje nėra ženklų, šviesoforo ir reguliuotojo, keliai yra lygiareikšmiai. Tada pirmas važiuoja tas, kuris artėja iš dešinės, jei jūsų keliai kertasi.', trap: 'Žodis „visada“. Praleisti reikia tik tada, kai jūsų važiavimo trajektorijos kertasi.' },
+    r739: { name: 'Geltonas mirksintis signalas', text: 'Mirksintis geltonas reiškia, kad šviesoforas eismo nereguliuoja. Važiuok pagal ženklus, o jei jų nėra, pagal dešinės rankos taisyklę.' },
+    r116: { name: 'Kur negalima apsisukti', text: 'Apsisukti draudžiama perėjose, pervažose, tuneliuose, ant tiltų, estakadų, viadukų ir po jais, taip pat ten, kur kelias bent viena kryptimi matomas mažiau kaip 100 m.' },
+    r150: { name: 'Sustoti, kai kelias blogai matomas', text: 'Kur kelias blogai matomas, sustojusio automobilio kiti gali laiku nepamatyti. Todėl už gyvenvietės kelias turi būti matomas bent 100 m, gyvenvietėje bent 50 m.', hook: 'Gyvenvietėje 50, už jos dvigubai: 100.' },
+    r533: { name: 'Ženklas „Pėsčiųjų perėja“', text: 'Mėlynas kvadratinis ženklas su pėsčiuoju žymi pačią perėją. Trikampis įspėjamasis ženklas tik įspėja, kad perėja artėja.' },
+    r30: { name: 'Nereguliuojama pėsčiųjų perėja', text: 'Artėdamas prie nereguliuojamos perėjos sulėtini greitį arba sustoji ir praleidi pėsčiąjį, kuris įžengė, žengia arba laukia prie pat perėjos.' },
+    r32: { name: 'Kada negalima įvažiuoti į perėją', text: 'Nevažiuok į perėją, kol pėstieji neišėjo iš tavo eismo juostos, ir kai už perėjos yra kliūtis, dėl kurios tektų sustoti perėjoje.' },
+    r35: { name: 'Ką praleisti visur', text: 'Asmenį su balta lazdele ir asmenį neįgaliojo vežimėlyje praleidi visur, ne tik perėjoje.' },
+    r76: { name: 'Žalia rodyklė prie raudono signalo', text: 'Žalia papildoma rodyklė leidžia sukti, bet pirmenybės neduoda: pirma sustok, tada praleisk kitus ir tik tada suk.' },
+  };
+
+  // Real Own Questions. `draws`: which written Options are shown each time, in what order (prototype: fixed, so every run is the same).
+  const QS = {
+    'gen-0001': { rule: 'r155', scene: 'cross', stem: 'Kam vairuotojas privalo duoti kelią lygia­reikšmių kelių sankryžoje?', ket: 'KET 155 p.',
+      opts: [
+        { t: 'Iš dešinės artėjančioms transporto priemonėms, jeigu jų važiavimo trajektorijos kertasi.', ok: 1 },
+        { t: 'Iš dešinės artėjančioms transporto priemonėms visada, net jeigu jų trajektorijos nesikerta.', n: 'Ne visada: jei trajektorijos nesikerta, praleisti nereikia.' },
+        { t: 'Iš dešinės artėjančioms transporto priemonėms tik tada, kai sankryžoje stovi pirmenybės ženklai.', n: 'Atvirkščiai: ši taisyklė galioja, kai pirmenybės ženklų nėra.' }],
+      draws: [[2, 0, 1], [0, 1, 2], [1, 2, 0]],
+      key: 'Duok kelią iš dešinės, kai jūsų keliai kertasi.',
+      why: 'Lygiareikšmių kelių sankryžoje praleidi iš dešinės artėjančią transporto priemonę, jeigu jūsų važiavimo trajektorijos kertasi. Jei nesikerta, praleisti nereikia.' },
+    'gen-0004': { rule: 'r739', stem: 'Ką reiškia geltonas mirksintis šviesoforo signalas?', ket: 'KET 73.9 p.',
+      opts: [
+        { t: 'Leidžia eismą ir informuoja, kad sankryža arba pėsčiųjų perėja nereguliuojama.', ok: 1 },
+        { t: 'Draudžia eismą ir informuoja, kad šviesoforo signalai netrukus pasikeis.', n: 'Taip veikia nuolatinis geltonas signalas, ne mirksintis.' },
+        { t: 'Įpareigoja sustoti, nes juo eismas draudžiamas.', n: 'Mirksintis geltonas eismo nedraudžia.' }],
+      draws: [[1, 0, 2], [2, 1, 0], [0, 2, 1]],
+      key: 'Mirksintis geltonas leidžia važiuoti: sankryža nereguliuojama.',
+      why: 'Geltonas mirksintis signalas leidžia eismą ir rodo, kad sankryža ar perėja nereguliuojama. Nuolatinis geltonas signalas eismą draudžia.' },
+    'gen-0129': { rule: 'r116', stem: 'Kur draudžiama apsisukti?', ket: 'KET 116 p.',
+      opts: [
+        { t: 'Pėsčiųjų perėjose ir geležinkelių pervažose.', ok: 1, n: 'Čia apsisukti irgi draudžiama.' },
+        { t: 'Ant tiltų, estakadų, viadukų ir po jais.', ok: 1, n: 'Čia apsisukti irgi draudžiama.' },
+        { t: 'Vietose, kur kelio matomumas bent viena kryptimi mažesnis kaip 100 metrų.', ok: 1, n: 'Čia apsisukti irgi draudžiama.' },
+        { t: 'Tuneliuose.', ok: 1, n: 'Čia apsisukti irgi draudžiama.' }, // true statement taken from the Question's own explanation (KET 116)
+        { t: 'Keliuose su skiriamąja juosta įrengtose ir pažymėtose apsisukimo vietose.', n: 'Čia apsisukti kaip tik leidžiama: tam tos vietos ir įrengtos.' }],
+      draws: [[0, 4, 1], [3, 2, 1], [2, 0, 4]],
+      key: 'Draudžiama perėjose, pervažose, tuneliuose, ant tiltų ir kur matyti mažiau nei 100 m.',
+      why: 'Apsisukti draudžiama pėsčiųjų perėjose, geležinkelių pervažose, tuneliuose, ant tiltų, estakadų, viadukų ir po jais, taip pat ten, kur kelias bent viena kryptimi matomas mažiau kaip 100 m. Keliuose su skiriamąja juosta apsisukti galima tik įrengtose apsisukimo vietose.' },
+    'gen-0304': { rule: 'r150', stem: 'Ne gyvenvietėje draudžiama sustoti ir stovėti, kai bent viena kryptimi kelias matomas mažiau kaip:', ket: 'KET 150 p.',
+      opts: [{ t: '50 m.', n: '50 m yra riba gyvenvietėje.' }, { t: '15 m.', n: 'Šioje taisyklėje tokios ribos nėra.' }, { t: '100 m.', ok: 1 }],
+      draws: [[0, 1, 2], [2, 0, 1], [1, 2, 0]],
+      key: 'Už gyvenvietės 100 m, gyvenvietėje 50 m.',
+      why: 'Ne gyvenvietėje sustoti ir stovėti draudžiama ten, kur kelias bent viena kryptimi matomas mažiau kaip 100 m. Gyvenvietėje ši riba yra 50 m.' },
+    'gen-0100': { rule: 'r533', scene: 'sign533', stem: 'Ką reiškia šis kelio ženklas?', ket: 'KET 1 priedas, ženklas 533',
+      opts: [
+        { t: 'Perėjimo per kelią vieta.', ok: 1 },
+        { t: 'Įspėja apie artėjimą prie pėsčiųjų perėjos.', n: 'Taip įspėja trikampis ženklas. Šis ženklas yra mėlynas kvadratas.' },
+        { t: 'Kelio ruožas, kurio važiuojamąja dalimi skersai arba išilgai kelio vaikšto pėstieji.', n: 'Tai reiškia ženklas „Pėstieji“.' }],
+      draws: [[1, 2, 0], [0, 2, 1], [2, 0, 1]],
+      key: 'Mėlynas kvadratas su pėsčiuoju žymi pačią perėją.',
+      why: 'Nurodomasis ženklas „Pėsčiųjų perėja“ žymi perėjimo per kelią vietą. Trikampis įspėjamasis ženklas tik įspėja, kad perėja artėja.' },
+    'gen-0017': { rule: 'r30', stem: 'Kaip privalo elgtis vairuotojas, artėdamas prie nereguliuojamos pėsčiųjų perėjos?', ket: 'KET 30 p.',
+      opts: [
+        { t: 'Sulėtinti greitį arba sustoti prieš perėją ir praleisti pėsčiąjį.', ok: 1 },
+        { t: 'Praleisti tik jau į perėją įžengusį pėsčiąjį.', n: 'Praleisti reikia ir tą, kuris laukia prie pat perėjos.' },
+        { t: 'Tęsti važiavimą tuo pačiu greičiu, jeigu perėjoje dar nėra pėsčiųjų.', n: 'Pėsčiasis gali laukti prie pat perėjos: jį irgi reikia praleisti.' }],
+      draws: [[1, 0, 2]],
+      key: 'Praleisk ir einantį, ir laukiantį prie perėjos.',
+      why: 'Prie nereguliuojamos perėjos sulėtini greitį arba sustoji ir praleidi pėsčiąjį, kuris įžengė, žengia arba stovi prie pat perėjos ir laukia.' },
+    'gen-0142': { rule: 'r32', stem: 'Kada vairuotojui draudžiama įvažiuoti į pėsčiųjų perėją?', ket: 'KET 32 p.',
+      opts: [
+        { t: 'Kol pėstieji, kuriuos privaloma praleisti, neišėjo iš jo užimamos eismo juostos.', ok: 1, n: 'Tai irgi draudžiama.' },
+        { t: 'Kai už perėjos yra kliūtis, dėl kurios reikėtų sustabdyti transporto priemonę perėjoje.', ok: 1, n: 'Tai irgi draudžiama.' },
+        { t: 'Kol pėstieji nebaigė eiti per visą pėsčiųjų perėją.', n: 'Laukti, kol pereis visą perėją, nereikia: užtenka, kad išeitų iš tavo juostos.' }],
+      draws: [[2, 0, 1]],
+      key: 'Lauk, kol pėstieji išeis iš tavo juostos, ir nesustok perėjoje.',
+      why: 'Įvažiuoti į perėją draudžiama, kol pėstieji, kuriuos privaloma praleisti, neišėjo iš tavo eismo juostos, ir kai už perėjos yra kliūtis, dėl kurios tektų sustoti perėjoje. Laukti, kol jie pereis visą perėją, nereikia.' },
+    'gen-0275': { rule: 'r35', stem: 'Ką vairuotojas privalo praleisti visur, net ir ne pėsčiųjų perėjoje?', ket: 'KET 35 p.',
+      opts: [
+        { t: 'Asmenį su regos negalia, signalizuojantį balta lazdele.', ok: 1, n: 'Šį asmenį irgi privaloma praleisti visur.' },
+        { t: 'Asmenį su negalia, važiuojantį per kelią asmens su negalia vežimėliu.', ok: 1, n: 'Šį asmenį irgi privaloma praleisti visur.' },
+        { t: 'Kiekvieną pėsčiąjį, einantį per važiuojamąją dalį ne pėsčiųjų perėjoje.', n: 'Ši pareiga taikoma ne visiems pėstiesiems.' }],
+      draws: [[0, 2, 1]],
+      key: 'Visur praleidi žmogų su balta lazdele ir žmogų vežimėlyje.',
+      why: 'Asmenį su regos negalia, signalizuojantį balta lazdele, ir asmenį su negalia, važiuojantį per kelią vežimėliu, praleidi visur. Kitiems pėstiesiems ne perėjoje ši pareiga netaikoma.' },
+    'gen-0195': { rule: 'r76', stem: 'Ką privalo padaryti vairuotojas prieš sukdamas į dešinę pagal lentelę su žalia rodykle, degant raudonam signalui?', ket: 'KET 76 p.',
+      opts: [
+        { t: 'Tik sulėtinti greitį ir, jeigu netrukdo kitiems, sukti nesustojus.', n: 'Sustoti privaloma.' },
+        { t: 'Sustoti prieš „Stop“ liniją, o jeigu jos nėra, – prieš pėsčiųjų perėją, šviesoforą, ir vėl pradėti važiuoti tik įsitikinus, kad tai saugu.', ok: 1 },
+        { t: 'Sustoti nereikia, nes žalia rodyklė suteikia pirmenybę prieš kertamą eismą.', n: 'Rodyklė pirmenybės nesuteikia: pirma sustok ir praleisk.' }],
+      draws: [[0, 1, 2]],
+      key: 'Prie žalios rodyklės pirma sustok, tik tada suk.',
+      why: 'Kai prie raudono signalo yra lentelė su žalia rodykle, sukti į dešinę galima tik sustojus prieš „Stop“ liniją (jei jos nėra, prieš perėją ar šviesoforą) ir įsitikinus, kad saugu.' },
+  };
+
+  // A Lesson: new Rules met question-first, due Rules mixed in, each new Rule planned to come back once.
+  const LESSON = [['gen-0001', 'new'], ['gen-0004', 'due'], ['gen-0129', 'due'], ['gen-0304', 'new'], ['gen-0100', 'due'], ['gen-0001', 'return'], ['gen-0304', 'return']];
+  const MOCK = ['gen-0017', 'gen-0142', 'gen-0001', 'gen-0275', 'gen-0195', 'gen-0004'];
+  const PLANNED = LESSON.length;
+
+  let variant = 'A', mode = 'lesson';
+  const S = {}, M = {}, LOG = [];
+  let SHOWS = {};
+
+  const sameSet = (a, b) => a && b && [...a].sort().join() === [...b].sort().join();
+  function draw(id) {
+    const q = QS[id], n = SHOWS[id] || 0;
+    SHOWS[id] = n + 1;
+    const d = q.draws[n % q.draws.length], prev = q.last;
+    q.last = d;
+    return { d, changed: prev ? !sameSet(prev, d) : false };
+  }
+  function resetLesson() {
+    SHOWS = {}; Object.values(QS).forEach(q => { q.last = null; });
+    Object.assign(S, { queue: LESSON.map(([q, kind]) => ({ q, kind })), i: 0, done: 0, phase: 'ask', ticks: new Set(), last: null, tipSeen: false, t0: 0 });
+    enter();
+  }
+  function enter() {
+    const it = S.queue[S.i];
+    if (!it) { S.phase = 'end'; return; }
+    if (!it.d) Object.assign(it, draw(it.q));
+    S.ticks = new Set(); S.phase = 'ask'; S.t0 = performance.now();
+  }
+  function resetMock() {
+    clearNote();
+    Object.assign(M, { phase: 'start', untimed: false, i: 0, ans: MOCK.map(() => new Set()), draws: MOCK.map(id => QS[id].draws[0]), left: 1800, timeUp: false, confirm: false, rev: 0, notice: '', res: [] });
+  }
+  const cur = () => S.queue[S.i];
+  const isPre = it => it.kind === 'new' && !it.learned;
+  const fmt = s => `${String(Math.floor(s / 60)).padStart(2, '0')}:${String(s % 60).padStart(2, '0')}`;
+  const verdictOf = (q, d, ticks) => d.every(oi => !!q.opts[oi].ok === ticks.has(oi));
+
+  /* ---------- pieces ---------- */
+  const screen = (html, after) => `<section class="screen${after ? ' is-after' : ''}">${html}</section>`;
+  const grow = '<div class="grow"></div>';
+  const scene = q => q.scene ? `<figure class="q-scene scene">${SCENES[q.scene]}</figure>` : '';
+  const stem = q => `<h2 class="q-stem">${q.stem}</h2>`;
+  function lessonTop() {
+    const pct = Math.round(S.done / PLANNED * 100), n = Math.min(cur()?.kind === 'reask' ? S.done : S.done + (S.phase === 'after' ? 0 : 1), PLANNED);
+    return `<div class="q-top"><button class="k-ibtn" type="button" data-act="quit" aria-label="Sustabdyti pamoką">${ic('close')}</button>
+      <div class="k-progress" role="progressbar" aria-label="Pamokos eiga" aria-valuemin="0" aria-valuemax="${PLANNED}" aria-valuenow="${S.done}"><i style="width:${pct}%"></i></div>
+      <span class="q-count">${Math.max(n, 1)} / ${PLANNED}</span></div>`;
+  }
+  function chip(it) {
+    if (it.kind === 'new') return `<span class="k-chip q-chip">${ic('spark')}${it.learned ? 'Nauja taisyklė' : 'Nauja taisyklė · spėk'}</span>`;
+    if (it.kind === 'due') return '<span class="k-chip k-chip--plain q-chip">Kartojimas</span>';
+    return `<span class="k-chip k-chip--plain q-chip">${ic('again')}${it.kind === 'return' ? 'Vėl ši taisyklė' : 'Dar kartą'} · ${it.changed ? 'kiti variantai' : 'kita tvarka'}</span>`;
+  }
+  function options(q, d, ticks, after) {
+    return `<fieldset class="q-opts"><legend class="sr">Pažymėk teisingus variantus</legend>${d.map(oi => {
+      const o = q.opts[oi], on = ticks.has(oi);
+      let cls = '', v = '', note = '';
+      if (after) {
+        if (o.ok && on) { cls = 'hit'; v = `${ic('ck')}Teisinga · tavo pasirinkimas`; }
+        else if (o.ok) { cls = 'missed'; v = `${ic('ck')}Teisingas variantas · nepažymėjai`; note = o.n; }
+        else if (on) { cls = 'bad'; v = `${ic('x')}Neteisinga · tavo pasirinkimas`; note = o.n; }
+        else cls = 'muted';
+      }
+      return `<label class="k-opt ${cls}"><input type="checkbox" data-o="${oi}"${on ? ' checked' : ''}${after ? ' disabled' : ''}><span class="box">${ic('ck', 'ck')}${ic('x', 'x')}</span><span class="txt">${o.t}</span>${v ? `<span class="verdict">${v}</span>` : ''}${note ? `<span class="note">${note}</span>` : ''}</label>`;
+    }).join('')}</fieldset>`;
+  }
+  function result(right, word, key) {
+    return `<div class="k-result k-result--${right ? 'ok' : 'bad'}" role="status" tabindex="-1" id="res"><span class="ic">${ic(right ? 'ck' : 'x')}</span><div><b>${word}</b>${key ? `<span>${key}</span>` : ''}</div></div>`;
+  }
+  // open = the full "why"; closed = key line stays, explanation one tap away (sure + right only)
+  function why(q, open, withKey) {
+    const key = withKey ? `<p class="key"><mark>${q.key}</mark></p>` : '';
+    const txt = `<p>${q.why} <span class="ket">${q.ket}</span></p>`;
+    return open ? `<div class="k-why"><h3>Kodėl</h3>${key}${txt}</div>`
+      : `<div class="k-why">${key}<details class="k-disc"><summary>Kodėl?${ic('chev', 'chev')}</summary>${txt}</details></div>`;
+  }
+  const explainer = (r, extra = '') => `<div class="k-block k-explainer"><h3>${ic('book')}${r.name}</h3><p>${r.text}</p>${extra}</div>`;
+  const hook = r => r.hook ? `<div class="k-block k-hook"><span class="k-chip k-chip--hook">Įsiminimui</span><p>${r.hook}</p></div>` : '';
+  const trap = r => r.trap ? `<div class="k-block k-trap"><h3>${ic('alert')}Egzamino spąstai</h3><p>${r.trap}</p></div>` : '';
+  // after a pretest guess the feedback IS the Rule Explainer; otherwise it is one tap away
+  function learnBlocks(q, pre, right) {
+    const r = RULES[q.rule];
+    if (pre) return explainer(r, '<p>Ši taisyklė dar grįš šioje pamokoje.</p>') + hook(r) + trap(r);
+    return `<details class="k-more"><summary>${ic('book')}<span class="t">${r.name}</span>${ic('chev', 'chev')}</summary><div class="in"><p>${r.text}</p>${hook(r)}</div></details>${right ? '' : trap(r)}`;
+  }
+
+  /* ---------- lesson ---------- */
+  function lessonView() {
+    if (S.phase === 'end') return endView();
+    if (S.phase === 'paused') return screen(`<div class="e-wrap"><h1>Pamoka sustabdyta</h1><p>Progresas išsaugotas. Tęsk, kada patogu.</p></div>${grow}<div class="q-dock one dock"><button class="k-btn" type="button" data-act="resume">Tęsti pamoką</button></div>`);
+    const it = cur(), q = QS[it.q], r = RULES[q.rule];
+    if (S.phase === 'learn') {
+      return screen(lessonTop() + `<span class="k-chip q-chip">${ic('spark')}Nauja taisyklė</span><div class="q-after" style="padding-top:4px">${explainer(r)}${hook(r)}${trap(r)}</div>${grow}<div class="q-dock one dock"><button class="k-btn" type="button" data-act="toq">Į klausimą${ic('arrow')}</button></div>`);
+    }
+    const head = lessonTop() + chip(it) + scene(q) + stem(q);
+    if (S.phase === 'ask') {
+      const tip = S.tipSeen ? '' : `<p class="k-note q-tip">${ic('info')}Teisingas gali būti vienas variantas arba keli. Įvertink kiekvieną.</p>`;
+      const dock = isPre(it)
+        ? `<button class="k-btn k-btn--secondary" type="button" data-act="learn">Pirma išmokti</button><button class="k-btn" type="button" data-act="check" data-conf="pretest" data-needs disabled>Tikrinti</button>`
+        : `<button class="k-btn k-btn--secondary" type="button" data-act="check" data-conf="unsure" data-needs disabled>Spėju</button><button class="k-btn" type="button" data-act="check" data-conf="sure" data-needs disabled>Tikrinti</button>`;
+      return screen(head + tip + options(q, it.d, S.ticks, false) + grow + `<div class="q-dock dock${isPre(it) ? ' even' : ''}">${dock}</div>`);
+    }
+    // after Check
+    const { right, conf } = S.last, pre = conf === 'pretest';
+    const word = pre ? (right ? 'Atspėjai' : 'Neatspėjai') : (right ? 'Teisingai' : 'Neteisingai');
+    const open = !(right && conf === 'sure');
+    const next = `<button class="k-btn" type="button" data-act="next">Toliau${ic('arrow')}</button>`;
+    const blocks = learnBlocks(q, pre, right);
+    const opts = options(q, it.d, S.ticks, true);
+    if (variant === 'A') return screen(head + opts + `<div class="q-after">${why(q, open, false)}${blocks}</div>` + grow + `<div class="q-dock one dock">${result(right, word, q.key)}${next}</div>`, true);
+    if (variant === 'B') return screen(head + opts + grow + `<div class="q-sheet dock"><div class="q-sheet-body">${result(right, word)}${why(q, open, true)}${blocks}</div><div class="q-sheet-foot">${next}</div></div>`, true);
+    return screen(lessonTop() + chip(it) + scene(q) + stem(q) + `<div class="q-card" id="card">${result(right, word)}${why(q, open, true)}</div>` + opts + `<div class="q-after">${blocks}</div>` + grow + `<div class="q-dock one dock">${next}</div>`, true);
+  }
+  function endView() {
+    const seen = [...new Map(LESSON.filter(([, k]) => k !== 'return').map(([id, k]) => [id, k])).entries()];
+    const nNew = seen.filter(([, k]) => k === 'new').length;
+    return screen(`<div class="e-wrap"><span class="e-ic">${ic('ck')}</span><h1>Pamoka baigta</h1><p>${nNew} naujos taisyklės ir ${seen.length - nNew} kartojimai. Naujos taisyklės grįš rytoj, kad neužsimirštų.</p>
+      <ul class="e-list">${seen.map(([id, k]) => `<li>${RULES[QS[id].rule].name}${k === 'new' ? `<span class="k-chip">Nauja</span>` : '<span class="k-chip k-chip--plain">Kartojimas</span>'}</li>`).join('')}</ul></div>
+      ${grow}<div class="q-dock one dock"><button class="k-btn" type="button" data-act="tomock">Bandomasis egzaminas${ic('arrow')}</button><button class="k-btn k-btn--text" type="button" data-act="relesson" style="justify-self:center">Kartoti pamoką</button></div>`);
+  }
+
+  function check(conf) {
+    const it = cur(), q = QS[it.q], right = verdictOf(q, it.d, S.ticks), opts = q.opts;
+    if (it.kind !== 'reask') S.done++;
+    S.last = { right, conf }; S.phase = 'after'; S.tipSeen = true;
+    let next;
+    if (it.kind === 'new') next = 'Planned to come back later in this Lesson.';
+    else if (right) next = it.kind === 'due' ? 'FSRS sets the next date.' : 'Stays on its FSRS schedule.';
+    else if (it.kind === 'due') {
+      S.queue.splice(Math.min(S.i + 3, S.queue.length), 0, { q: it.q, kind: 'reask' });
+      next = `Comes back 2 Questions later with ${opts.length > it.d.length ? 'other Options' : `a new order only (just ${opts.length} Options written)`}.`;
+    } else next = 'Comes back in the next Review.';
+    LOG.push({ where: 'Lesson', q: it.q, kind: it.kind, d: it.d, ticks: [...S.ticks], right, conf, secs: ((performance.now() - S.t0) / 1000).toFixed(1), next,
+      fsrs: it.kind === 'due' ? `counts as ${right ? 'right' : 'wrong'}` : isPre(it) ? 'not counted (pretest guess)' : it.kind === 'new' ? 'not counted (first meeting, Rule read first)' : 'not counted (same day)' });
+    const y = vp.scrollTop;
+    render(true);
+    // C: scroll only as far as needed to show the card, so the picture stays in view when it fits
+    if (variant === 'C') $('#card')?.scrollIntoView({ block: 'nearest' }); else vp.scrollTop = y;
+    $('#res')?.focus({ preventScroll: true });
+  }
+
+  /* ---------- mock exam ---------- */
+  function mockView() {
+    if (M.phase === 'start') {
+      return screen(`<div class="m-start"><h1>Bandomasis egzaminas</h1><p>Kaip Regitroje: atsakymai ir paaiškinimai tik pabaigoje. Gali praleisti klausimą, grįžti ir pakeisti atsakymą.</p>
+        <ul class="m-facts"><li><span class="t">30</span>klausimų (šiame prototipe 6)</li><li><span class="t">${ic('clock')}</span>30 minučių</li><li><span class="t">24</span>teisingi, kad išlaikytum</li></ul>
+        <label class="k-opt"><input type="checkbox" id="untimed"${M.untimed ? ' checked' : ''}><span class="box">${ic('ck', 'ck')}</span><span class="txt"><b>Be laiko ribos</b><br><span style="font-size:16px;color:var(--ink2)">Jei reikia daugiau laiko. Rezultatas bus pažymėtas „be laiko ribos“.</span></span></label></div>
+        ${grow}<div class="q-dock one dock"><button class="k-btn" type="button" data-act="mstart">Pradėti${ic('arrow')}</button></div>`);
+    }
+    if (M.phase === 'results') return resultsView();
+    if (M.phase === 'review') return reviewView();
+    const id = MOCK[M.i], q = QS[id], ticks = M.ans[M.i], last = M.i === MOCK.length - 1;
+    const top = `<div class="q-top"><button class="k-ibtn" type="button" data-act="mquit" aria-label="Išeiti iš egzamino">${ic('close')}</button>
+      <span class="m-timer">${M.untimed ? 'Be laiko ribos' : `${ic('clock')}<span id="timer" aria-label="Liko laiko">${fmt(M.left)}</span>`}</span><span class="q-count">${M.i + 1} / ${MOCK.length}</span></div>
+      <p class="m-note" id="mnote" role="status">${M.notice}</p>
+      <nav class="m-strip" aria-label="Klausimai">${MOCK.map((_, k) => `<button type="button" data-act="mgo" data-k="${k}" class="${M.ans[k].size ? 'done' : ''}"${k === M.i ? ' aria-current="step"' : ''} aria-label="${k + 1} klausimas${M.ans[k].size ? ', atsakytas' : ''}">${k + 1}</button>`).join('')}</nav>`;
+    const un = M.ans.filter(s => !s.size).length;
+    const dock = M.confirm
+      ? `<div class="q-sheet dock" role="group" aria-labelledby="mc"><div class="q-sheet-body"><h2 id="mc">Baigti egzaminą?</h2><p>${un ? `Neatsakyta: ${un}. Neatsakyti klausimai skaičiuojami kaip klaidos.` : 'Atsakei į visus klausimus.'}</p></div>
+         <div class="q-sheet-foot two"><button class="k-btn k-btn--secondary" type="button" data-act="mcancel">Grįžti</button><button class="k-btn" type="button" data-act="mconfirm">Baigti</button></div></div>`
+      : `<div class="q-dock dock"><button class="k-btn k-btn--secondary" type="button" data-act="mprev"${M.i ? '' : ' disabled'}>${ic('back')}Atgal</button>${last ? '<button class="k-btn" type="button" data-act="mfinish">Baigti</button>' : `<button class="k-btn" type="button" data-act="mnext">Kitas${ic('arrow')}</button>`}</div>`;
+    return screen(top + scene(q) + stem(q) + options(q, M.draws[M.i], ticks, false) + (last ? '' : '<button class="k-btn k-btn--text m-finish" type="button" data-act="mfinish">Baigti egzaminą</button>') + grow + dock);
+  }
+  function resultsView() {
+    const n = MOCK.length, right = M.res.filter(Boolean).length, pass = n - right <= 1;
+    return screen(`<div class="m-res">${result(pass, pass ? 'Išlaikyta' : 'Neišlaikyta', `${right} iš ${n} teisingai`)}
+      ${M.timeUp ? `<p class="k-note">${ic('clock')}Laikas baigėsi. Neatsakyti klausimai įskaityti kaip klaidos.</p>` : ''}
+      ${M.untimed ? '<span class="k-chip k-chip--plain">Be laiko ribos</span>' : ''}
+      <p class="k-note">${ic('info')}Šiame prototipe 6 klausimai: išlaikai su ne daugiau kaip 1 klaida. Egzamine 30 klausimų ir ne daugiau kaip 6 klaidos.</p>
+      <h2>Peržiūrėk atsakymus</h2><div class="m-list">${MOCK.map((id, k) => {
+        const ok = M.res[k];
+        return `<button class="k-row" type="button" data-act="mrev" data-k="${k}"><span class="tile ${ok ? 'ok' : 'bad'}">${ic(ok ? 'ck' : 'x')}</span><span class="txt"><b>${k + 1}. ${QS[id].stem}</b><small>${ok ? 'Teisingai' : M.ans[k].size ? 'Neteisingai' : 'Neatsakyta'}</small></span>${ic('chev')}</button>`;
+      }).join('')}</div></div>
+      ${grow}<div class="q-dock one dock"><button class="k-btn" type="button" data-act="mretry">Bandyti dar kartą</button><button class="k-btn k-btn--text" type="button" data-act="tolesson" style="justify-self:center">Grįžti į pamoką</button></div>`);
+  }
+  function reviewView() {
+    const k = M.rev, id = MOCK[k], q = QS[id], ok = M.res[k], last = k === MOCK.length - 1;
+    const word = ok ? 'Teisingai' : M.ans[k].size ? 'Neteisingai' : 'Neatsakyta';
+    return screen(`<div class="q-top"><button class="k-ibtn" type="button" data-act="mback" aria-label="Į rezultatus">${ic('list')}</button><span class="q-count">Peržiūra · ${k + 1} / ${MOCK.length}</span></div>`
+      + scene(q) + stem(q) + `<div class="q-card">${result(ok, word)}${why(q, true, true)}</div>` + options(q, M.draws[k], M.ans[k], true)
+      + `<div class="q-after">${learnBlocks(q, false, ok)}</div>` + grow
+      + `<div class="q-dock dock"><button class="k-btn k-btn--secondary" type="button" data-act="mrprev"${k ? '' : ' disabled'}>${ic('back')}Atgal</button>${last ? '<button class="k-btn" type="button" data-act="mback">Į rezultatus</button>' : `<button class="k-btn" type="button" data-act="mrnext">Kitas${ic('arrow')}</button>`}</div>`, true);
+  }
+  function mFinish(timeUp) {
+    M.phase = 'results'; M.timeUp = timeUp; M.confirm = false;
+    M.res = MOCK.map((id, k) => verdictOf(QS[id], M.draws[k], M.ans[k]));
+    MOCK.forEach((id, k) => LOG.push({ where: 'Mock Exam', q: id, d: M.draws[k], ticks: [...M.ans[k]], right: M.res[k], conf: 'mock',
+      fsrs: `counts as ${M.res[k] ? 'right' : 'wrong'}; score goes into the readiness check${M.untimed ? ' (marked untimed)' : ''}`,
+      next: M.res[k] ? 'FSRS sets the next date.' : 'Comes back in a Review.' }));
+    render();
+  }
+  function setNote(t) { M.notice = t; const n = $('#mnote'); if (n) n.textContent = t; }
+  function clearNote() { M.notice = ''; }
+  setInterval(() => {
+    if (mode !== 'mock' || M.phase !== 'exam' || M.untimed) return;
+    M.left = Math.max(0, M.left - 1);
+    const t = $('#timer'); if (t) t.textContent = fmt(M.left);
+    if (M.left === 300) setNote('Liko 5 minutės.');
+    if (M.left === 60) setNote('Liko 1 minutė. Kai laikas baigsis, egzaminas baigsis pats.');
+    if (M.left === 0) mFinish(true);
+  }, 1000);
+
+  /* ---------- log (prototype chrome, English) ---------- */
+  const CONF = { pretest: '"Tikrinti" on a new-Rule guess', sure: '"Tikrinti" (sure)', unsure: '"Spėju" (not sure)', mock: 'Mock Exam: no confidence asked' };
+  function renderLog() {
+    $('#log').innerHTML = LOG.length ? LOG.map((e, i) => {
+      const q = QS[e.q], nc = e.d.filter(oi => q.opts[oi].ok).length;
+      return `<li><b>${i + 1}. ${e.where}: ${RULES[q.rule].name}</b>
+        Shown ${e.d.length} of ${q.opts.length} written Options (${e.d.map(oi => `#${oi + 1}${q.opts[oi].ok ? '✓' : '✗'}`).join(' ')}), ${nc === e.d.length ? 'all' : nc} correct. Ticked ${e.ticks.length ? e.ticks.map(oi => '#' + (oi + 1)).join(' ') : 'nothing'}.<br>
+        Result: <b style="display:inline">${e.right ? 'right' : 'wrong'}</b> (all or nothing). ${CONF[e.conf]}${e.secs ? `, ${e.secs} s` : ''}.<br>FSRS: ${e.fsrs}.<br>Next: ${e.next}</li>`;
+    }).reverse().join('') : '<li class="muted">Nothing yet. Answer a Question.</li>';
+  }
+
+  /* ---------- render + events ---------- */
+  function render(keep) {
+    const y = vp.scrollTop;
+    app.innerHTML = mode === 'mock' ? mockView() : lessonView();
+    vp.scrollTop = keep ? y : 0;
+    document.querySelectorAll('[data-variant]').forEach(b => b.setAttribute('aria-pressed', String(b.dataset.variant === variant)));
+    document.querySelectorAll('[data-mode]').forEach(b => b.setAttribute('aria-pressed', String(b.dataset.mode === mode)));
+    $('#ff').hidden = !(mode === 'mock' && M.phase === 'exam' && !M.untimed);
+    renderLog();
+    try { history.replaceState(null, '', `#${mode === 'mock' ? 'mock-' : ''}${variant.toLowerCase()}`); } catch (e) {}
+  }
+  const ACT = {
+    check: b => check(b.dataset.conf),
+    learn: () => { cur().learned = true; S.phase = 'learn'; render(); },
+    toq: () => { S.phase = 'ask'; S.t0 = performance.now(); render(); },
+    next: () => { S.i++; enter(); render(); },
+    quit: () => { S.prev = S.phase; S.phase = 'paused'; render(); },
+    resume: () => { S.phase = S.prev; render(); },
+    relesson: () => { resetLesson(); render(); },
+    tomock: () => { mode = 'mock'; resetMock(); render(); },
+    tolesson: () => { mode = 'lesson'; render(); },
+    mstart: () => { M.phase = 'exam'; render(); },
+    mquit: () => { resetMock(); render(); },
+    mprev: () => { M.i--; render(); },
+    mnext: () => { M.i++; render(); },
+    mgo: b => { M.i = +b.dataset.k; M.confirm = false; render(); },
+    mfinish: () => { M.confirm = true; render(true); },
+    mcancel: () => { M.confirm = false; render(true); },
+    mconfirm: () => mFinish(false),
+    mrev: b => { M.rev = +b.dataset.k; M.phase = 'review'; render(); },
+    mrprev: () => { M.rev--; render(); },
+    mrnext: () => { M.rev++; render(); },
+    mback: () => { M.phase = 'results'; render(); },
+    mretry: () => { resetMock(); render(); },
+  };
+  app.addEventListener('click', e => {
+    const b = e.target.closest('[data-act]');
+    if (b && !b.disabled) ACT[b.dataset.act]?.(b);
+  });
+  app.addEventListener('change', e => {
+    if (e.target.id === 'untimed') { M.untimed = e.target.checked; return; }
+    const inp = e.target.closest('input[data-o]');
+    if (!inp) return;
+    const set = mode === 'mock' ? M.ans[M.i] : S.ticks, oi = +inp.dataset.o;
+    inp.checked ? set.add(oi) : set.delete(oi);
+    app.querySelectorAll('[data-needs]').forEach(b => { b.disabled = !set.size; });
+    const sq = app.querySelector(`.m-strip [data-k="${M.i}"]`);
+    if (mode === 'mock' && sq) { sq.classList.toggle('done', set.size > 0); sq.setAttribute('aria-label', `${M.i + 1} klausimas${set.size ? ', atsakytas' : ''}`); }
+  });
+
+  // chrome
+  const setVariant = v => { variant = v; render(true); if (variant === 'C' && S.phase === 'after' && mode === 'lesson') $('#card')?.scrollIntoView({ block: 'nearest' }); };
+  document.querySelectorAll('[data-variant]').forEach(b => b.onclick = () => setVariant(b.dataset.variant));
+  document.querySelectorAll('[data-mode]').forEach(b => b.onclick = () => { mode = b.dataset.mode; render(); });
+  $('#restart').onclick = () => { if (mode === 'mock') resetMock(); else resetLesson(); render(); };
+  $('#ff').onclick = () => { M.left = M.left > 301 ? 301 : M.left > 61 ? 61 : 4; const t = $('#timer'); if (t) t.textContent = fmt(M.left); };
+  document.addEventListener('keydown', e => {
+    if (!['ArrowLeft', 'ArrowRight'].includes(e.key) || e.target.closest('input, textarea, [contenteditable]')) return;
+    const V = ['A', 'B', 'C'], k = (V.indexOf(variant) + (e.key === 'ArrowRight' ? 1 : 2)) % 3;
+    setVariant(V[k]);
+  });
+  const themes = [null, 'light', 'dark'], names = ['Phone', 'Light', 'Dark'];
+  let t = 0;
+  $('#theme').onclick = e => {
+    t = (t + 1) % 3;
+    if (themes[t]) root.setAttribute('data-theme', themes[t]); else root.removeAttribute('data-theme');
+    e.currentTarget.innerHTML = `◐<span class="long"> ${names[t]}</span>`;
+    e.currentTarget.setAttribute('aria-label', 'Theme: ' + (t ? names[t] : 'follows phone'));
+  };
+  $('#info').onclick = e => e.currentTarget.setAttribute('aria-pressed', String(document.body.classList.toggle('show-notes')));
+
+  const m = location.hash.match(/^#(mock-)?([abc])$/i);
+  if (m) { mode = m[1] ? 'mock' : 'lesson'; variant = m[2].toUpperCase(); }
+  resetLesson(); resetMock();
+  render();
+})();
+</script>
