@@ -1,0 +1,873 @@
+<title>KETGO Look Directions</title>
+<!--
+  VERSION 2 (2026-10-14: owner chose A · Teal; D and E not chosen). Current version: index.html.
+  PROTOTYPE, throwaway. Ticket: "Look and feel" (Whirlywack/ketgo-web#12). Version 2.
+  Version 1 (B Course map, C Atšvaitas: rejected) is in v1.html.
+  Owner steer 2026-10-14: one look with teal; the others corporate, sleek, clean, commercial; no brutalism, nothing experimental.
+  Three looks: A Teal, D Blue (commercial, Revolut/Wise class), E Mono (premium, Apple class),
+  each on Landing, Home and Question, switched from the bar at the bottom.
+  Deep link: #a-landing, #d-home, #e-question, #e-question-after. Keys: ← → change look. All numbers on Home are examples.
+
+  THESIS A: teal-led and light; lime only marks the one thing to remember. Refuses the 2025 dark screen + neon button.
+  THESIS D: a confident consumer brand: white, one blue, rounded cards, pill buttons.
+  THESIS E: premium calm: white, black, grey; colour only for right and wrong; big thin numbers.
+-->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible+Next:wght@400;700&family=Albert+Sans:wght@400..700&family=Hanken+Grotesk:wght@300..700&display=swap">
+<style>
+:root {
+  /* prototype chrome */
+  --ui-bg: #E6E7EA; --ui-fg: #17181B; --ui-muted: #555963; --ui-line: #CDD0D6;
+  --ui-bar: #17181B; --ui-bar-fg: #FFFFFF; --ui-bar-dim: #A3A7B0; --ui-bar-on: #FFFFFF; --ui-bar-on-fg: #17181B;
+
+  /* A · Teal */
+  --a-bg: #F4F7F5; --a-surface: #FFFFFF; --a-ink: #142627; --a-ink2: #3E5557; --a-line: #D5E0DB;
+  --a-teal: #145457; --a-on-teal: #FFFFFF; --a-teal-soft: #E0EDEA; --a-teal-ink: #145457; --a-mid: #7DB3AC;
+  --a-field: #142627; --a-on-field: #F4F7F5; --a-on-field2: #B9CCC4; --a-field-2: #1E3A3B; --a-next-btn: #FFFFFF; --a-on-next-btn: #142627;
+  --a-lime: #CCFF00; --a-on-lime: #142627;
+  --a-ok: #16703A; --a-ok-bg: #E2F3E5; --a-bad: #B3261E; --a-bad-bg: #FBE8E6;
+  --a-s-ground: #D3E2DA; --a-s-road: #FFFFFF; --a-s-edge: #A3BDB2; --a-s-mark: #BACCC3; --a-s-me: #145457; --a-s-other: #6F8B86; --a-s-path: #3E5557; --a-s-hit: #B3261E;
+
+  /* D · Blue */
+  --d-bg: #F4F6FB; --d-surface: #FFFFFF; --d-ink: #101828; --d-ink2: #475467; --d-line: #E1E6EF;
+  --d-blue: #1F4FE0; --d-on-blue: #FFFFFF; --d-on-blue2: #DCE4FF; --d-blue-soft: #E7EDFF; --d-blue-ink: #1A44C4; --d-blue-2: #2D5CF0;
+  --d-shadow: rgb(16 24 40 / .08); --d-white: #FFFFFF; --d-on-white: #1A44C4;
+  --d-ok: #12733A; --d-ok-bg: #E3F4E9; --d-bad: #C0232B; --d-bad-bg: #FCE9EA;
+  --d-s-ground: #E6EBF5; --d-s-road: #FFFFFF; --d-s-edge: #B9C3D6; --d-s-mark: #C9D1E0; --d-s-me: #1F4FE0; --d-s-other: #7A869C; --d-s-path: #475467; --d-s-hit: #C0232B;
+
+  /* E · Mono */
+  --e-bg: #FFFFFF; --e-surface: #F4F4F5; --e-ink: #0B0B0C; --e-ink2: #5C5E64; --e-hair: #E4E4E7; --e-mid: #8A8B91;
+  --e-btn: #0B0B0C; --e-on-btn: #FFFFFF;
+  --e-ok: #12733A; --e-ok-bg: #E8F5EC; --e-bad: #C0232B; --e-bad-bg: #FCEBEC;
+  --e-s-ground: #EDEDEF; --e-s-road: #FFFFFF; --e-s-edge: #C8C8CC; --e-s-mark: #D2D2D6; --e-s-me: #0B0B0C; --e-s-other: #8E8E93; --e-s-path: #5C5E64; --e-s-hit: #C0232B;
+}
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) {
+  --ui-bg: #111214; --ui-fg: #ECEDEF; --ui-muted: #A3A7B0; --ui-line: #2B2D33;
+  --ui-bar: #F1F2F4; --ui-bar-fg: #17181B; --ui-bar-dim: #5A5E68; --ui-bar-on: #17181B; --ui-bar-on-fg: #FFFFFF;
+  --a-bg: #0E1B1C; --a-surface: #162728; --a-ink: #EEF4F1; --a-ink2: #B0C4BE; --a-line: #27403F;
+  --a-teal: #5CC3B8; --a-on-teal: #0E1B1C; --a-teal-soft: #1B3536; --a-teal-ink: #8FDCD3; --a-mid: #3F8079;
+  --a-field: #1B3334; --a-on-field: #F4F7F5; --a-on-field2: #B9CCC4; --a-field-2: #24403F; --a-next-btn: #5CC3B8; --a-on-next-btn: #0E1B1C;
+  --a-lime: #CCFF00; --a-on-lime: #142627;
+  --a-ok: #6FDC97; --a-ok-bg: #173A2A; --a-bad: #FF8F86; --a-bad-bg: #432222;
+  --a-s-ground: #1F3A39; --a-s-road: #375253; --a-s-edge: #4B6868; --a-s-mark: #6A8685; --a-s-me: #5CC3B8; --a-s-other: #9DB5A9; --a-s-path: #EEF4F1; --a-s-hit: #FF8F86;
+  --d-bg: #0B1020; --d-surface: #151C30; --d-ink: #F2F5FB; --d-ink2: #A9B3C7; --d-line: #263150;
+  --d-blue: #2F57E4; --d-on-blue: #FFFFFF; --d-on-blue2: #EEF2FF; --d-blue-soft: #1B2A55; --d-blue-ink: #9DB4FF; --d-blue-2: #4A72FA;
+  --d-shadow: rgb(0 0 0 / .35);
+  --d-ok: #5FD68E; --d-ok-bg: #11301E; --d-bad: #FF8A8F; --d-bad-bg: #3A1519;
+  --d-s-ground: #18213A; --d-s-road: #2A3452; --d-s-edge: #3B4766; --d-s-mark: #4D5A7A; --d-s-me: #7E9BFF; --d-s-other: #8390A8; --d-s-path: #C7D0E2; --d-s-hit: #FF8A8F;
+  --e-bg: #000000; --e-surface: #161618; --e-ink: #F5F5F7; --e-ink2: #A1A1A8; --e-hair: #2C2C30; --e-mid: #75777E;
+  --e-btn: #F5F5F7; --e-on-btn: #000000;
+  --e-ok: #4CD480; --e-ok-bg: #0F2A19; --e-bad: #FF7B7B; --e-bad-bg: #331314;
+  --e-s-ground: #1C1C1E; --e-s-road: #2C2C2E; --e-s-edge: #3A3A3C; --e-s-mark: #48484A; --e-s-me: #F5F5F7; --e-s-other: #8E8E93; --e-s-path: #A1A1A8; --e-s-hit: #FF7B7B;
+  color-scheme: dark;
+} }
+:root[data-theme="dark"] {
+  --ui-bg: #111214; --ui-fg: #ECEDEF; --ui-muted: #A3A7B0; --ui-line: #2B2D33;
+  --ui-bar: #F1F2F4; --ui-bar-fg: #17181B; --ui-bar-dim: #5A5E68; --ui-bar-on: #17181B; --ui-bar-on-fg: #FFFFFF;
+  --a-bg: #0E1B1C; --a-surface: #162728; --a-ink: #EEF4F1; --a-ink2: #B0C4BE; --a-line: #27403F;
+  --a-teal: #5CC3B8; --a-on-teal: #0E1B1C; --a-teal-soft: #1B3536; --a-teal-ink: #8FDCD3; --a-mid: #3F8079;
+  --a-field: #1B3334; --a-on-field: #F4F7F5; --a-on-field2: #B9CCC4; --a-field-2: #24403F; --a-next-btn: #5CC3B8; --a-on-next-btn: #0E1B1C;
+  --a-lime: #CCFF00; --a-on-lime: #142627;
+  --a-ok: #6FDC97; --a-ok-bg: #173A2A; --a-bad: #FF8F86; --a-bad-bg: #432222;
+  --a-s-ground: #1F3A39; --a-s-road: #375253; --a-s-edge: #4B6868; --a-s-mark: #6A8685; --a-s-me: #5CC3B8; --a-s-other: #9DB5A9; --a-s-path: #EEF4F1; --a-s-hit: #FF8F86;
+  --d-bg: #0B1020; --d-surface: #151C30; --d-ink: #F2F5FB; --d-ink2: #A9B3C7; --d-line: #263150;
+  --d-blue: #2F57E4; --d-on-blue: #FFFFFF; --d-on-blue2: #EEF2FF; --d-blue-soft: #1B2A55; --d-blue-ink: #9DB4FF; --d-blue-2: #4A72FA;
+  --d-shadow: rgb(0 0 0 / .35);
+  --d-ok: #5FD68E; --d-ok-bg: #11301E; --d-bad: #FF8A8F; --d-bad-bg: #3A1519;
+  --d-s-ground: #18213A; --d-s-road: #2A3452; --d-s-edge: #3B4766; --d-s-mark: #4D5A7A; --d-s-me: #7E9BFF; --d-s-other: #8390A8; --d-s-path: #C7D0E2; --d-s-hit: #FF8A8F;
+  --e-bg: #000000; --e-surface: #161618; --e-ink: #F5F5F7; --e-ink2: #A1A1A8; --e-hair: #2C2C30; --e-mid: #75777E;
+  --e-btn: #F5F5F7; --e-on-btn: #000000;
+  --e-ok: #4CD480; --e-ok-bg: #0F2A19; --e-bad: #FF7B7B; --e-bad-bg: #331314;
+  --e-s-ground: #1C1C1E; --e-s-road: #2C2C2E; --e-s-edge: #3A3A3C; --e-s-mark: #48484A; --e-s-me: #F5F5F7; --e-s-other: #8E8E93; --e-s-path: #A1A1A8; --e-s-hit: #FF7B7B;
+  color-scheme: dark;
+}
+
+/* ---------- prototype chrome ---------- */
+html, body { height: 100%; }
+body { background: var(--ui-bg); color: var(--ui-fg); display: grid; grid-template-rows: minmax(0, 1fr) auto; overflow: hidden; }
+.stage { display: flex; justify-content: center; align-items: center; gap: 40px; min-height: 0; padding-block: 16px; padding-inline: 16px; }
+.notes { width: 300px; flex: none; font: 15px/1.5 system-ui, sans-serif; color: var(--ui-fg); }
+.notes h2 { font-size: 20px; line-height: 1.25; margin: 0 0 6px; text-wrap: balance; }
+.notes p { margin: 0 0 10px; }
+.notes .muted { color: var(--ui-muted); }
+.notes .judge { border-top: 1px solid var(--ui-line); padding-top: 10px; margin-top: 14px; }
+.notes ul { margin: 0; padding-left: 18px; }
+.swatches { display: flex; gap: 6px; margin: 10px 0 12px; }
+.swatches span { width: 28px; height: 28px; border-radius: 6px; border: 1px solid var(--ui-line); }
+.device { width: 390px; height: min(844px, 100%); flex: none; border-radius: 40px; border: 10px solid #0B0B0C; overflow: hidden; position: relative; box-shadow: 0 18px 50px -12px rgb(0 0 0 / .35); background: #0B0B0C; }
+.viewport { height: 100%; overflow-y: auto; overscroll-behavior: contain; position: relative; }
+.switcher { background: var(--ui-bar); color: var(--ui-bar-fg); font: 600 14px/1.2 system-ui, sans-serif; padding: 8px 12px calc(8px + env(safe-area-inset-bottom, 0px)); display: flex; flex-wrap: wrap; gap: 8px 14px; justify-content: center; align-items: center; }
+.switcher button { font: inherit; color: inherit; background: transparent; border: 1px solid var(--ui-bar-dim); border-radius: 999px; min-height: 44px; padding: 0 14px; cursor: pointer; }
+.switcher button[aria-pressed="true"] { background: var(--ui-bar-on); color: var(--ui-bar-on-fg); border-color: var(--ui-bar-on); }
+.switcher button:focus-visible { outline: 2px solid var(--ui-bar-fg); outline-offset: 2px; }
+.switcher .group { display: flex; gap: 4px; }
+.switcher .info { display: none; }
+@media (max-width: 760px) {
+  .stage { padding: 0; }
+  .notes { display: none; position: absolute; inset: 0 0 auto 0; z-index: 20; width: auto; background: var(--ui-bg); padding: 20px; max-height: 100%; overflow: auto; box-shadow: 0 10px 30px rgb(0 0 0 / .3); }
+  body.show-notes .notes { display: block; }
+  .device { width: 100%; height: 100%; border: 0; border-radius: 0; box-shadow: none; }
+  .switcher { font-size: 13px; gap: 6px 8px; padding-inline: 8px; }
+  .switcher button { min-height: 40px; padding: 0 10px; }
+  .switcher .info { display: inline-block; }
+}
+
+/* ---------- shared screen mechanics (each look restyles everything visible) ---------- */
+.variant { min-height: 100%; }
+.screen { min-height: 100%; display: flex; flex-direction: column; font-size: 18px; line-height: 1.5; }
+:where(.screen) :is(h1, h2, h3, p, figure) { margin: 0; }
+.screen h1, .screen h2, .screen h3 { text-wrap: balance; }
+:where(.screen) button { font: inherit; cursor: pointer; }
+.grow { flex: 1; }
+.dock { position: sticky; bottom: 0; z-index: 5; }
+.opt input { position: absolute; opacity: 0; width: 1px; height: 1px; }
+.screen :focus-visible { outline: 3px solid currentColor; outline-offset: 2px; }
+/* ponytail: !important so each look's own display (grid/flex) survives when shown */
+.screen:not(.is-after) .after-only, .is-after .before-only { display: none !important; }
+.scene svg { display: block; width: 100%; height: auto; }
+.scene .hit { opacity: 0; }
+.is-after .scene .hit { opacity: 1; }
+.sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); }
+.icon { width: 24px; height: 24px; stroke: currentColor; fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; flex: none; }
+.icon.s { width: 18px; height: 18px; }
+:where(fieldset.opts) { border: 0; margin: 0; padding: 0; min-width: 0; }
+.num { font-variant-numeric: tabular-nums; }
+
+/* =================== A · TEAL =================== */
+.va { font-family: "Atkinson Hyperlegible Next", "Segoe UI", system-ui, sans-serif; background: var(--a-bg); color: var(--a-ink);
+  --s-ground: var(--a-s-ground); --s-road: var(--a-s-road); --s-edge: var(--a-s-edge); --s-mark: var(--a-s-mark); --s-me: var(--a-s-me); --s-other: var(--a-s-other); --s-path: var(--a-s-path); --s-hit: var(--a-s-hit); }
+.va mark { background: var(--a-lime); color: var(--a-on-lime); border-radius: 4px; padding: 0 .12em; -webkit-box-decoration-break: clone; box-decoration-break: clone; }
+.a-top { display: flex; align-items: center; justify-content: space-between; padding: 14px 20px; }
+.a-mark { font-weight: 700; font-size: 22px; letter-spacing: -0.01em; }
+.a-mark b { background: var(--a-lime); color: var(--a-on-lime); border-radius: 6px; padding: 0 5px; margin-left: 2px; }
+.a-tag { font-size: 15px; font-weight: 700; color: var(--a-teal-ink); background: var(--a-teal-soft); border-radius: 999px; padding: 3px 12px; }
+.a-btn { display: flex; align-items: center; justify-content: center; gap: 8px; width: 100%; min-height: 56px; border-radius: 14px; border: 0; background: var(--a-teal); color: var(--a-on-teal); font-weight: 700; font-size: 18px; text-decoration: none; }
+.a-btn.light { background: var(--a-next-btn); color: var(--a-on-next-btn); }
+.a-btn.ghost { background: var(--a-surface); color: var(--a-ink); box-shadow: inset 0 0 0 1.5px var(--a-line); }
+.a-iconbtn { width: 48px; height: 48px; display: grid; place-items: center; border-radius: 14px; border: 0; background: var(--a-surface); color: var(--a-ink); box-shadow: inset 0 0 0 1px var(--a-line); }
+/* landing */
+.a-hero { padding: 18px 20px 0; display: grid; gap: 18px; }
+.a-hero h1 { font-size: 40px; line-height: 1.1; letter-spacing: -0.02em; }
+.a-hero p { color: var(--a-ink2); }
+.a-hero small { color: var(--a-ink2); font-size: 16px; text-align: center; }
+.a-preview { margin: 30px 20px 0; background: var(--a-field); color: var(--a-on-field); border-radius: 24px; padding: 20px; display: grid; gap: 12px; }
+.a-preview .k { font-size: 15px; font-weight: 700; color: var(--a-on-field2); }
+.a-preview .q { font-weight: 700; font-size: 19px; line-height: 1.3; }
+.a-preview .o { display: grid; grid-template-columns: 24px 1fr; gap: 10px; align-items: start; background: var(--a-field-2); border-radius: 14px; padding: 12px; font-size: 16px; line-height: 1.4; }
+.a-preview .o b { grid-column: 2; display: flex; align-items: center; gap: 6px; font-size: 15px; color: var(--a-on-field); }
+.a-preview .why { font-size: 17px; line-height: 1.45; }
+.a-sec { padding: 32px 20px 0; display: grid; gap: 14px; }
+.a-sec h2 { font-size: 26px; line-height: 1.2; letter-spacing: -0.01em; }
+.a-sec > p { color: var(--a-ink2); }
+.a-pair { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+.a-mini { background: var(--a-surface); border-radius: 16px; padding: 12px; display: grid; gap: 8px; align-content: start; font-size: 14px; line-height: 1.35; min-width: 0; box-shadow: inset 0 0 0 1px var(--a-line); }
+.a-mini h3 { font-size: 14px; color: var(--a-teal-ink); }
+.a-mini div { background: var(--a-bg); border-radius: 10px; padding: 6px 8px; overflow-wrap: anywhere; }
+.a-mini .new { background: var(--a-teal-soft); font-weight: 700; }
+.a-steps { list-style: none; margin: 0; padding: 0; display: grid; gap: 16px; }
+.a-steps li { display: grid; grid-template-columns: 44px 1fr; gap: 14px; align-items: start; }
+.a-steps li > span { width: 44px; height: 44px; border-radius: 14px; background: var(--a-teal-soft); color: var(--a-teal-ink); display: grid; place-items: center; font-weight: 700; }
+.a-steps p { color: var(--a-ink2); font-size: 16px; }
+.a-facts { margin: 32px 20px 0; border-radius: 20px; background: var(--a-surface); padding: 20px; display: grid; gap: 14px; box-shadow: inset 0 0 0 1px var(--a-line); }
+.a-facts .nums { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
+.a-facts .nums b { display: block; font-size: 34px; line-height: 1.1; color: var(--a-teal-ink); font-variant-numeric: tabular-nums; }
+.a-facts .nums span { font-size: 15px; color: var(--a-ink2); }
+.a-end { padding: 32px 20px 32px; display: grid; gap: 12px; text-align: center; color: var(--a-ink2); font-size: 15px; }
+/* home */
+.a-count { padding: 6px 20px 0; display: grid; gap: 2px; }
+.a-count .k { font-size: 16px; font-weight: 700; color: var(--a-ink2); }
+.a-count .big { font-size: 22px; font-weight: 700; }
+.a-count .big b { font-size: 56px; line-height: 1; letter-spacing: -0.02em; color: var(--a-teal-ink); font-variant-numeric: tabular-nums; }
+.a-count p:last-child { color: var(--a-ink2); font-size: 16px; }
+.a-card { margin: 20px 20px 0; background: var(--a-surface); border-radius: 20px; padding: 18px; display: grid; gap: 12px; box-shadow: inset 0 0 0 1px var(--a-line); }
+.a-card h2 { font-size: 19px; display: flex; justify-content: space-between; }
+.a-card h2 span { color: var(--a-ink2); font-weight: 400; font-size: 16px; }
+.a-stack { display: flex; gap: 3px; height: 12px; }
+.a-stack i { display: block; border-radius: 6px; }
+.a-legend { display: grid; gap: 8px; font-size: 16px; }
+.a-legend div { display: flex; align-items: center; gap: 10px; }
+.a-legend b { margin-left: auto; font-variant-numeric: tabular-nums; }
+.a-legend i { width: 12px; height: 12px; border-radius: 4px; flex: none; }
+.a-row { margin: 12px 20px 0; min-height: 64px; display: flex; align-items: center; gap: 12px; padding: 0 16px; border-radius: 20px; border: 0; background: var(--a-surface); box-shadow: inset 0 0 0 1px var(--a-line); color: var(--a-ink); text-align: left; width: calc(100% - 40px); }
+.a-row span { flex: 1; display: grid; }
+.a-row small { color: var(--a-ink2); font-size: 15px; }
+.a-note { padding: 12px 20px 0; color: var(--a-ink2); font-size: 15px; }
+.a-next { background: var(--a-field); color: var(--a-on-field); border-radius: 24px 24px 0 0; padding: 20px 20px calc(18px + env(safe-area-inset-bottom, 0px)); display: grid; gap: 4px; margin-top: 20px; }
+.a-next .k { color: var(--a-on-field2); font-size: 15px; font-weight: 700; }
+.a-next h2 { font-size: 24px; line-height: 1.2; }
+.a-next p { color: var(--a-on-field2); font-size: 16px; margin-bottom: 12px; }
+/* question */
+.a-qtop { display: flex; align-items: center; gap: 12px; padding: 12px 20px; }
+.a-prog { flex: 1; height: 8px; border-radius: 4px; background: var(--a-teal-soft); overflow: hidden; }
+.a-prog i { display: block; height: 100%; width: 23%; background: var(--a-teal); border-radius: 4px; }
+.a-count2 { font-size: 15px; font-weight: 700; color: var(--a-ink2); font-variant-numeric: tabular-nums; }
+.a-badge { margin: 4px 20px 12px; align-self: flex-start; display: inline-flex; gap: 8px; align-items: center; background: var(--a-teal-soft); color: var(--a-teal-ink); border-radius: 999px; padding: 4px 12px; font-size: 15px; font-weight: 700; }
+.a-scene { margin: 0 20px; border-radius: 18px; overflow: hidden; }
+.a-stem { padding: 16px 20px 12px; font-size: 22px; line-height: 1.3; font-weight: 700; }
+.a-opts { display: grid; gap: 10px; padding: 0 20px; }
+.a-opt { position: relative; display: grid; grid-template-columns: 28px 1fr; gap: 12px; align-items: start; min-height: 56px; padding: 14px; border-radius: 16px; background: var(--a-surface); box-shadow: inset 0 0 0 1.5px var(--a-line); cursor: pointer; }
+.a-opt .box { width: 28px; height: 28px; border-radius: 8px; border: 2px solid var(--a-ink2); display: grid; place-items: center; }
+.a-opt .box svg { opacity: 0; }
+.a-opt:has(input:checked) { box-shadow: inset 0 0 0 2.5px var(--a-teal); }
+.a-opt:has(input:checked) .box { background: var(--a-teal); border-color: var(--a-teal); color: var(--a-on-teal); }
+.a-opt:has(input:checked) .box svg { opacity: 1; }
+.a-opt:has(input:focus-visible) { outline: 3px solid var(--a-ink); outline-offset: 2px; }
+.a-opt .verdict { grid-column: 2; font-size: 15px; font-weight: 700; display: none; align-items: center; gap: 6px; }
+.is-after .a-opt.ok { background: var(--a-ok-bg); box-shadow: inset 0 0 0 2.5px var(--a-ok); }
+.is-after .a-opt.ok .verdict { display: flex; color: var(--a-ok); }
+.is-after .a-opt.bad { background: var(--a-bad-bg); box-shadow: inset 0 0 0 2.5px var(--a-bad); }
+.is-after .a-opt.bad .verdict { display: flex; color: var(--a-bad); }
+.is-after .a-opt.bad .box { background: var(--a-bad); border-color: var(--a-bad); color: var(--a-bad-bg); }
+.a-why { margin: 18px 20px 0; display: grid; gap: 8px; }
+.a-why h3 { font-size: 16px; color: var(--a-teal-ink); }
+.a-why .key { font-weight: 700; font-size: 21px; line-height: 1.4; }
+.a-why p { font-size: 17px; }
+.a-why a { color: var(--a-teal-ink); font-weight: 700; }
+.a-explainer { margin: 14px 20px 0; padding: 16px; border-radius: 18px; background: var(--a-teal-soft); display: grid; gap: 6px; }
+.a-explainer h3 { font-size: 18px; }
+.a-explainer p { font-size: 16px; color: var(--a-ink2); }
+.a-dock { padding: 14px 20px calc(14px + env(safe-area-inset-bottom, 0px)); background: var(--a-bg); box-shadow: 0 -1px 0 var(--a-line); display: grid; grid-template-columns: 1fr 1.6fr; gap: 10px; margin-top: 18px; }
+.a-dock.one { grid-template-columns: 1fr; }
+
+/* =================== D · BLUE =================== */
+.vd { font-family: "Albert Sans", "Segoe UI", system-ui, sans-serif; background: var(--d-bg); color: var(--d-ink);
+  --s-ground: var(--d-s-ground); --s-road: var(--d-s-road); --s-edge: var(--d-s-edge); --s-mark: var(--d-s-mark); --s-me: var(--d-s-me); --s-other: var(--d-s-other); --s-path: var(--d-s-path); --s-hit: var(--d-s-hit); }
+.d-top { display: flex; align-items: center; justify-content: space-between; padding: 14px 20px; }
+.d-mark { font-weight: 700; font-size: 22px; letter-spacing: -0.02em; display: flex; align-items: center; gap: 8px; }
+.d-mark i { width: 28px; height: 28px; border-radius: 9px; background: var(--d-blue); color: var(--d-on-blue); display: grid; place-items: center; }
+.d-mark i svg { width: 18px; height: 18px; stroke-width: 2.6; }
+.d-btn { display: flex; align-items: center; justify-content: center; gap: 8px; width: 100%; min-height: 56px; border-radius: 999px; border: 0; background: var(--d-blue); color: var(--d-on-blue); font-weight: 700; font-size: 18px; text-decoration: none; }
+.d-btn.white { background: var(--d-white); color: var(--d-on-white); }
+.d-btn.ghost { background: var(--d-surface); color: var(--d-ink); box-shadow: inset 0 0 0 1.5px var(--d-line); }
+.d-iconbtn { width: 48px; height: 48px; display: grid; place-items: center; border-radius: 50%; border: 0; background: var(--d-surface); color: var(--d-ink); box-shadow: 0 1px 2px var(--d-shadow), inset 0 0 0 1px var(--d-line); }
+.d-card { background: var(--d-surface); border-radius: 20px; box-shadow: 0 1px 2px var(--d-shadow), 0 8px 24px -12px var(--d-shadow); }
+/* landing */
+.d-hero { background: var(--d-blue); color: var(--d-on-blue); padding: 0 20px 96px; display: grid; gap: 18px; }
+.d-hero .d-top { padding: 14px 0; }
+.d-hero .d-mark i { background: var(--d-white); color: var(--d-on-white); }
+.d-hero .d-tag { font-size: 15px; font-weight: 600; background: rgb(255 255 255 / .16); border-radius: 999px; padding: 4px 12px; }
+.d-hero h1 { font-size: 40px; line-height: 1.08; letter-spacing: -0.03em; font-weight: 700; }
+.d-hero p { color: var(--d-on-blue2); }
+.d-hero small { color: var(--d-on-blue2); font-size: 16px; text-align: center; }
+.d-float { margin: -72px 20px 0; padding: 18px; display: grid; gap: 10px; position: relative; }
+.d-float .k { font-size: 15px; font-weight: 600; color: var(--d-ink2); display: flex; justify-content: space-between; }
+.d-float h3 { font-size: 20px; line-height: 1.25; }
+.d-float .bar { height: 8px; border-radius: 4px; background: var(--d-blue-soft); overflow: hidden; }
+.d-float .bar i { display: block; height: 100%; width: 17%; background: var(--d-blue); border-radius: 4px; }
+.d-float .row { display: flex; justify-content: space-between; align-items: center; gap: 10px; font-size: 15px; color: var(--d-ink2); }
+.d-float .pill { background: var(--d-blue); color: var(--d-on-blue); border-radius: 999px; padding: 6px 16px; font-weight: 700; font-size: 15px; }
+.d-sec { padding: 32px 20px 0; display: grid; gap: 14px; }
+.d-sec h2 { font-size: 26px; line-height: 1.2; letter-spacing: -0.02em; }
+.d-feat { padding: 16px; display: grid; grid-template-columns: 48px 1fr; gap: 14px; align-items: start; }
+.d-feat > span { width: 48px; height: 48px; border-radius: 14px; background: var(--d-blue-soft); color: var(--d-blue-ink); display: grid; place-items: center; }
+.d-feat h3 { font-size: 18px; line-height: 1.3; }
+.d-feat p { color: var(--d-ink2); font-size: 16px; }
+.d-facts { margin: 32px 20px 0; padding: 20px; display: grid; gap: 14px; }
+.d-facts h2 { font-size: 20px; line-height: 1.25; }
+.d-facts .nums { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
+.d-facts .nums div { background: var(--d-blue-soft); border-radius: 14px; padding: 10px 12px; }
+.d-facts .nums b { display: block; font-size: 30px; line-height: 1.1; color: var(--d-blue-ink); font-variant-numeric: tabular-nums; }
+.d-facts .nums span { font-size: 14px; color: var(--d-ink2); }
+.d-end { padding: 32px 20px; display: grid; gap: 12px; text-align: center; color: var(--d-ink2); font-size: 15px; }
+/* home */
+.d-hi { padding: 4px 20px 0; }
+.d-hi h1 { font-size: 28px; line-height: 1.2; letter-spacing: -0.02em; }
+.d-exam { margin: 16px 20px 0; background: var(--d-blue); color: var(--d-on-blue); border-radius: 24px; padding: 20px; display: grid; grid-template-columns: 1fr auto; gap: 4px 12px; align-items: end; }
+.d-exam .k { font-size: 15px; font-weight: 600; color: var(--d-on-blue2); }
+.d-exam .big { font-size: 22px; font-weight: 600; }
+.d-exam .big b { font-size: 52px; line-height: 1; letter-spacing: -0.03em; font-weight: 700; font-variant-numeric: tabular-nums; }
+.d-exam .date { grid-row: 1 / 3; grid-column: 2; align-self: start; text-align: center; background: rgb(255 255 255 / .16); border-radius: 14px; padding: 8px 12px; font-size: 14px; font-weight: 600; line-height: 1.2; }
+.d-exam .date b { display: block; font-size: 26px; }
+.d-exam p:last-child { grid-column: 1 / -1; color: var(--d-on-blue2); font-size: 16px; margin-top: 6px; }
+.d-rules { margin: 14px 20px 0; padding: 18px; display: grid; grid-template-columns: 112px 1fr; gap: 18px; align-items: center; }
+.d-rules h2 { grid-column: 1 / -1; font-size: 19px; display: flex; justify-content: space-between; }
+.d-rules h2 span { font-weight: 400; color: var(--d-ink2); font-size: 16px; }
+.d-ring { position: relative; width: 112px; height: 112px; }
+.d-ring svg { width: 100%; height: 100%; transform: rotate(-90deg); }
+.d-ring div { position: absolute; inset: 0; display: grid; place-content: center; text-align: center; line-height: 1.1; }
+.d-ring b { font-size: 28px; font-variant-numeric: tabular-nums; }
+.d-ring small { font-size: 13px; color: var(--d-ink2); }
+.d-legend { display: grid; gap: 8px; font-size: 16px; }
+.d-legend div { display: flex; align-items: center; gap: 8px; }
+.d-legend i { width: 10px; height: 10px; border-radius: 50%; flex: none; }
+.d-legend b { margin-left: auto; font-variant-numeric: tabular-nums; }
+.d-row { margin: 14px 20px 0; min-height: 68px; display: flex; align-items: center; gap: 14px; padding: 0 16px; border: 0; color: var(--d-ink); text-align: left; width: calc(100% - 40px); }
+.d-row > span:first-child { width: 40px; height: 40px; border-radius: 12px; background: var(--d-blue-soft); color: var(--d-blue-ink); display: grid; place-items: center; }
+.d-row > span:nth-child(2) { flex: 1; display: grid; }
+.d-row small { color: var(--d-ink2); font-size: 15px; }
+.d-note { padding: 12px 20px 0; color: var(--d-ink2); font-size: 15px; }
+.d-dock { padding: 14px 20px calc(14px + env(safe-area-inset-bottom, 0px)); background: var(--d-surface); border-radius: 24px 24px 0 0; box-shadow: 0 -8px 24px -12px var(--d-shadow), 0 -1px 0 var(--d-line); display: grid; gap: 10px; margin-top: 20px; }
+.d-dock .what { display: grid; gap: 2px; }
+.d-dock .what .k { font-size: 15px; font-weight: 600; color: var(--d-blue-ink); }
+.d-dock .what b { font-size: 21px; line-height: 1.25; }
+.d-dock .what span { font-size: 16px; color: var(--d-ink2); }
+.d-dock.two { grid-template-columns: 1fr 1.6fr; border-radius: 0; background: var(--d-bg); box-shadow: 0 -1px 0 var(--d-line); }
+.d-dock.one { border-radius: 0; background: var(--d-bg); box-shadow: 0 -1px 0 var(--d-line); }
+/* question */
+.d-qtop { display: flex; align-items: center; gap: 12px; padding: 12px 20px; }
+.d-prog { flex: 1; height: 8px; border-radius: 4px; background: var(--d-blue-soft); overflow: hidden; }
+.d-prog i { display: block; height: 100%; width: 23%; background: var(--d-blue); border-radius: 4px; }
+.d-count { font-size: 15px; font-weight: 700; color: var(--d-ink2); font-variant-numeric: tabular-nums; }
+.d-badge { margin: 4px 20px 12px; align-self: flex-start; display: inline-flex; gap: 6px; align-items: center; background: var(--d-blue-soft); color: var(--d-blue-ink); border-radius: 999px; padding: 4px 12px; font-size: 15px; font-weight: 600; }
+.d-scene { margin: 0 20px; border-radius: 20px; overflow: hidden; }
+.d-stem { padding: 16px 20px 12px; font-size: 22px; line-height: 1.3; font-weight: 700; letter-spacing: -0.01em; }
+.d-opts { display: grid; gap: 10px; padding: 0 20px; }
+.d-opt { position: relative; display: grid; grid-template-columns: 28px 1fr; gap: 12px; align-items: start; min-height: 56px; padding: 14px 16px; border-radius: 18px; background: var(--d-surface); box-shadow: 0 1px 2px var(--d-shadow), inset 0 0 0 1px var(--d-line); cursor: pointer; }
+.d-opt .box { width: 28px; height: 28px; border-radius: 8px; border: 2px solid var(--d-ink2); display: grid; place-items: center; }
+.d-opt .box svg { opacity: 0; }
+.d-opt:has(input:checked) { box-shadow: 0 1px 2px var(--d-shadow), inset 0 0 0 2.5px var(--d-blue); background: var(--d-blue-soft); }
+.d-opt:has(input:checked) .box { background: var(--d-blue); border-color: var(--d-blue); color: var(--d-on-blue); }
+.d-opt:has(input:checked) .box svg { opacity: 1; }
+.d-opt:has(input:focus-visible) { outline: 3px solid var(--d-blue); outline-offset: 2px; }
+.d-opt .verdict { grid-column: 2; display: none; font-weight: 700; font-size: 15px; align-items: center; gap: 6px; }
+.is-after .d-opt.ok { background: var(--d-ok-bg); box-shadow: inset 0 0 0 2.5px var(--d-ok); }
+.is-after .d-opt.ok .verdict { display: flex; color: var(--d-ok); }
+.is-after .d-opt.bad { background: var(--d-bad-bg); box-shadow: inset 0 0 0 2.5px var(--d-bad); }
+.is-after .d-opt.bad .box { background: var(--d-bad); border-color: var(--d-bad); color: var(--d-bad-bg); }
+.is-after .d-opt.bad .verdict { display: flex; color: var(--d-bad); }
+.d-why { margin: 16px 20px 0; padding: 18px; display: grid; gap: 8px; }
+.d-why h3 { font-size: 15px; font-weight: 700; color: var(--d-blue-ink); }
+.d-why .key { font-weight: 700; font-size: 20px; line-height: 1.35; }
+.d-why p { font-size: 17px; }
+.d-why a { color: var(--d-blue-ink); font-weight: 700; }
+.d-explainer { margin: 12px 20px 0; padding: 16px 18px; border-radius: 20px; background: var(--d-blue-soft); display: grid; gap: 6px; }
+.d-explainer h3 { font-size: 18px; }
+.d-explainer p { font-size: 16px; color: var(--d-ink2); }
+
+/* =================== E · MONO =================== */
+.ve { font-family: "Hanken Grotesk", "Helvetica Neue", system-ui, sans-serif; background: var(--e-bg); color: var(--e-ink);
+  --s-ground: var(--e-s-ground); --s-road: var(--e-s-road); --s-edge: var(--e-s-edge); --s-mark: var(--e-s-mark); --s-me: var(--e-s-me); --s-other: var(--e-s-other); --s-path: var(--e-s-path); --s-hit: var(--e-s-hit); }
+.e-top { display: flex; align-items: center; justify-content: space-between; padding: 14px 20px; }
+.e-mark { font-weight: 700; font-size: 20px; letter-spacing: 0.06em; }
+.e-tag { font-size: 15px; font-weight: 500; color: var(--e-ink2); }
+.e-btn { display: flex; align-items: center; justify-content: center; gap: 8px; width: 100%; min-height: 56px; border-radius: 14px; border: 0; background: var(--e-btn); color: var(--e-on-btn); font-weight: 600; font-size: 18px; text-decoration: none; }
+.e-btn.ghost { background: var(--e-surface); color: var(--e-ink); }
+.e-iconbtn { width: 48px; height: 48px; display: grid; place-items: center; border-radius: 50%; border: 0; background: var(--e-surface); color: var(--e-ink); }
+.e-iconbtn .icon { stroke-width: 1.75; }
+/* landing */
+.e-hero { padding: 28px 20px 0; display: grid; gap: 18px; }
+.e-hero h1 { font-size: 42px; line-height: 1.08; letter-spacing: -0.03em; font-weight: 600; }
+.e-hero p { color: var(--e-ink2); font-size: 19px; }
+.e-hero small { color: var(--e-ink2); font-size: 16px; text-align: center; }
+.e-shot { margin: 36px 20px 0; background: var(--e-surface); border-radius: 28px; padding: 28px 22px 0; overflow: hidden; display: grid; }
+.e-shot .card { background: var(--e-bg); border-radius: 22px 22px 0 0; padding: 18px 16px 8px; display: grid; gap: 10px; box-shadow: 0 -1px 0 var(--e-hair), 0 20px 40px -20px rgb(0 0 0 / .25); }
+.e-shot .bar { height: 4px; border-radius: 2px; background: var(--e-hair); }
+.e-shot .bar i { display: block; width: 23%; height: 100%; background: var(--e-ink); border-radius: 2px; }
+.e-shot .q { font-weight: 600; font-size: 18px; line-height: 1.3; letter-spacing: -0.01em; }
+.e-shot .o { display: grid; grid-template-columns: 22px 1fr; gap: 10px; align-items: start; padding: 10px 0; border-top: 1px solid var(--e-hair); font-size: 15px; line-height: 1.4; }
+.e-shot .o i { width: 22px; height: 22px; border-radius: 6px; border: 1.5px solid var(--e-mid); display: grid; place-items: center; }
+.e-shot .o.on i { background: var(--e-ink); border-color: var(--e-ink); color: var(--e-bg); }
+.e-shot .o b { grid-column: 2; display: flex; align-items: center; gap: 6px; color: var(--e-ok); font-size: 14px; }
+.e-cap { padding: 12px 20px 0; color: var(--e-ink2); font-size: 15px; text-align: center; }
+.e-sec { padding: 40px 20px 0; display: grid; gap: 16px; }
+.e-sec h2 { font-size: 28px; line-height: 1.15; letter-spacing: -0.02em; font-weight: 600; }
+.e-sec > p { color: var(--e-ink2); }
+.e-spec { display: grid; grid-template-columns: repeat(3, 1fr); border-block: 1px solid var(--e-hair); }
+.e-spec div { padding: 16px 0 14px; display: grid; gap: 2px; }
+.e-spec div + div { border-left: 1px solid var(--e-hair); padding-left: 14px; }
+.e-spec b { font-size: 46px; line-height: 1; font-weight: 300; letter-spacing: -0.03em; font-variant-numeric: tabular-nums; }
+.e-spec span { font-size: 15px; color: var(--e-ink2); }
+.e-list { display: grid; }
+.e-list > div { display: grid; grid-template-columns: 32px 1fr; gap: 12px; padding: 16px 0; border-top: 1px solid var(--e-hair); }
+.e-list > div:last-child { border-bottom: 1px solid var(--e-hair); }
+.e-list .n { color: var(--e-ink2); font-variant-numeric: tabular-nums; font-weight: 500; }
+.e-list h3 { font-size: 18px; font-weight: 600; line-height: 1.35; }
+.e-list p { color: var(--e-ink2); font-size: 16px; }
+.e-end { padding: 40px 20px 32px; display: grid; gap: 12px; text-align: center; color: var(--e-ink2); font-size: 15px; }
+/* home */
+.e-count { padding: 18px 20px 0; display: grid; }
+.e-count .k { font-size: 15px; font-weight: 600; color: var(--e-ink2); }
+.e-count .big { display: flex; align-items: baseline; gap: 10px; }
+.e-count .big b { font-size: 104px; line-height: 1; font-weight: 300; letter-spacing: -0.05em; font-variant-numeric: tabular-nums; }
+.e-count .big span { font-size: 26px; font-weight: 400; letter-spacing: -0.01em; }
+.e-count p:last-child { color: var(--e-ink2); font-size: 16px; margin-top: 4px; }
+.e-next { margin: 24px 20px 0; background: var(--e-surface); border-radius: 24px; padding: 20px; display: grid; gap: 4px; }
+.e-next .k { font-size: 15px; font-weight: 600; color: var(--e-ink2); }
+.e-next h2 { font-size: 24px; line-height: 1.2; letter-spacing: -0.02em; font-weight: 600; }
+.e-next p { color: var(--e-ink2); font-size: 16px; margin-bottom: 14px; }
+.e-group { margin: 28px 20px 0; display: grid; }
+.e-group h2 { font-size: 20px; font-weight: 600; letter-spacing: -0.01em; display: flex; justify-content: space-between; align-items: baseline; padding-bottom: 12px; }
+.e-group h2 span { font-size: 16px; font-weight: 400; color: var(--e-ink2); }
+.e-line { display: flex; gap: 2px; height: 6px; margin-bottom: 6px; }
+.e-line i { display: block; border-radius: 3px; }
+.e-group .r { display: flex; align-items: center; gap: 10px; min-height: 52px; border-top: 1px solid var(--e-hair); font-size: 17px; }
+.e-group .r i { width: 10px; height: 10px; border-radius: 50%; flex: none; }
+.e-group .r b { margin-left: auto; font-weight: 500; font-variant-numeric: tabular-nums; }
+.e-group button.r { width: 100%; background: none; border: 0; border-block: 1px solid var(--e-hair); color: var(--e-ink); text-align: left; padding: 10px 0; min-height: 68px; }
+.e-group button.r span { flex: 1; display: grid; }
+.e-group button.r small { color: var(--e-ink2); font-size: 15px; }
+.e-note { padding: 12px 20px 24px; color: var(--e-ink2); font-size: 15px; }
+/* question */
+.e-qtop { display: flex; align-items: center; gap: 14px; padding: 12px 20px; }
+.e-prog { flex: 1; height: 4px; border-radius: 2px; background: var(--e-hair); overflow: hidden; }
+.e-prog i { display: block; height: 100%; width: 23%; background: var(--e-ink); border-radius: 2px; }
+.e-count2 { font-size: 15px; font-weight: 500; color: var(--e-ink2); font-variant-numeric: tabular-nums; }
+.e-badge { margin: 6px 20px 14px; align-self: flex-start; display: inline-flex; gap: 8px; align-items: center; font-size: 15px; font-weight: 600; color: var(--e-ink2); }
+.e-badge i { width: 8px; height: 8px; border-radius: 50%; background: var(--e-ink); }
+.e-scene { margin: 0 20px; border-radius: 20px; overflow: hidden; }
+.e-stem { padding: 18px 20px 14px; font-size: 23px; line-height: 1.28; font-weight: 600; letter-spacing: -0.015em; }
+.e-opts { margin: 0 20px; border-radius: 20px; overflow: hidden; background: var(--e-surface); display: grid; gap: 1px; }
+.e-opt { position: relative; display: grid; grid-template-columns: 26px 1fr; gap: 14px; align-items: start; min-height: 56px; padding: 15px 16px; background: var(--e-surface); box-shadow: 0 -1px 0 var(--e-hair); cursor: pointer; }
+.e-opt:first-of-type { box-shadow: none; }
+.e-opt .box { width: 26px; height: 26px; border-radius: 7px; border: 1.75px solid var(--e-mid); display: grid; place-items: center; background: var(--e-bg); }
+.e-opt .box svg { opacity: 0; }
+.e-opt:has(input:checked) .box { background: var(--e-ink); border-color: var(--e-ink); color: var(--e-bg); }
+.e-opt:has(input:checked) .box svg { opacity: 1; }
+.e-opt:has(input:focus-visible) { outline: 3px solid var(--e-ink); outline-offset: -3px; }
+.e-opt .verdict { grid-column: 2; display: none; font-weight: 600; font-size: 15px; align-items: center; gap: 6px; }
+.is-after .e-opt.ok { background: var(--e-ok-bg); }
+.is-after .e-opt.ok .box { border-color: var(--e-ok); }
+.is-after .e-opt.ok .verdict { display: flex; color: var(--e-ok); }
+.is-after .e-opt.bad { background: var(--e-bad-bg); }
+.is-after .e-opt.bad .box { background: var(--e-bad); border-color: var(--e-bad); color: var(--e-bad-bg); }
+.is-after .e-opt.bad .verdict { display: flex; color: var(--e-bad); }
+.e-why { margin: 22px 20px 0; display: grid; gap: 8px; }
+.e-why h3 { font-size: 15px; font-weight: 600; color: var(--e-ink2); }
+.e-why .key { font-weight: 600; font-size: 21px; line-height: 1.35; letter-spacing: -0.01em; }
+.e-why p { font-size: 17px; }
+.e-why a { color: var(--e-ink); font-weight: 600; text-underline-offset: 3px; }
+.e-explainer { margin: 16px 20px 0; padding: 18px; border-radius: 20px; background: var(--e-surface); display: grid; gap: 6px; }
+.e-explainer h3 { font-size: 18px; font-weight: 600; }
+.e-explainer p { font-size: 16px; color: var(--e-ink2); }
+.e-dock { padding: 14px 20px calc(14px + env(safe-area-inset-bottom, 0px)); background: var(--e-bg); box-shadow: 0 -1px 0 var(--e-hair); display: grid; grid-template-columns: 1fr 1.6fr; gap: 10px; margin-top: 20px; }
+.e-dock.one { grid-template-columns: 1fr; }
+</style>
+
+<main class="stage">
+  <aside class="notes" id="notes" aria-live="polite"></aside>
+  <div class="device"><div class="viewport" id="viewport">
+
+  <!-- =========================== A · TEAL =========================== -->
+  <div class="variant va" data-variant="a" lang="lt">
+
+    <!-- A · Landing -->
+    <section class="screen" data-screen="landing">
+      <div class="a-top"><span class="a-mark">KET<b>GO</b></span><span class="a-tag">Nemokama beta</span></div>
+      <div class="a-hero">
+        <h1>Išmok KET taisykles taip, kad jos <mark>liktų</mark>.</h1>
+        <p>Klausimai, trumpas „kodėl“ po kiekvieno atsakymo ir kartojimai, suplanuoti iki tavo egzamino dienos.</p>
+        <a class="a-btn" href="#a-home">Pradėti</a>
+        <small>Be registracijos. Pirmas klausimas – per minutę.</small>
+      </div>
+      <figure class="a-preview" aria-label="Kaip atrodo atsakymas">
+        <span class="k">Po atsakymo</span>
+        <p class="q">Kam duodi kelią lygia&shy;reikšmių kelių sankryžoje?</p>
+        <div class="o"><svg class="icon s" viewBox="0 0 24 24"><path d="M5 12l5 5 9-10"/></svg><span>Iš dešinės, jei trajektorijos kertasi<b>Teisinga</b></span></div>
+        <p class="why"><mark>Duok kelią iš dešinės, kai jūsų keliai kertasi.</mark> Jei nesikerta – praleisti nereikia.</p>
+      </figure>
+      <div class="a-sec">
+        <h2>Klausimas grįžta kitoks</h2>
+        <p>Kitą kartą – kita variantų tvarka ir kiti klaidinantys variantai. Išmoksti taisyklę, ne atsakymo vietą.</p>
+        <div class="a-pair">
+          <div class="a-mini"><h3>Šiandien</h3><strong>Kam duodi kelią lygia&shy;reikšmių kelių sankryžoje?</strong><div>Iš dešinės, jei trajektorijos kertasi</div><div>Iš dešinės visada</div><div>Tik kai yra ženklai</div></div>
+          <div class="a-mini"><h3>Po 3 dienų</h3><strong>Kam duodi kelią lygia&shy;reikšmių kelių sankryžoje?</strong><div class="new">Iš kairės artėjančiam</div><div>Tik kai yra ženklai</div><div>Iš dešinės, jei trajektorijos kertasi</div></div>
+        </div>
+      </div>
+      <div class="a-sec">
+        <h2>Kaip tai veikia</h2>
+        <ol class="a-steps">
+          <li><span>1</span><div><strong>Pirma spėji, tada supranti.</strong><p>Nauja taisyklė prasideda klausimu. Po atsakymo – paaiškinimas.</p></div></li>
+          <li><span>2</span><div><strong>Taisyklė grįžta, kai pradedi pamiršti.</strong><p>Kartojimai suplanuoti pagal tavo egzamino datą.</p></div></li>
+          <li><span>3</span><div><strong>Bandomasis egzaminas kaip tikras.</strong><p>Tos pačios sąlygos kaip „Regitroje“.</p></div></li>
+        </ol>
+      </div>
+      <div class="a-facts">
+        <strong>Teorijos egzaminas, B kategorija</strong>
+        <div class="nums"><div><b>30</b><span>klausimų</span></div><div><b>30</b><span>minučių</span></div><div><b>24</b><span>išlaikyti</span></div></div>
+      </div>
+      <div class="a-end"><a class="a-btn" href="#a-home">Pradėti nemokamai</a>KETGO · nemokama beta · 2026</div>
+    </section>
+
+    <!-- A · Home -->
+    <section class="screen" data-screen="home" hidden>
+      <div class="a-top"><span class="a-mark">KET<b>GO</b></span>
+        <span style="display:flex;gap:8px">
+          <button class="a-iconbtn" type="button" aria-label="Pažanga"><svg class="icon" viewBox="0 0 24 24"><path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/></svg></button>
+          <button class="a-iconbtn" type="button" aria-label="Meniu"><svg class="icon" viewBox="0 0 24 24"><path d="M4 7h16M4 12h16M4 17h16"/></svg></button>
+        </span></div>
+      <div class="a-count">
+        <p class="k">Iki egzamino</p>
+        <p class="big"><b>29</b> d.</p>
+        <p>Lapkričio 12 d. · užtenka apie 1 pamokos per dieną</p>
+      </div>
+      <div class="a-card">
+        <h2>Taisyklės <span class="num">296</span></h2>
+        <div class="a-stack" role="img" aria-label="38 įsimintos, 21 mokaisi, 237 dar nesutiktos"><i style="flex:38;background:var(--a-teal)"></i><i style="flex:21;background:var(--a-mid)"></i><i style="flex:237;background:var(--a-teal-soft)"></i></div>
+        <div class="a-legend">
+          <div><i style="background:var(--a-teal)"></i>Įsimintos<b>38</b></div>
+          <div><i style="background:var(--a-mid)"></i>Mokaisi<b>21</b></div>
+          <div><i style="background:var(--a-teal-soft);box-shadow:inset 0 0 0 1px var(--a-line)"></i>Dar nesutiktos<b>237</b></div>
+        </div>
+      </div>
+      <button class="a-row" type="button"><span><strong>Bandomasis egzaminas</strong><small>30 klausimų · 30 min.</small></span><svg class="icon" viewBox="0 0 24 24"><path d="M9 6l6 6-6 6"/></svg></button>
+      <p class="a-note">Pasirengimą parodysime po pirmojo bandomojo egzamino antroje programos pusėje.</p>
+      <div class="grow"></div>
+      <div class="a-next dock">
+        <span class="k">Toliau · 7 pamoka iš 36</span>
+        <h2>Lygiareikšmių kelių sankryžos</h2>
+        <p>8 naujos taisyklės · 6 kartoti · apie 18 min.</p>
+        <a class="a-btn light" href="#a-question">Tęsti</a>
+      </div>
+    </section>
+
+    <!-- A · Question -->
+    <section class="screen" data-screen="question" hidden>
+      <div class="a-qtop">
+        <button class="a-iconbtn" type="button" aria-label="Uždaryti"><svg class="icon" viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
+        <div class="a-prog" role="progressbar" aria-valuemin="1" aria-valuemax="22" aria-valuenow="5"><i></i></div>
+        <span class="a-count2">5 / 22</span>
+      </div>
+      <span class="a-badge">Nauja taisyklė · pabandyk atspėti</span>
+      <div class="a-scene scene"></div>
+      <h2 class="a-stem">Kam vairuotojas privalo duoti kelią lygia&shy;reikšmių kelių sankryžoje?</h2>
+      <fieldset class="a-opts opts">
+        <legend class="sr">Pasirink visus teisingus variantus</legend>
+        <label class="a-opt opt"><input type="checkbox"><span class="box"><svg class="icon s" viewBox="0 0 24 24"><path d="M5 12l5 5 9-10"/></svg></span><span>Iš dešinės artėjančioms transporto priemonėms tik tada, kai sankryžoje stovi pirmenybės ženklai.</span></label>
+        <label class="a-opt opt ok"><input type="checkbox"><span class="box"><svg class="icon s" viewBox="0 0 24 24"><path d="M5 12l5 5 9-10"/></svg></span><span>Iš dešinės artėjančioms transporto priemonėms, jeigu jų važiavimo trajektorijos kertasi.</span><span class="verdict"><svg class="icon s" viewBox="0 0 24 24"><path d="M5 12l5 5 9-10"/></svg>Teisinga</span></label>
+        <label class="a-opt opt bad"><input type="checkbox" checked><span class="box"><svg class="icon s" viewBox="0 0 24 24"><path d="M5 12l5 5 9-10"/></svg></span><span>Iš dešinės artėjančioms transporto priemonėms visada, net jeigu jų trajektorijos nesikerta.</span><span class="verdict"><svg class="icon s" viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18"/></svg>Neteisinga · tavo pasirinkimas</span></label>
+      </fieldset>
+      <div class="a-why after-only">
+        <h3>Kodėl</h3>
+        <p class="key"><mark>Duok kelią iš dešinės, kai jūsų keliai kertasi.</mark></p>
+        <p>Lygiareikšmių kelių sankryžoje praleidi iš dešinės artėjančią transporto priemonę, jeigu jūsų važiavimo trajektorijos kertasi. Jei nesikerta – praleisti nereikia. <a href="#a-question-after">KET 155 p.</a></p>
+      </div>
+      <div class="a-explainer after-only">
+        <h3>Dešinės rankos taisyklė</h3>
+        <p>Nėra ženklų, šviesoforo ir reguliuotojo, keliai lygiareikšmiai: pirmas važiuoja tas, kuris iš dešinės. Ši taisyklė dar grįš šioje pamokoje – su kitais variantais.</p>
+      </div>
+      <div class="grow"></div>
+      <div class="a-dock dock before-only"><button class="a-btn ghost" type="button" data-check>Spėju</button><button class="a-btn" type="button" data-check>Tikrinti</button></div>
+      <div class="a-dock one dock after-only"><button class="a-btn" type="button" data-next>Toliau</button></div>
+    </section>
+  </div>
+
+  <!-- =========================== D · BLUE =========================== -->
+  <div class="variant vd" data-variant="d" lang="lt" hidden>
+
+    <!-- D · Landing -->
+    <section class="screen" data-screen="landing">
+      <div class="d-hero">
+        <div class="d-top"><span class="d-mark"><i><svg class="icon" viewBox="0 0 24 24"><path d="M9 6l6 6-6 6"/></svg></i>KETGO</span><span class="d-tag">Nemokama beta</span></div>
+        <h1>Pasiruošk teorijos egzaminui be streso.</h1>
+        <p>Klausimai, aiškus „kodėl“ po kiekvieno atsakymo ir kartojimai, suplanuoti iki tavo egzamino dienos.</p>
+        <a class="d-btn white" href="#d-home">Pradėti nemokamai</a>
+        <small>Be registracijos. Pirmas klausimas – per minutę.</small>
+      </div>
+      <div class="d-card d-float" aria-label="Pavyzdys: kitas žingsnis">
+        <span class="k"><span>Toliau · 7 pamoka iš 36</span><span class="num">liko 29 d.</span></span>
+        <h3>Lygiareikšmių kelių sankryžos</h3>
+        <div class="bar"><i></i></div>
+        <div class="row"><span>8 naujos · 6 kartoti · ~18 min.</span><span class="pill">Tęsti</span></div>
+      </div>
+      <div class="d-sec">
+        <h2>Kodėl KETGO</h2>
+        <div class="d-card d-feat"><span><svg class="icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M9.5 9.5a2.5 2.5 0 1 1 3.5 2.3c-.6.3-1 .9-1 1.5V14M12 17.5v.01"/></svg></span><div><h3>Pirma spėji, tada supranti</h3><p>Nauja taisyklė prasideda klausimu. Po atsakymo – trumpas paaiškinimas.</p></div></div>
+        <div class="d-card d-feat"><span><svg class="icon" viewBox="0 0 24 24"><path d="M20 12a8 8 0 0 1-14 5.3M4 12a8 8 0 0 1 14-5.3M18 3v4h-4M6 21v-4h4"/></svg></span><div><h3>Klausimas grįžta kitoks</h3><p>Kita variantų tvarka ir kiti klaidinantys variantai. Išmoksti taisyklę, ne atsakymo vietą.</p></div></div>
+        <div class="d-card d-feat"><span><svg class="icon" viewBox="0 0 24 24"><rect x="3.5" y="5" width="17" height="15" rx="3"/><path d="M3.5 10h17M8 3v4M16 3v4"/></svg></span><div><h3>Planas iki egzamino dienos</h3><p>Taisyklė grįžta tada, kai ją pradedi pamiršti.</p></div></div>
+      </div>
+      <div class="d-card d-facts">
+        <h2>Bandomasis egzaminas kaip „Regitroje“</h2>
+        <div class="nums"><div><b>30</b><span>klausimų</span></div><div><b>30</b><span>minučių</span></div><div><b>24</b><span>išlaikyti</span></div></div>
+      </div>
+      <div class="d-end"><a class="d-btn" href="#d-home">Pradėti nemokamai</a>KETGO · nemokama beta · 2026</div>
+    </section>
+
+    <!-- D · Home -->
+    <section class="screen" data-screen="home" hidden>
+      <div class="d-top"><span class="d-mark"><i><svg class="icon" viewBox="0 0 24 24"><path d="M9 6l6 6-6 6"/></svg></i>KETGO</span>
+        <span style="display:flex;gap:8px">
+          <button class="d-iconbtn" type="button" aria-label="Pažanga"><svg class="icon" viewBox="0 0 24 24"><path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/></svg></button>
+          <button class="d-iconbtn" type="button" aria-label="Meniu"><svg class="icon" viewBox="0 0 24 24"><path d="M4 7h16M4 12h16M4 17h16"/></svg></button>
+        </span></div>
+      <div class="d-exam">
+        <span class="k">Iki egzamino</span>
+        <span class="big"><b>29</b> dienos</span>
+        <span class="date">Lapkr.<b class="num">12</b></span>
+        <p>Užtenka apie 1 pamokos per dieną.</p>
+      </div>
+      <div class="d-card d-rules">
+        <h2>Taisyklės <span class="num">iš 296</span></h2>
+        <div class="d-ring" role="img" aria-label="38 įsimintos, 21 mokaisi, 237 dar nesutiktos">
+          <svg viewBox="0 0 120 120"><circle cx="60" cy="60" r="50" fill="none" stroke="var(--d-blue-soft)" stroke-width="14"/><circle cx="60" cy="60" r="50" fill="none" stroke="var(--d-blue)" stroke-width="14" pathLength="296" stroke-dasharray="38 258"/><circle cx="60" cy="60" r="50" fill="none" stroke="var(--d-s-other)" stroke-width="14" pathLength="296" stroke-dasharray="21 275" stroke-dashoffset="-38"/></svg>
+          <div><b>38</b><small>įsimintos</small></div>
+        </div>
+        <div class="d-legend">
+          <div><i style="background:var(--d-blue)"></i>Įsimintos<b>38</b></div>
+          <div><i style="background:var(--d-s-other)"></i>Mokaisi<b>21</b></div>
+          <div><i style="background:var(--d-blue-soft);box-shadow:inset 0 0 0 1px var(--d-line)"></i>Dar ne<b>237</b></div>
+        </div>
+      </div>
+      <button class="d-card d-row" type="button"><span><svg class="icon" viewBox="0 0 24 24"><circle cx="12" cy="13" r="8"/><path d="M12 9v4l2.5 2.5M10 2h4"/></svg></span><span><strong>Bandomasis egzaminas</strong><small>30 klausimų · 30 min.</small></span><svg class="icon" viewBox="0 0 24 24"><path d="M9 6l6 6-6 6"/></svg></button>
+      <p class="d-note">Pasirengimą parodysime po pirmojo bandomojo egzamino antroje programos pusėje.</p>
+      <div class="grow"></div>
+      <div class="d-dock dock">
+        <div class="what"><span class="k">Toliau · 7 pamoka iš 36</span><b>Lygiareikšmių kelių sankryžos</b><span>8 naujos taisyklės · 6 kartoti · apie 18 min.</span></div>
+        <a class="d-btn" href="#d-question">Tęsti</a>
+      </div>
+    </section>
+
+    <!-- D · Question -->
+    <section class="screen" data-screen="question" hidden>
+      <div class="d-qtop">
+        <button class="d-iconbtn" type="button" aria-label="Uždaryti"><svg class="icon" viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
+        <div class="d-prog" role="progressbar" aria-valuemin="1" aria-valuemax="22" aria-valuenow="5"><i></i></div>
+        <span class="d-count">5 / 22</span>
+      </div>
+      <span class="d-badge">Nauja taisyklė · pabandyk atspėti</span>
+      <div class="d-scene scene"></div>
+      <h2 class="d-stem">Kam vairuotojas privalo duoti kelią lygia&shy;reikšmių kelių sankryžoje?</h2>
+      <fieldset class="d-opts opts">
+        <legend class="sr">Pasirink visus teisingus variantus</legend>
+        <label class="d-opt opt"><input type="checkbox"><span class="box"><svg class="icon s" viewBox="0 0 24 24"><path d="M5 12l5 5 9-10"/></svg></span><span>Iš dešinės artėjančioms transporto priemonėms tik tada, kai sankryžoje stovi pirmenybės ženklai.</span></label>
+        <label class="d-opt opt ok"><input type="checkbox"><span class="box"><svg class="icon s" viewBox="0 0 24 24"><path d="M5 12l5 5 9-10"/></svg></span><span>Iš dešinės artėjančioms transporto priemonėms, jeigu jų važiavimo trajektorijos kertasi.</span><span class="verdict"><svg class="icon s" viewBox="0 0 24 24"><path d="M5 12l5 5 9-10"/></svg>Teisinga</span></label>
+        <label class="d-opt opt bad"><input type="checkbox" checked><span class="box"><svg class="icon s" viewBox="0 0 24 24"><path d="M5 12l5 5 9-10"/></svg></span><span>Iš dešinės artėjančioms transporto priemonėms visada, net jeigu jų trajektorijos nesikerta.</span><span class="verdict"><svg class="icon s" viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18"/></svg>Neteisinga · tavo pasirinkimas</span></label>
+      </fieldset>
+      <div class="d-card d-why after-only">
+        <h3>Kodėl</h3>
+        <p class="key">Duok kelią iš dešinės, kai jūsų keliai kertasi.</p>
+        <p>Lygiareikšmių kelių sankryžoje praleidi iš dešinės artėjančią transporto priemonę, jeigu jūsų važiavimo trajektorijos kertasi. Jei nesikerta – praleisti nereikia. <a href="#d-question-after">KET 155 p.</a></p>
+      </div>
+      <div class="d-explainer after-only">
+        <h3>Dešinės rankos taisyklė</h3>
+        <p>Nėra ženklų, šviesoforo ir reguliuotojo, keliai lygiareikšmiai: pirmas važiuoja tas, kuris iš dešinės. Ši taisyklė dar grįš šioje pamokoje – su kitais variantais.</p>
+      </div>
+      <div class="grow"></div>
+      <div class="d-dock two dock before-only"><button class="d-btn ghost" type="button" data-check>Spėju</button><button class="d-btn" type="button" data-check>Tikrinti</button></div>
+      <div class="d-dock one dock after-only"><button class="d-btn" type="button" data-next>Toliau</button></div>
+    </section>
+  </div>
+
+  <!-- =========================== E · MONO =========================== -->
+  <div class="variant ve" data-variant="e" lang="lt" hidden>
+
+    <!-- E · Landing -->
+    <section class="screen" data-screen="landing">
+      <div class="e-top"><span class="e-mark">KETGO</span><span class="e-tag">Nemokama beta</span></div>
+      <div class="e-hero">
+        <h1>Teorijos egzaminas. Išmoktas ramiai.</h1>
+        <p>Klausimai, aiškus „kodėl“ po kiekvieno atsakymo ir kartojimai, suplanuoti iki tavo egzamino dienos.</p>
+        <a class="e-btn" href="#e-home">Pradėti</a>
+        <small>Nemokamai. Be registracijos.</small>
+      </div>
+      <figure class="e-shot" aria-label="Kaip atrodo klausimas">
+        <div class="card">
+          <div class="bar"><i></i></div>
+          <p class="q">Kam vairuotojas privalo duoti kelią lygia&shy;reikšmių kelių sankryžoje?</p>
+          <div class="o on"><i><svg class="icon" viewBox="0 0 24 24" style="width:14px;height:14px;stroke-width:3"><path d="M5 12l5 5 9-10"/></svg></i><span>Iš dešinės, jeigu jų trajektorijos kertasi.<b><svg class="icon" viewBox="0 0 24 24" style="width:14px;height:14px"><path d="M5 12l5 5 9-10"/></svg>Teisinga</b></span></div>
+          <div class="o"><i></i><span>Iš dešinės visada, net jeigu trajektorijos nesikerta.</span></div>
+        </div>
+      </figure>
+      <p class="e-cap">Kitą kartą tas pats klausimas grįš su kitais variantais.</p>
+      <div class="e-sec">
+        <h2>Bandomasis egzaminas kaip „Regitroje“</h2>
+        <div class="e-spec"><div><b>30</b><span>klausimų</span></div><div><b>30</b><span>minučių</span></div><div><b>24</b><span>išlaikyti</span></div></div>
+      </div>
+      <div class="e-sec">
+        <h2>Kaip tai veikia</h2>
+        <div class="e-list">
+          <div><span class="n">01</span><div><h3>Pirma spėji, tada supranti</h3><p>Nauja taisyklė prasideda klausimu. Po atsakymo – paaiškinimas.</p></div></div>
+          <div><span class="n">02</span><div><h3>Klausimas grįžta kitoks</h3><p>Kita variantų tvarka ir kiti klaidinantys variantai. Išmoksti taisyklę, ne atsakymo vietą.</p></div></div>
+          <div><span class="n">03</span><div><h3>Planas iki egzamino dienos</h3><p>Taisyklė grįžta tada, kai ją pradedi pamiršti.</p></div></div>
+        </div>
+      </div>
+      <div class="e-end"><a class="e-btn" href="#e-home">Pradėti nemokamai</a>KETGO · nemokama beta · 2026</div>
+    </section>
+
+    <!-- E · Home -->
+    <section class="screen" data-screen="home" hidden>
+      <div class="e-top"><span class="e-mark">KETGO</span>
+        <span style="display:flex;gap:8px">
+          <button class="e-iconbtn" type="button" aria-label="Pažanga"><svg class="icon" viewBox="0 0 24 24"><path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/></svg></button>
+          <button class="e-iconbtn" type="button" aria-label="Meniu"><svg class="icon" viewBox="0 0 24 24"><path d="M4 7h16M4 12h16M4 17h16"/></svg></button>
+        </span></div>
+      <div class="e-count">
+        <p class="k">Iki egzamino</p>
+        <p class="big"><b>29</b><span>dienos</span></p>
+        <p>Lapkričio 12 d. · užtenka apie 1 pamokos per dieną</p>
+      </div>
+      <div class="e-next">
+        <span class="k">Toliau · 7 pamoka iš 36</span>
+        <h2>Lygiareikšmių kelių sankryžos</h2>
+        <p>8 naujos taisyklės · 6 kartoti · apie 18 min.</p>
+        <a class="e-btn" href="#e-question">Tęsti</a>
+      </div>
+      <div class="e-group">
+        <h2>Taisyklės <span class="num">296</span></h2>
+        <div class="e-line" role="img" aria-label="38 įsimintos, 21 mokaisi, 237 dar nesutiktos"><i style="flex:38;background:var(--e-ink)"></i><i style="flex:21;background:var(--e-mid)"></i><i style="flex:237;background:var(--e-hair)"></i></div>
+        <div class="r"><i style="background:var(--e-ink)"></i>Įsimintos<b>38</b></div>
+        <div class="r"><i style="background:var(--e-mid)"></i>Mokaisi<b>21</b></div>
+        <div class="r"><i style="background:var(--e-hair)"></i>Dar nesutiktos<b>237</b></div>
+      </div>
+      <div class="e-group">
+        <button class="r" type="button"><span><strong style="font-weight:600">Bandomasis egzaminas</strong><small>30 klausimų · 30 min.</small></span><svg class="icon" viewBox="0 0 24 24" style="stroke-width:1.75"><path d="M9 6l6 6-6 6"/></svg></button>
+      </div>
+      <p class="e-note">Pasirengimą parodysime po pirmojo bandomojo egzamino antroje programos pusėje.</p>
+    </section>
+
+    <!-- E · Question -->
+    <section class="screen" data-screen="question" hidden>
+      <div class="e-qtop">
+        <button class="e-iconbtn" type="button" aria-label="Uždaryti"><svg class="icon" viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
+        <div class="e-prog" role="progressbar" aria-valuemin="1" aria-valuemax="22" aria-valuenow="5"><i></i></div>
+        <span class="e-count2">5 / 22</span>
+      </div>
+      <span class="e-badge"><i></i>Nauja taisyklė · pabandyk atspėti</span>
+      <div class="e-scene scene"></div>
+      <h2 class="e-stem">Kam vairuotojas privalo duoti kelią lygia&shy;reikšmių kelių sankryžoje?</h2>
+      <fieldset class="e-opts opts">
+        <legend class="sr">Pasirink visus teisingus variantus</legend>
+        <label class="e-opt opt"><input type="checkbox"><span class="box"><svg class="icon s" viewBox="0 0 24 24"><path d="M5 12l5 5 9-10"/></svg></span><span>Iš dešinės artėjančioms transporto priemonėms tik tada, kai sankryžoje stovi pirmenybės ženklai.</span></label>
+        <label class="e-opt opt ok"><input type="checkbox"><span class="box"><svg class="icon s" viewBox="0 0 24 24"><path d="M5 12l5 5 9-10"/></svg></span><span>Iš dešinės artėjančioms transporto priemonėms, jeigu jų važiavimo trajektorijos kertasi.</span><span class="verdict"><svg class="icon s" viewBox="0 0 24 24"><path d="M5 12l5 5 9-10"/></svg>Teisinga</span></label>
+        <label class="e-opt opt bad"><input type="checkbox" checked><span class="box"><svg class="icon s" viewBox="0 0 24 24"><path d="M5 12l5 5 9-10"/></svg></span><span>Iš dešinės artėjančioms transporto priemonėms visada, net jeigu jų trajektorijos nesikerta.</span><span class="verdict"><svg class="icon s" viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18"/></svg>Neteisinga · tavo pasirinkimas</span></label>
+      </fieldset>
+      <div class="e-why after-only">
+        <h3>Kodėl</h3>
+        <p class="key">Duok kelią iš dešinės, kai jūsų keliai kertasi.</p>
+        <p>Lygiareikšmių kelių sankryžoje praleidi iš dešinės artėjančią transporto priemonę, jeigu jūsų važiavimo trajektorijos kertasi. Jei nesikerta – praleisti nereikia. <a href="#e-question-after">KET 155 p.</a></p>
+      </div>
+      <div class="e-explainer after-only">
+        <h3>Dešinės rankos taisyklė</h3>
+        <p>Nėra ženklų, šviesoforo ir reguliuotojo, keliai lygiareikšmiai: pirmas važiuoja tas, kuris iš dešinės. Ši taisyklė dar grįš šioje pamokoje – su kitais variantais.</p>
+      </div>
+      <div class="grow"></div>
+      <div class="e-dock dock before-only"><button class="e-btn ghost" type="button" data-check>Spėju</button><button class="e-btn" type="button" data-check>Tikrinti</button></div>
+      <div class="e-dock one dock after-only"><button class="e-btn" type="button" data-next>Toliau</button></div>
+    </section>
+  </div>
+
+  </div></div>
+</main>
+
+<nav class="switcher" aria-label="Prototipo valdymas">
+  <span class="group" id="looks">
+    <button type="button" data-look="a" aria-pressed="true">A · Teal</button>
+    <button type="button" data-look="d" aria-pressed="false">D · Blue</button>
+    <button type="button" data-look="e" aria-pressed="false">E · Mono</button>
+  </span>
+  <button type="button" class="info" id="info" aria-pressed="false">Notes</button>
+  <span class="group" id="screens">
+    <button type="button" data-go="landing" aria-pressed="true">Landing</button>
+    <button type="button" data-go="home" aria-pressed="false">Home</button>
+    <button type="button" data-go="question" aria-pressed="false">Question</button>
+  </span>
+  <button type="button" id="state" aria-pressed="false" hidden>After check</button>
+  <button type="button" id="theme">◐ Phone</button>
+</nav>
+
+<!-- one bird's-eye scene, drawn by each look's tokens. Synthetic illustration. -->
+<template id="scene-tpl">
+  <svg viewBox="0 0 320 190" role="img" aria-label="Lygiareikšmių kelių sankryža: tu važiuoji tiesiai, automobilis artėja iš dešinės">
+    <rect width="320" height="190" fill="var(--s-ground)"/>
+    <rect x="0" y="70" width="320" height="52" fill="var(--s-road)"/>
+    <rect x="134" y="0" width="52" height="190" fill="var(--s-road)"/>
+    <path d="M0 70H134V0M186 0V70H320M0 122H134V190M186 190V122H320" fill="none" stroke="var(--s-edge)" stroke-width="2.5"/>
+    <path d="M0 96H120M200 96H320M160 0V56M160 136V190" stroke="var(--s-mark)" stroke-width="2" stroke-dasharray="10 9" fill="none"/>
+    <path d="M173 150V18" stroke="var(--s-path)" stroke-width="2.5" stroke-dasharray="4 6" fill="none"/>
+    <path d="M286 83H40" stroke="var(--s-path)" stroke-width="2.5" stroke-dasharray="4 6" fill="none"/>
+    <path d="M168 26l5-9 5 9M48 78l-9 5 9 5" fill="none" stroke="var(--s-path)" stroke-width="2.5" stroke-linejoin="round" stroke-linecap="round"/>
+    <g transform="translate(164 148)"><rect width="18" height="32" rx="5" fill="var(--s-me)"/><rect x="3" y="5" width="12" height="7" rx="2" fill="var(--s-ground)" opacity=".7"/></g>
+    <g transform="translate(270 74)"><rect width="32" height="18" rx="5" fill="var(--s-other)"/><rect x="4" y="3" width="7" height="12" rx="2" fill="var(--s-ground)" opacity=".7"/></g>
+    <g class="hit"><circle cx="173" cy="83" r="13" fill="none" stroke="var(--s-hit)" stroke-width="3"/><text x="194" y="64" font-size="13" font-weight="700" fill="var(--s-hit)" font-family="system-ui, sans-serif">kertasi</text></g>
+  </svg>
+</template>
+
+<script>
+(() => {
+  const judge = `
+    <div class="judge"><p><b>What to judge</b></p><ul>
+    <li>First look, in one second: would a 17–21-year-old trust it?</li>
+    <li>Does the Question screen feel calm enough to think?</li>
+    <li>Mixing is fine: "E, but with A's teal" is a good answer.</li></ul>
+    <p class="muted" style="margin-top:10px">All numbers on Home are examples. The road picture is a rough sketch, not a final scene. Older looks B and C are in v1.html.</p></div>`;
+  const VARIANTS = [
+    { key: 'a', notes: `
+      <h2>A · Teal</h2>
+      <p>The teal look, made cleaner and more grown-up. Light screens with deep teal for the main button and the "next step" panel.</p>
+      <p><b>What changed:</b> no dark top block and no lime button, so it moves away from the 2025 "dark screen + neon" look. Lime now only marks the one thing to remember (and the logo).</p>
+      <div class="swatches"><span style="background:var(--a-bg)"></span><span style="background:var(--a-teal)"></span><span style="background:var(--a-field)"></span><span style="background:var(--a-lime)"></span><span style="background:var(--a-ok)"></span><span style="background:var(--a-bad)"></span></div>
+      <p><b>Font:</b> Atkinson Hyperlegible Next, made for easy reading (13 KB).</p>
+      <p class="muted"><b>Risk:</b> friendly more than premium. The lime highlight must stay rare.</p>` },
+    { key: 'd', notes: `
+      <h2>D · Blue</h2>
+      <p>A confident consumer brand, like Revolut or Wise. White cards on a light blue-grey page, one strong blue, pill buttons, soft shadows.</p>
+      <p>Landing opens on a blue field with a card that shows the real "next step". Home has a blue exam card and a ring for the Rules.</p>
+      <div class="swatches"><span style="background:var(--d-bg)"></span><span style="background:var(--d-blue)"></span><span style="background:var(--d-blue-soft)"></span><span style="background:var(--d-ink)"></span><span style="background:var(--d-ok)"></span><span style="background:var(--d-bad)"></span></div>
+      <p><b>Font:</b> Albert Sans, a clean modern sans (19 KB).</p>
+      <p class="muted"><b>Risk:</b> blue is the most common app colour, so KETGO must be recognised by its name and layout, not by colour.</p>` },
+    { key: 'e', notes: `
+      <h2>E · Mono</h2>
+      <p>Premium and calm, like Apple. White, black and grey only. Colour appears only for right and wrong, so it is very easy to see.</p>
+      <p>Big thin numbers (29 days), lists with fine lines like a good bank app, black buttons.</p>
+      <div class="swatches"><span style="background:var(--e-bg)"></span><span style="background:var(--e-surface)"></span><span style="background:var(--e-ink)"></span><span style="background:var(--e-mid)"></span><span style="background:var(--e-ok)"></span><span style="background:var(--e-bad)"></span></div>
+      <p><b>Font:</b> Hanken Grotesk, a neat classic sans (20 KB).</p>
+      <p class="muted"><b>Risk:</b> it can feel cold to some teens. One brand colour could be added later (for example A's teal).</p>` },
+  ];
+  const SCREENS = ['landing', 'home', 'question'];
+  const KEYS = VARIANTS.map(x => x.key).join('');
+  const RE = new RegExp(`^#([${KEYS}])-(landing|home|question)(-after)?$`);
+  const root = document.documentElement;
+  const vp = document.getElementById('viewport');
+  const notes = document.getElementById('notes');
+  let v = 0, s = 0, after = false;
+
+  const tpl = document.getElementById('scene-tpl');
+  document.querySelectorAll('.scene').forEach(el => el.appendChild(tpl.content.cloneNode(true)));
+
+  function render(push) {
+    const vk = VARIANTS[v].key, sk = SCREENS[s];
+    document.querySelectorAll('.variant').forEach(el => { el.hidden = el.dataset.variant !== vk; });
+    document.querySelectorAll(`.variant[data-variant="${vk}"] .screen`).forEach(el => {
+      el.hidden = el.dataset.screen !== sk;
+      el.classList.toggle('is-after', after && el.dataset.screen === 'question');
+      el.querySelectorAll('input').forEach(i => { i.disabled = after; });
+    });
+    notes.innerHTML = VARIANTS[v].notes + judge;
+    document.querySelectorAll('#looks button').forEach(b => b.setAttribute('aria-pressed', String(b.dataset.look === vk)));
+    document.querySelectorAll('#screens button').forEach(b => b.setAttribute('aria-pressed', String(b.dataset.go === sk)));
+    const st = document.getElementById('state');
+    st.hidden = sk !== 'question';
+    st.setAttribute('aria-pressed', String(after));
+    if (push) { try { history.replaceState(null, '', `#${vk}-${sk}${after && sk === 'question' ? '-after' : ''}`); } catch (e) {} }
+    vp.scrollTop = 0;
+  }
+  function go(hash) {
+    const m = (hash || '').match(RE);
+    if (!m) return false;
+    v = VARIANTS.findIndex(x => x.key === m[1]); s = SCREENS.indexOf(m[2]); after = !!m[3];
+    return true;
+  }
+  const cycle = d => { v = (v + d + VARIANTS.length) % VARIANTS.length; render(true); };
+  document.querySelectorAll('#looks button').forEach(b => b.onclick = () => { v = VARIANTS.findIndex(x => x.key === b.dataset.look); render(true); });
+  document.querySelectorAll('#screens button').forEach(b => b.onclick = () => { s = SCREENS.indexOf(b.dataset.go); render(true); });
+  document.getElementById('state').onclick = () => { after = !after; render(true); };
+  document.querySelectorAll('[data-check]').forEach(b => b.onclick = () => { after = true; render(true); });
+  document.querySelectorAll('[data-next]').forEach(b => b.onclick = () => { after = false; render(true); });
+  // in-screen links (#a-home etc.) move between screens
+  document.addEventListener('click', e => {
+    const a = e.target.closest('a[href^="#"]');
+    if (!a || !go(a.getAttribute('href'))) return;
+    e.preventDefault();
+    render(true);
+  });
+  const themes = [null, 'light', 'dark'], names = ['Phone', 'Light', 'Dark'];
+  let t = 0;
+  document.getElementById('theme').onclick = e => {
+    t = (t + 1) % 3;
+    if (themes[t]) root.setAttribute('data-theme', themes[t]); else root.removeAttribute('data-theme');
+    e.currentTarget.textContent = '◐ ' + names[t];
+  };
+  document.getElementById('info').onclick = e => {
+    const on = document.body.classList.toggle('show-notes');
+    e.currentTarget.setAttribute('aria-pressed', String(on));
+  };
+  document.addEventListener('keydown', e => {
+    if (e.target.closest('input, textarea, [contenteditable]')) return;
+    if (e.key === 'ArrowLeft') cycle(-1);
+    if (e.key === 'ArrowRight') cycle(1);
+  });
+  window.addEventListener('hashchange', () => { if (go(location.hash)) render(false); });
+  go(location.hash);
+  render(false);
+})();
+</script>

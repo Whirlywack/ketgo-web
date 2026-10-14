@@ -1,0 +1,711 @@
+<title>KETGO Look Directions</title>
+<!--
+  PROTOTYPE, throwaway. Ticket: "Look and feel" (Whirlywack/ketgo-web#12). Version 3.
+  Owner chose Teal on 2026-10-14. This version refines Teal's elements and UI components.
+  Older versions: v1.html (A, B Course map, C Atšvaitas), v2.html (A Teal, D Blue, E Mono).
+  Screens: Landing, Home, Question (with After check), Components (the design-system sheet).
+  Deep link: #landing, #home, #question, #question-after, #components. All numbers on Home are examples.
+
+  THESIS: teal-led and light. Deep teal carries the action and the "next step"; lime only marks
+  the one sentence to remember. Refuses the 2025 dark screen + neon button.
+-->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible+Next:wght@400;700&display=swap">
+<style>
+:root {
+  /* prototype chrome */
+  --ui-bg: #E6E7EA; --ui-fg: #17181B; --ui-muted: #555963; --ui-line: #CDD0D6;
+  --ui-bar: #17181B; --ui-bar-fg: #FFFFFF; --ui-bar-dim: #A3A7B0; --ui-bar-on: #FFFFFF; --ui-bar-on-fg: #17181B;
+
+  /* KETGO · Teal */
+  --bg: #F4F7F5; --surface: #FFFFFF; --surface-2: #EBF1EE;
+  --ink: #142627; --ink2: #3E5557; --line: #D5E0DB; --line-strong: #6B847D;
+  --teal: #145457; --teal-hover: #0F4346; --teal-press: #0A3436; --on-teal: #FFFFFF;
+  --teal-soft: #E0EDEA; --teal-soft-2: #CFE3DE; --teal-ink: #145457; --mid: #7DB3AC;
+  --field: #142627; --on-field: #F4F7F5; --on-field2: #B9CCC4; --field-2: #1E3A3B; --field-fill: #5CC3B8;
+  --next-btn: #FFFFFF; --next-btn-hover: #E0EDEA; --on-next-btn: #142627;
+  --lime: #CCFF00; --on-lime: #142627;
+  --ok: #16703A; --ok-bg: #E2F3E5; --on-ok: #FFFFFF;
+  --bad: #B3261E; --bad-bg: #FBE8E6; --on-bad: #FFFFFF;
+  --warn: #7F4A00; --warn-bg: #FFF0D4;
+  --focus: #145457; --shadow: rgb(20 38 39 / .22);
+  --s-ground: #D3E2DA; --s-road: #FFFFFF; --s-edge: #A3BDB2; --s-mark: #BACCC3; --s-me: #145457; --s-other: #6F8B86; --s-path: #3E5557; --s-hit: #B3261E;
+}
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) {
+  --ui-bg: #111214; --ui-fg: #ECEDEF; --ui-muted: #A3A7B0; --ui-line: #2B2D33;
+  --ui-bar: #F1F2F4; --ui-bar-fg: #17181B; --ui-bar-dim: #5A5E68; --ui-bar-on: #17181B; --ui-bar-on-fg: #FFFFFF;
+  --bg: #0E1B1C; --surface: #162728; --surface-2: #1D3233;
+  --ink: #EEF4F1; --ink2: #B0C4BE; --line: #27403F; --line-strong: #6E8C86;
+  --teal: #5CC3B8; --teal-hover: #74D0C6; --teal-press: #4AAFA4; --on-teal: #0E1B1C;
+  --teal-soft: #1B3536; --teal-soft-2: #22413F; --teal-ink: #8FDCD3; --mid: #3F8079;
+  --field: #1B3334; --on-field: #F4F7F5; --on-field2: #B9CCC4; --field-2: #24403F; --field-fill: #5CC3B8;
+  --next-btn: #5CC3B8; --next-btn-hover: #74D0C6; --on-next-btn: #0E1B1C;
+  --lime: #CCFF00; --on-lime: #142627;
+  --ok: #6FDC97; --ok-bg: #173A2A; --on-ok: #0E1B1C;
+  --bad: #FF8F86; --bad-bg: #432222; --on-bad: #0E1B1C;
+  --warn: #FFC56B; --warn-bg: #3A2A10;
+  --focus: #8FDCD3; --shadow: rgb(0 0 0 / .5);
+  --s-ground: #1F3A39; --s-road: #375253; --s-edge: #4B6868; --s-mark: #6A8685; --s-me: #5CC3B8; --s-other: #9DB5A9; --s-path: #EEF4F1; --s-hit: #FF8F86;
+  color-scheme: dark;
+} }
+:root[data-theme="dark"] {
+  --ui-bg: #111214; --ui-fg: #ECEDEF; --ui-muted: #A3A7B0; --ui-line: #2B2D33;
+  --ui-bar: #F1F2F4; --ui-bar-fg: #17181B; --ui-bar-dim: #5A5E68; --ui-bar-on: #17181B; --ui-bar-on-fg: #FFFFFF;
+  --bg: #0E1B1C; --surface: #162728; --surface-2: #1D3233;
+  --ink: #EEF4F1; --ink2: #B0C4BE; --line: #27403F; --line-strong: #6E8C86;
+  --teal: #5CC3B8; --teal-hover: #74D0C6; --teal-press: #4AAFA4; --on-teal: #0E1B1C;
+  --teal-soft: #1B3536; --teal-soft-2: #22413F; --teal-ink: #8FDCD3; --mid: #3F8079;
+  --field: #1B3334; --on-field: #F4F7F5; --on-field2: #B9CCC4; --field-2: #24403F; --field-fill: #5CC3B8;
+  --next-btn: #5CC3B8; --next-btn-hover: #74D0C6; --on-next-btn: #0E1B1C;
+  --lime: #CCFF00; --on-lime: #142627;
+  --ok: #6FDC97; --ok-bg: #173A2A; --on-ok: #0E1B1C;
+  --bad: #FF8F86; --bad-bg: #432222; --on-bad: #0E1B1C;
+  --warn: #FFC56B; --warn-bg: #3A2A10;
+  --focus: #8FDCD3; --shadow: rgb(0 0 0 / .5);
+  --s-ground: #1F3A39; --s-road: #375253; --s-edge: #4B6868; --s-mark: #6A8685; --s-me: #5CC3B8; --s-other: #9DB5A9; --s-path: #EEF4F1; --s-hit: #FF8F86;
+  color-scheme: dark;
+}
+
+/* ---------- prototype chrome ---------- */
+html, body { height: 100%; }
+body { background: var(--ui-bg); color: var(--ui-fg); display: grid; grid-template-rows: minmax(0, 1fr) auto; overflow: hidden; }
+.stage { display: flex; justify-content: center; align-items: center; gap: 40px; min-height: 0; padding-block: 16px; padding-inline: 16px; }
+.notes { width: 300px; flex: none; font: 15px/1.5 system-ui, sans-serif; color: var(--ui-fg); }
+.notes h2 { font-size: 20px; line-height: 1.25; margin: 0 0 6px; text-wrap: balance; }
+.notes p { margin: 0 0 10px; }
+.notes ul { margin: 0 0 10px; padding-left: 18px; }
+.notes .muted { color: var(--ui-muted); }
+.device { width: 390px; height: min(844px, 100%); flex: none; border-radius: 40px; border: 10px solid #0B0B0C; overflow: hidden; position: relative; box-shadow: 0 18px 50px -12px rgb(0 0 0 / .35); background: #0B0B0C; }
+.viewport { height: 100%; overflow-y: auto; overscroll-behavior: contain; position: relative; }
+.switcher { background: var(--ui-bar); color: var(--ui-bar-fg); font: 600 14px/1.2 system-ui, sans-serif; padding: 8px 12px calc(8px + env(safe-area-inset-bottom, 0px)); display: flex; flex-wrap: wrap; gap: 8px 14px; justify-content: center; align-items: center; }
+.switcher button { font: inherit; color: inherit; background: transparent; border: 1px solid var(--ui-bar-dim); border-radius: 999px; min-height: 44px; padding: 0 14px; cursor: pointer; }
+.switcher button[aria-pressed="true"] { background: var(--ui-bar-on); color: var(--ui-bar-on-fg); border-color: var(--ui-bar-on); }
+.switcher button:focus-visible { outline: 2px solid var(--ui-bar-fg); outline-offset: 2px; }
+.switcher .group { display: flex; gap: 4px; flex-wrap: wrap; justify-content: center; }
+.switcher .info { display: none; }
+@media (max-width: 760px) {
+  .stage { padding: 0; }
+  .notes { display: none; position: absolute; inset: 0 0 auto 0; z-index: 20; width: auto; background: var(--ui-bg); padding: 20px; max-height: 100%; overflow: auto; box-shadow: 0 10px 30px rgb(0 0 0 / .3); }
+  body.show-notes .notes { display: block; }
+  .device { width: 100%; height: 100%; border: 0; border-radius: 0; box-shadow: none; }
+  .switcher { font-size: 13px; gap: 6px 8px; padding-inline: 8px; }
+  .switcher button { min-height: 40px; padding: 0 10px; }
+  .switcher .info { display: inline-block; }
+}
+
+/* ---------- screen mechanics ---------- */
+.app *, .app *::before, .app *::after { box-sizing: border-box; }
+.app { min-height: 100%; font-family: "Atkinson Hyperlegible Next", "Segoe UI", system-ui, sans-serif; background: var(--bg); color: var(--ink); }
+.screen { min-height: 100%; display: flex; flex-direction: column; font-size: 18px; line-height: 1.5; }
+:where(.screen) :is(h1, h2, h3, p, figure, ol, ul) { margin: 0; }
+:where(.screen) :is(h1, h2, h3) { text-wrap: balance; }
+:where(.screen) button { font: inherit; cursor: pointer; }
+:where(.screen) :is(ol, ul) { padding: 0; list-style: none; }
+:where(fieldset.opts) { border: 0; margin: 0; padding: 0; min-width: 0; }
+.grow { flex: 1; }
+.dock { position: sticky; bottom: 0; z-index: 5; }
+.opt input { position: absolute; opacity: 0; width: 1px; height: 1px; }
+/* ponytail: !important so each block's own display (grid/flex) survives when shown */
+.screen:not(.is-after) .after-only, .is-after .before-only { display: none !important; }
+.scene svg { display: block; width: 100%; height: auto; }
+.scene .hit { opacity: 0; }
+.is-after .scene .hit { opacity: 1; }
+.sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); }
+.icon { width: 24px; height: 24px; stroke: currentColor; fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; flex: none; }
+.num { font-variant-numeric: tabular-nums; }
+.app mark { background: var(--lime); color: var(--on-lime); border-radius: 4px; padding: 0 .12em; -webkit-box-decoration-break: clone; box-decoration-break: clone; }
+
+/* =================== components =================== */
+/* logo */
+.k-logo { font-weight: 700; font-size: 22px; letter-spacing: -0.01em; display: inline-flex; align-items: center; color: var(--ink); text-decoration: none; min-height: 48px; }
+.k-logo b { background: var(--lime); color: var(--on-lime); border-radius: 7px; padding: 0 6px; margin-left: 3px; }
+/* top bar */
+.k-top { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 12px 20px; }
+.k-top .actions { display: flex; gap: 8px; }
+/* buttons */
+.k-btn { display: inline-flex; align-items: center; justify-content: center; gap: 10px; width: 100%; min-height: 56px; padding: 0 20px; border-radius: 14px; border: 0; background: var(--teal); color: var(--on-teal); font-weight: 700; font-size: 18px; line-height: 1.2; text-decoration: none; transition: background-color .12s ease-out, color .12s ease-out; -webkit-tap-highlight-color: transparent; }
+.k-btn:hover { background: var(--teal-hover); }
+.k-btn:active { background: var(--teal-press); }
+.k-btn:focus-visible { outline: 3px solid var(--focus); outline-offset: 3px; }
+.k-btn .icon { width: 20px; height: 20px; stroke-width: 2.4; }
+.k-btn--secondary { background: var(--surface); color: var(--ink); box-shadow: inset 0 0 0 1.5px var(--line); }
+.k-btn--secondary:hover { background: var(--surface-2); }
+.k-btn--secondary:active { background: var(--teal-soft-2); }
+.k-btn--onfield { background: var(--next-btn); color: var(--on-next-btn); }
+.k-btn--onfield:hover, .k-btn--onfield:active { background: var(--next-btn-hover); }
+.k-btn--onfield:focus-visible { outline-color: var(--next-btn); }
+.k-btn--text { width: auto; min-height: 48px; padding: 0 12px; background: transparent; color: var(--teal-ink); }
+.k-btn--text:hover { background: var(--teal-soft); }
+.k-btn--text:active { background: var(--teal-soft-2); }
+.k-btn:disabled, .k-btn:disabled:hover { background: var(--teal-soft); color: var(--ink2); box-shadow: none; cursor: not-allowed; }
+.k-spin { width: 20px; height: 20px; border-radius: 50%; border: 2.5px solid currentColor; border-right-color: transparent; animation: k-spin .8s linear infinite; }
+@keyframes k-spin { to { transform: rotate(1turn); } }
+@media (prefers-reduced-motion: reduce) { .k-spin { animation-duration: 2.4s; } }
+/* icon button */
+.k-ibtn { width: 48px; height: 48px; display: grid; place-items: center; border-radius: 14px; border: 0; background: var(--surface); color: var(--ink); box-shadow: inset 0 0 0 1px var(--line); transition: background-color .12s ease-out; }
+.k-ibtn:hover { background: var(--surface-2); }
+.k-ibtn:active { background: var(--teal-soft-2); }
+.k-ibtn:focus-visible { outline: 3px solid var(--focus); outline-offset: 2px; }
+/* chips */
+.k-chip { display: inline-flex; align-items: center; gap: 6px; align-self: flex-start; justify-self: start; min-height: 32px; padding: 4px 12px; border-radius: 999px; background: var(--teal-soft); color: var(--teal-ink); font-size: 15px; font-weight: 700; line-height: 1.3; }
+.k-chip .icon { width: 16px; height: 16px; stroke-width: 2.4; }
+.k-chip--plain { background: var(--surface); color: var(--ink); box-shadow: inset 0 0 0 1.5px var(--line); }
+.k-chip--trap { background: var(--warn-bg); color: var(--warn); }
+.k-chip--hook { background: var(--lime); color: var(--on-lime); }
+/* progress */
+.k-progress { flex: 1; height: 8px; border-radius: 4px; background: var(--teal-soft); overflow: hidden; }
+.k-progress i { display: block; height: 100%; border-radius: 4px; background: var(--teal); }
+.k-stack { display: flex; gap: 3px; height: 12px; }
+.k-stack i { display: block; border-radius: 6px; }
+.k-legend { display: grid; gap: 8px; font-size: 16px; }
+.k-legend div { display: flex; align-items: center; gap: 10px; }
+.k-legend i { width: 12px; height: 12px; border-radius: 4px; flex: none; }
+.k-legend b { margin-left: auto; font-variant-numeric: tabular-nums; }
+/* option (checkbox card); Questions are always checkboxes */
+.k-opt { position: relative; display: grid; grid-template-columns: 28px 1fr; gap: 6px 14px; align-items: start; min-height: 56px; padding: 14px 16px; border-radius: 18px; background: var(--surface); box-shadow: inset 0 0 0 1.5px var(--line); cursor: pointer; transition: box-shadow .12s ease-out, background-color .12s ease-out; -webkit-tap-highlight-color: transparent; }
+.k-opt:hover { box-shadow: inset 0 0 0 1.5px var(--line-strong); }
+.k-opt .box { width: 28px; height: 28px; border-radius: 8px; border: 2px solid var(--line-strong); background: var(--surface); color: transparent; display: grid; place-items: center; }
+.k-opt .box .icon { width: 18px; height: 18px; stroke-width: 2.8; }
+.k-opt .box .x { display: none; }
+.k-opt:has(input:checked) { background: var(--teal-soft); box-shadow: inset 0 0 0 2.5px var(--teal); }
+.k-opt:has(input:checked) .box { background: var(--teal); border-color: var(--teal); color: var(--on-teal); }
+.k-opt:has(input:focus-visible), .k-opt.is-focus { outline: 3px solid var(--focus); outline-offset: 2px; }
+.k-opt:has(input:disabled) { cursor: default; }
+.k-opt .verdict { grid-column: 2; display: none; align-items: center; gap: 6px; font-size: 16px; font-weight: 700; line-height: 1.3; }
+.k-opt .verdict .icon { width: 18px; height: 18px; stroke-width: 2.6; }
+/* after Check: four states, each with icon + word + colour */
+.is-after .k-opt, .is-after .k-opt:hover { background: var(--surface); box-shadow: inset 0 0 0 1.5px var(--line); }
+.is-after .k-opt.muted .txt { color: var(--ink2); }
+.is-after .k-opt.hit { background: var(--ok-bg); box-shadow: inset 0 0 0 2.5px var(--ok); }
+.is-after .k-opt.hit .box { background: var(--ok); border-color: var(--ok); color: var(--on-ok); }
+.is-after .k-opt.missed { background: var(--ok-bg); box-shadow: none; outline: 2.5px dashed var(--ok); outline-offset: -2.5px; }
+.is-after .k-opt.missed .box { border-color: var(--ok); background: var(--surface); color: transparent; }
+.is-after .k-opt.bad { background: var(--bad-bg); box-shadow: inset 0 0 0 2.5px var(--bad); }
+.is-after .k-opt.bad .box { background: var(--bad); border-color: var(--bad); color: var(--on-bad); }
+.is-after .k-opt.bad .box .ck { display: none; }
+.is-after .k-opt.bad .box .x { display: block; }
+.is-after .k-opt.hit .verdict, .is-after .k-opt.missed .verdict { display: flex; color: var(--ok); }
+.is-after .k-opt.bad .verdict { display: flex; color: var(--bad); }
+/* answer result */
+.k-result { display: grid; grid-template-columns: 40px 1fr; gap: 12px; align-items: center; }
+.k-result .ic { width: 40px; height: 40px; border-radius: 50%; display: grid; place-items: center; }
+.k-result .ic .icon { width: 22px; height: 22px; stroke-width: 2.8; }
+.k-result b { display: block; font-size: 20px; line-height: 1.2; }
+.k-result span { font-size: 16px; line-height: 1.4; color: var(--ink2); }
+.k-result--ok .ic { background: var(--ok); color: var(--on-ok); }
+.k-result--ok b { color: var(--ok); }
+.k-result--bad .ic { background: var(--bad); color: var(--on-bad); }
+.k-result--bad b { color: var(--bad); }
+/* learning blocks */
+.k-why { display: grid; gap: 8px; }
+.k-why h3 { font-size: 16px; color: var(--teal-ink); }
+.k-why .key { font-size: 21px; line-height: 1.4; font-weight: 700; }
+.k-why a { color: var(--teal-ink); font-weight: 700; text-underline-offset: 3px; }
+.k-block { padding: 18px; border-radius: 18px; display: grid; gap: 8px; }
+.k-block h3 { font-size: 18px; line-height: 1.3; display: flex; align-items: center; gap: 8px; }
+.k-block p { font-size: 17px; }
+.k-explainer { background: var(--teal-soft); }
+.k-explainer h3 .icon { color: var(--teal-ink); width: 20px; height: 20px; }
+.k-explainer p { color: var(--ink2); }
+.k-hook { background: var(--surface); box-shadow: inset 0 0 0 1.5px var(--line); }
+.k-hook p { font-size: 19px; font-weight: 700; line-height: 1.4; }
+.k-trap { background: var(--warn-bg); }
+.k-trap h3 { color: var(--warn); }
+.k-trap h3 .icon { width: 20px; height: 20px; }
+/* cards and rows */
+.k-card { background: var(--surface); border-radius: 20px; box-shadow: inset 0 0 0 1px var(--line); padding: 18px; display: grid; gap: 12px; }
+.k-row { display: flex; align-items: center; gap: 14px; width: 100%; min-height: 72px; padding: 12px 14px 12px 12px; border: 0; border-radius: 20px; background: var(--surface); box-shadow: inset 0 0 0 1px var(--line); color: var(--ink); text-align: left; transition: background-color .12s ease-out; }
+.k-row:hover { background: var(--surface-2); }
+.k-row:active { background: var(--teal-soft-2); }
+.k-row:focus-visible { outline: 3px solid var(--focus); outline-offset: 2px; }
+.k-row .tile { width: 48px; height: 48px; border-radius: 14px; background: var(--teal-soft); color: var(--teal-ink); display: grid; place-items: center; flex: none; }
+.k-row .txt { flex: 1; display: grid; min-width: 0; }
+.k-row small { color: var(--ink2); font-size: 16px; }
+.k-row > .icon { color: var(--ink2); }
+.k-note { display: flex; gap: 10px; align-items: flex-start; font-size: 16px; line-height: 1.45; color: var(--ink2); }
+.k-note .icon { width: 20px; height: 20px; margin-top: 1px; }
+/* next-step panel */
+.k-next { background: var(--field); color: var(--on-field); border-radius: 24px 24px 0 0; padding: 20px 20px calc(18px + env(safe-area-inset-bottom, 0px)); display: grid; gap: 6px; box-shadow: 0 -10px 30px -18px var(--shadow); }
+.k-next .k { font-size: 16px; font-weight: 700; color: var(--on-field2); }
+.k-next .bar { height: 6px; border-radius: 3px; background: var(--field-2); overflow: hidden; margin: 2px 0 6px; }
+.k-next .bar i { display: block; height: 100%; border-radius: 3px; background: var(--field-fill); }
+.k-next h2 { font-size: 24px; line-height: 1.2; }
+.k-next p { color: var(--on-field2); font-size: 16px; margin-bottom: 10px; }
+/* fields */
+.k-field { display: grid; gap: 6px; }
+.k-field > label, .k-field > .lbl { font-size: 16px; font-weight: 700; }
+.k-input { width: 100%; min-height: 56px; padding: 0 16px; border-radius: 14px; border: 1.5px solid var(--line-strong); background: var(--surface); color: var(--ink); font: inherit; font-size: 18px; transition: border-color .12s ease-out, box-shadow .12s ease-out; }
+.k-input::placeholder { color: var(--ink2); }
+.k-input:hover { border-color: var(--ink2); }
+.k-input:focus, .k-input.is-focus { outline: none; border-color: var(--focus); box-shadow: 0 0 0 2px var(--focus); }
+.k-input[aria-invalid="true"] { border-color: var(--bad); box-shadow: 0 0 0 1px var(--bad); }
+.k-hint { font-size: 16px; color: var(--ink2); }
+.k-err { display: flex; gap: 6px; align-items: flex-start; font-size: 16px; font-weight: 700; line-height: 1.4; color: var(--bad); }
+.k-err .icon { width: 18px; height: 18px; margin-top: 2px; }
+.k-code { display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 8px; }
+.k-code .k-input { padding: 0; text-align: center; font-size: 24px; font-weight: 700; font-variant-numeric: tabular-nums; }
+
+/* =================== screens =================== */
+/* landing */
+.l-hero { padding: 16px 20px 0; display: grid; gap: 18px; }
+.l-hero h1 { font-size: 40px; line-height: 1.1; letter-spacing: -0.02em; }
+.l-hero > p { color: var(--ink2); }
+.l-trust { display: flex; flex-wrap: wrap; justify-content: center; gap: 4px 16px; font-size: 16px; color: var(--ink2); }
+.l-trust li { display: inline-flex; align-items: center; gap: 6px; }
+.l-trust .icon { width: 18px; height: 18px; color: var(--teal-ink); stroke-width: 2.6; }
+.l-preview { margin: 32px 20px 0; background: var(--field); color: var(--on-field); border-radius: 24px; padding: 20px; display: grid; gap: 12px; }
+.l-preview .k { font-size: 16px; font-weight: 700; color: var(--on-field2); }
+.l-preview .q { font-weight: 700; font-size: 19px; line-height: 1.3; }
+.l-preview .o { display: grid; grid-template-columns: 24px 1fr; gap: 4px 12px; align-items: start; background: var(--field-2); border-radius: 14px; padding: 12px; font-size: 16px; line-height: 1.4; }
+.l-preview .o .box { width: 24px; height: 24px; border-radius: 7px; background: var(--field-fill); color: var(--field); display: grid; place-items: center; }
+.l-preview .o .box .icon { width: 16px; height: 16px; stroke-width: 3; }
+.l-preview .o b { grid-column: 2; font-size: 15px; color: var(--on-field2); }
+.l-preview .why { font-size: 17px; line-height: 1.5; }
+.l-sec { padding: 40px 20px 0; display: grid; gap: 14px; }
+.l-sec h2 { font-size: 28px; line-height: 1.2; letter-spacing: -0.01em; }
+.l-sec > p { color: var(--ink2); }
+.l-compare { display: grid; gap: 10px; }
+.l-compare .q { font-weight: 700; font-size: 17px; line-height: 1.35; }
+.l-mini { background: var(--surface); border-radius: 18px; box-shadow: inset 0 0 0 1px var(--line); padding: 14px; display: grid; gap: 10px; }
+.l-mini ol { display: grid; gap: 6px; font-size: 16px; line-height: 1.4; }
+.l-mini li { display: flex; gap: 10px; align-items: center; background: var(--bg); border-radius: 10px; padding: 8px 10px; }
+.l-mini li::before { content: ""; width: 16px; height: 16px; border-radius: 5px; border: 1.5px solid var(--line-strong); flex: none; }
+.l-mini li.new { background: var(--teal-soft); font-weight: 700; }
+.l-mini li em { margin-left: auto; font-style: normal; font-size: 14px; color: var(--teal-ink); }
+.l-steps { display: grid; gap: 18px; }
+.l-steps li { display: grid; grid-template-columns: 44px 1fr; gap: 14px; align-items: start; }
+.l-steps li > span { width: 44px; height: 44px; border-radius: 14px; background: var(--teal-soft); color: var(--teal-ink); display: grid; place-items: center; }
+.l-steps p { color: var(--ink2); font-size: 16px; }
+.l-facts { margin: 40px 20px 0; }
+.l-facts .nums { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
+.l-facts .nums b { display: block; font-size: 34px; line-height: 1.1; color: var(--teal-ink); font-variant-numeric: tabular-nums; }
+.l-facts .nums span { font-size: 16px; color: var(--ink2); }
+.l-end { padding: 40px 20px 32px; display: grid; gap: 12px; text-align: center; color: var(--ink2); font-size: 16px; }
+/* home */
+.h-count { padding: 4px 20px 0; display: grid; }
+.h-count .k { font-size: 16px; font-weight: 700; color: var(--ink2); }
+.h-count .big { font-size: 24px; font-weight: 700; }
+.h-count .big b { font-size: 64px; line-height: 1.05; letter-spacing: -0.03em; color: var(--teal-ink); font-variant-numeric: tabular-nums; }
+.h-count .sub { color: var(--ink2); font-size: 16px; }
+.h-rules { margin: 20px 20px 0; }
+.h-rules .head { display: flex; justify-content: space-between; align-items: baseline; gap: 10px; }
+.h-rules h2 { font-size: 20px; }
+.h-rules .head span { font-size: 16px; color: var(--ink2); }
+.h-list { padding: 12px 20px 0; display: grid; gap: 12px; }
+/* question */
+.q-top { display: flex; align-items: center; gap: 12px; padding: 12px 20px; }
+.q-count { font-size: 16px; font-weight: 700; color: var(--ink2); font-variant-numeric: tabular-nums; }
+.q-chip { margin: 4px 20px 12px; }
+.q-scene { margin: 0 20px; border-radius: 18px; overflow: hidden; }
+.q-stem { padding: 18px 20px 6px; font-size: 22px; line-height: 1.3; }
+.q-hint { padding: 0 20px 12px; font-size: 16px; color: var(--ink2); }
+.is-after .q-hint { display: none; }
+.is-after .q-opts { margin-top: 12px; }
+.q-opts { display: grid; gap: 10px; padding: 0 20px; }
+.q-after { padding: 22px 20px 0; display: grid; gap: 14px; }
+.q-dock { padding: 14px 20px calc(14px + env(safe-area-inset-bottom, 0px)); background: var(--bg); box-shadow: 0 -1px 0 var(--line); display: grid; grid-template-columns: 1fr 1.6fr; gap: 12px 10px; margin-top: 18px; }
+.q-dock.one { grid-template-columns: 1fr; }
+/* components sheet */
+.cs { padding: 4px 20px 40px; display: grid; gap: 40px; }
+.cs-intro { display: grid; gap: 6px; }
+.cs-intro h1 { font-size: 28px; line-height: 1.2; letter-spacing: -0.01em; }
+.cs-intro p { color: var(--ink2); font-size: 16px; }
+.cs-g { display: grid; gap: 12px; }
+.cs-g > h2 { font-size: 22px; line-height: 1.25; }
+.cs-g > p { font-size: 16px; color: var(--ink2); }
+.cs-cap { font-size: 15px; font-weight: 700; color: var(--ink2); }
+.cs-row { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; }
+.cs-stack { display: grid; gap: 10px; }
+.cs-dark { background: var(--field); border-radius: 20px; padding: 16px; display: grid; gap: 10px; }
+.cs-dark .cs-cap { color: var(--on-field2); }
+.sw-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
+.sw { border-radius: 16px; overflow: hidden; background: var(--surface); border: 1px solid var(--line); }
+.sw i { display: block; height: 52px; box-shadow: inset 0 -1px 0 var(--line); }
+.sw div { padding: 8px 10px 10px; font-size: 15px; line-height: 1.35; }
+.sw b { display: block; }
+.sw code { font: 13px/1.4 ui-monospace, "SF Mono", Menlo, monospace; color: var(--ink2); }
+.sw span { display: block; color: var(--ink2); font-size: 14px; }
+.ty { display: grid; gap: 14px; }
+.ty div { display: grid; gap: 2px; border-top: 1px solid var(--line); padding-top: 10px; }
+.ty code { font: 13px/1.4 ui-monospace, "SF Mono", Menlo, monospace; color: var(--ink2); }
+</style>
+
+<main class="stage">
+  <aside class="notes" id="notes"></aside>
+  <div class="device"><div class="viewport" id="viewport">
+  <div class="app" lang="lt">
+
+    <!-- ======================= Landing ======================= -->
+    <section class="screen" data-screen="landing">
+      <header class="k-top"><a class="k-logo" href="#landing" aria-label="KETGO">KET<b>GO</b></a><span class="k-chip">Nemokama beta</span></header>
+      <div class="l-hero">
+        <h1>Išmok KET taisykles taip, kad jos <mark>liktų</mark>.</h1>
+        <p>Klausimai, trumpas „kodėl“ po kiekvieno atsakymo ir kartojimai, suplanuoti iki tavo egzamino dienos.</p>
+        <a class="k-btn" href="#home">Pradėti<svg class="icon" viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+        <ul class="l-trust">
+          <li><svg class="icon" viewBox="0 0 24 24"><path d="M5 12l5 5 9-10"/></svg>Nemokamai</li>
+          <li><svg class="icon" viewBox="0 0 24 24"><path d="M5 12l5 5 9-10"/></svg>Be registracijos</li>
+        </ul>
+      </div>
+      <figure class="l-preview">
+        <figcaption class="k">Taip atrodo atsakymas</figcaption>
+        <p class="q">Kam duodi kelią lygia&shy;reikšmių kelių sankryžoje?</p>
+        <div class="o"><span class="box"><svg class="icon" viewBox="0 0 24 24"><path d="M5 12l5 5 9-10"/></svg></span><span>Iš dešinės, jei trajektorijos kertasi</span><b>Teisinga · tavo pasirinkimas</b></div>
+        <p class="why"><mark>Duok kelią iš dešinės, kai jūsų keliai kertasi.</mark> Jei nesikerta – praleisti nereikia.</p>
+      </figure>
+      <div class="l-sec">
+        <h2>Klausimas grįžta kitoks</h2>
+        <p>Kitą kartą – kita variantų tvarka ir kiti klaidinantys variantai. Išmoksti taisyklę, ne atsakymo vietą.</p>
+        <div class="l-compare">
+          <p class="q">Kam duodi kelią lygia&shy;reikšmių kelių sankryžoje?</p>
+          <div class="l-mini"><span class="k-chip k-chip--plain">Šiandien</span>
+            <ol><li>Iš dešinės, jei trajektorijos kertasi</li><li>Iš dešinės visada</li><li>Tik kai yra ženklai</li></ol></div>
+          <div class="l-mini"><span class="k-chip">Po 3 dienų</span>
+            <ol><li>Tik kai yra ženklai</li><li class="new">Iš kairės artėjančiam<em>naujas</em></li><li>Iš dešinės, jei trajektorijos kertasi</li></ol></div>
+        </div>
+      </div>
+      <div class="l-sec">
+        <h2>Kaip tai veikia</h2>
+        <ol class="l-steps">
+          <li><span><svg class="icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M9.5 9.5a2.5 2.5 0 1 1 3.5 2.3c-.6.3-1 .9-1 1.5V14M12 17.5v.01"/></svg></span><div><strong>Pirma spėji, tada supranti.</strong><p>Nauja taisyklė prasideda klausimu. Po atsakymo – paaiškinimas.</p></div></li>
+          <li><span><svg class="icon" viewBox="0 0 24 24"><path d="M20 12a8 8 0 0 1-14 5.3M4 12a8 8 0 0 1 14-5.3M18 3v4h-4M6 21v-4h4"/></svg></span><div><strong>Taisyklė grįžta, kai pradedi pamiršti.</strong><p>Kartojimai suplanuoti pagal tavo egzamino datą.</p></div></li>
+          <li><span><svg class="icon" viewBox="0 0 24 24"><circle cx="12" cy="13" r="8"/><path d="M12 9v4l2.5 2.5M10 2h4"/></svg></span><div><strong>Bandomasis egzaminas kaip tikras.</strong><p>Tos pačios sąlygos kaip „Regitroje“.</p></div></li>
+        </ol>
+      </div>
+      <div class="k-card l-facts">
+        <strong>Teorijos egzaminas, B kategorija</strong>
+        <div class="nums"><div><b>30</b><span>klausimų</span></div><div><b>30</b><span>minučių</span></div><div><b>24</b><span>išlaikyti</span></div></div>
+      </div>
+      <div class="l-end"><a class="k-btn" href="#home">Pradėti nemokamai</a><p>KETGO · nemokama beta · 2026</p></div>
+    </section>
+
+    <!-- ======================= Home ======================= -->
+    <section class="screen" data-screen="home" hidden>
+      <header class="k-top"><a class="k-logo" href="#landing" aria-label="KETGO">KET<b>GO</b></a>
+        <span class="actions">
+          <button class="k-ibtn" type="button" aria-label="Pažanga"><svg class="icon" viewBox="0 0 24 24"><path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/></svg></button>
+          <button class="k-ibtn" type="button" aria-label="Meniu"><svg class="icon" viewBox="0 0 24 24"><path d="M4 7h16M4 12h16M4 17h16"/></svg></button>
+        </span></header>
+      <div class="h-count">
+        <p class="k">Iki egzamino</p>
+        <p class="big"><b>29</b> d.</p>
+        <p class="sub">Lapkričio 12 d. · užtenka apie 1 pamokos per dieną</p>
+      </div>
+      <div class="k-card h-rules">
+        <div class="head"><h2>Taisyklės</h2><span class="num">38 iš 296 įsimintos</span></div>
+        <div class="k-stack" role="img" aria-label="38 įsimintos, 21 mokaisi, 237 dar nesutiktos"><i style="flex:38;background:var(--teal)"></i><i style="flex:21;background:var(--mid)"></i><i style="flex:237;background:var(--teal-soft)"></i></div>
+        <div class="k-legend">
+          <div><i style="background:var(--teal)"></i>Įsimintos<b>38</b></div>
+          <div><i style="background:var(--mid)"></i>Mokaisi<b>21</b></div>
+          <div><i style="background:var(--teal-soft);box-shadow:inset 0 0 0 1px var(--line-strong)"></i>Dar nesutiktos<b>237</b></div>
+        </div>
+      </div>
+      <div class="h-list">
+        <button class="k-row" type="button"><span class="tile"><svg class="icon" viewBox="0 0 24 24"><circle cx="12" cy="13" r="8"/><path d="M12 9v4l2.5 2.5M10 2h4"/></svg></span><span class="txt"><strong>Bandomasis egzaminas</strong><small>30 klausimų · 30 min.</small></span><svg class="icon" viewBox="0 0 24 24"><path d="M9 6l6 6-6 6"/></svg></button>
+        <p class="k-note"><svg class="icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 11v5M12 8v.01"/></svg>Pasirengimą parodysime po pirmojo bandomojo egzamino antroje programos pusėje.</p>
+      </div>
+      <div class="grow"></div>
+      <div class="k-next dock" style="margin-top:20px">
+        <span class="k">Toliau · 7 pamoka iš 36</span>
+        <div class="bar" role="img" aria-label="6 pamokos iš 36 baigtos"><i style="width:16.7%"></i></div>
+        <h2>Lygiareikšmių kelių sankryžos</h2>
+        <p>8 naujos taisyklės · 6 kartoti · apie 18 min.</p>
+        <a class="k-btn k-btn--onfield" href="#question">Tęsti<svg class="icon" viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+      </div>
+    </section>
+
+    <!-- ======================= Question ======================= -->
+    <section class="screen" data-screen="question" hidden>
+      <div class="q-top">
+        <button class="k-ibtn" type="button" aria-label="Uždaryti pamoką"><svg class="icon" viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
+        <div class="k-progress" role="progressbar" aria-label="Pamokos eiga" aria-valuemin="1" aria-valuemax="22" aria-valuenow="5"><i style="width:23%"></i></div>
+        <span class="q-count">5 / 22</span>
+      </div>
+      <span class="k-chip q-chip"><svg class="icon" viewBox="0 0 24 24"><path d="M12 3l2.2 5.8L20 11l-5.8 2.2L12 19l-2.2-5.8L4 11l5.8-2.2z"/></svg>Nauja taisyklė · pabandyk atspėti</span>
+      <div class="q-scene scene"></div>
+      <h2 class="q-stem">Kam vairuotojas privalo duoti kelią lygia&shy;reikšmių kelių sankryžoje?</h2>
+      <p class="q-hint">Pažymėk visus teisingus variantus.</p>
+      <fieldset class="q-opts opts">
+        <legend class="sr">Pažymėk visus teisingus variantus</legend>
+        <label class="k-opt opt muted"><input type="checkbox"><span class="box"><svg class="icon ck" viewBox="0 0 24 24"><path d="M5 12l5 5 9-10"/></svg><svg class="icon x" viewBox="0 0 24 24"><path d="M7 7l10 10M17 7L7 17"/></svg></span><span class="txt">Iš dešinės artėjančioms transporto priemonėms tik tada, kai sankryžoje stovi pirmenybės ženklai.</span></label>
+        <label class="k-opt opt missed"><input type="checkbox"><span class="box"><svg class="icon ck" viewBox="0 0 24 24"><path d="M5 12l5 5 9-10"/></svg><svg class="icon x" viewBox="0 0 24 24"><path d="M7 7l10 10M17 7L7 17"/></svg></span><span class="txt">Iš dešinės artėjančioms transporto priemonėms, jeigu jų važiavimo trajektorijos kertasi.</span><span class="verdict"><svg class="icon" viewBox="0 0 24 24"><path d="M5 12l5 5 9-10"/></svg>Teisingas variantas · nepažymėjai</span></label>
+        <label class="k-opt opt bad"><input type="checkbox" checked><span class="box"><svg class="icon ck" viewBox="0 0 24 24"><path d="M5 12l5 5 9-10"/></svg><svg class="icon x" viewBox="0 0 24 24"><path d="M7 7l10 10M17 7L7 17"/></svg></span><span class="txt">Iš dešinės artėjančioms transporto priemonėms visada, net jeigu jų trajektorijos nesikerta.</span><span class="verdict"><svg class="icon" viewBox="0 0 24 24"><path d="M7 7l10 10M17 7L7 17"/></svg>Neteisinga · tavo pasirinkimas</span></label>
+      </fieldset>
+      <div class="q-after after-only">
+        <div class="k-why">
+          <h3>Kodėl</h3>
+          <p class="key"><mark>Duok kelią iš dešinės, kai jūsų keliai kertasi.</mark></p>
+          <p>Lygiareikšmių kelių sankryžoje praleidi iš dešinės artėjančią transporto priemonę, jeigu jūsų važiavimo trajektorijos kertasi. Jei nesikerta – praleisti nereikia. <a href="#question-after">KET 155 p.</a></p>
+        </div>
+        <div class="k-block k-explainer">
+          <h3><svg class="icon" viewBox="0 0 24 24"><path d="M4 5.5A2.5 2.5 0 0 1 6.5 3H20v15H6.5A2.5 2.5 0 0 0 4 20.5zM4 20.5A2.5 2.5 0 0 0 6.5 23H20"/></svg>Dešinės rankos taisyklė</h3>
+          <p>Nėra ženklų, šviesoforo ir reguliuotojo, keliai lygiareikšmiai: pirmas važiuoja tas, kuris iš dešinės. Ši taisyklė dar grįš šioje pamokoje – su kitais variantais.</p>
+        </div>
+      </div>
+      <div class="grow"></div>
+      <div class="q-dock dock before-only"><button class="k-btn k-btn--secondary" type="button" data-check>Spėju</button><button class="k-btn" type="button" data-check data-needs-choice>Tikrinti</button></div>
+      <div class="q-dock one dock after-only">
+        <div class="k-result k-result--bad" role="status"><span class="ic"><svg class="icon" viewBox="0 0 24 24"><path d="M7 7l10 10M17 7L7 17"/></svg></span><div><b>Neteisingai</b><span>Teisingas variantas pažymėtas žaliai.</span></div></div>
+        <button class="k-btn" type="button" data-next>Toliau<svg class="icon" viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button>
+      </div>
+    </section>
+
+    <!-- ======================= Components ======================= -->
+    <section class="screen" data-screen="components" hidden>
+      <header class="k-top"><a class="k-logo" href="#landing" aria-label="KETGO">KET<b>GO</b></a><span class="k-chip k-chip--plain" lang="en">Components</span></header>
+      <div class="cs">
+        <div class="cs-intro" lang="en"><h1>KETGO building blocks</h1><p>Every part, with its states. Tap them: they react like the real app. Theme follows your phone (switch it in the bar).</p></div>
+
+        <div class="cs-g">
+          <h2 lang="en">Colours</h2>
+          <p lang="en">Teal does the work. Lime only marks the one thing to remember. Green and red only mean right and wrong.</p>
+          <div class="sw-grid" id="swatches"></div>
+        </div>
+
+        <div class="cs-g">
+          <h2 lang="en">Type</h2>
+          <p lang="en">One font, Atkinson Hyperlegible Next, in two weights (regular and bold). 13 KB, all Lithuanian letters.</p>
+          <div class="ty">
+            <div><code>Display · 40/44 bold</code><span style="font-size:40px;line-height:1.1;font-weight:700;letter-spacing:-0.02em">Įsimink taisyklę</span></div>
+            <div><code>Headline · 28/34 bold</code><span style="font-size:28px;line-height:1.2;font-weight:700">Klausimas grįžta kitoks</span></div>
+            <div><code>Title · 22/29 bold</code><span style="font-size:22px;line-height:1.3;font-weight:700">Kam duodi kelią sankryžoje?</span></div>
+            <div><code>Body · 18/27 regular</code><span>Pirmas važiuoja tas, kuris iš dešinės. Šeši žodžiai, aiškiai ir ramiai.</span></div>
+            <div><code>Small · 16/23 regular</code><span style="font-size:16px;color:var(--ink2)">8 naujos taisyklės · 6 kartoti · apie 18 min.</span></div>
+            <div><code>Label · 15/20 bold</code><span style="font-size:15px;font-weight:700">Nauja taisyklė</span></div>
+          </div>
+        </div>
+
+        <div class="cs-g">
+          <h2 lang="en">Buttons</h2>
+          <p lang="en">One main button per screen. 56 px high, so they are easy to hit with a thumb.</p>
+          <div class="cs-stack">
+            <span class="cs-cap" lang="en">Main</span>
+            <button class="k-btn" type="button">Tęsti<svg class="icon" viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button>
+            <span class="cs-cap" lang="en">Second choice</span>
+            <button class="k-btn k-btn--secondary" type="button">Spėju</button>
+            <span class="cs-cap" lang="en">Not ready yet (nothing chosen)</span>
+            <button class="k-btn" type="button" disabled>Tikrinti</button>
+            <span class="cs-cap" lang="en">Working</span>
+            <button class="k-btn" type="button" aria-busy="true"><span class="k-spin" aria-hidden="true"></span>Siunčiame kodą…</button>
+            <span class="cs-cap" lang="en">Quiet action</span>
+            <div class="cs-row"><button class="k-btn k-btn--text" type="button">Vėliau</button><button class="k-btn k-btn--text" type="button">Keisti datą</button></div>
+            <div class="cs-dark"><span class="cs-cap" lang="en">On the teal panel</span><button class="k-btn k-btn--onfield" type="button">Tęsti<svg class="icon" viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button></div>
+            <span class="cs-cap" lang="en">Icon buttons</span>
+            <div class="cs-row">
+              <button class="k-ibtn" type="button" aria-label="Uždaryti"><svg class="icon" viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
+              <button class="k-ibtn" type="button" aria-label="Pažanga"><svg class="icon" viewBox="0 0 24 24"><path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/></svg></button>
+              <button class="k-ibtn" type="button" aria-label="Meniu"><svg class="icon" viewBox="0 0 24 24"><path d="M4 7h16M4 12h16M4 17h16"/></svg></button>
+              <button class="k-ibtn" type="button" aria-label="Atgal"><svg class="icon" viewBox="0 0 24 24"><path d="M15 6l-6 6 6 6"/></svg></button>
+            </div>
+          </div>
+        </div>
+
+        <div class="cs-g">
+          <h2 lang="en">Labels</h2>
+          <div class="cs-row">
+            <span class="k-chip"><svg class="icon" viewBox="0 0 24 24"><path d="M12 3l2.2 5.8L20 11l-5.8 2.2L12 19l-2.2-5.8L4 11l5.8-2.2z"/></svg>Nauja taisyklė</span>
+            <span class="k-chip k-chip--plain"><svg class="icon" viewBox="0 0 24 24"><path d="M20 12a8 8 0 0 1-14 5.3M4 12a8 8 0 0 1 14-5.3M18 3v4h-4M6 21v-4h4"/></svg>Kartojimas</span>
+            <span class="k-chip k-chip--trap"><svg class="icon" viewBox="0 0 24 24"><path d="M12 4l9 16H3zM12 10v4M12 17v.01"/></svg>Egzamino spąstai</span>
+            <span class="k-chip k-chip--hook">Įsiminimui</span>
+          </div>
+        </div>
+
+        <div class="cs-g">
+          <h2 lang="en">Answer options</h2>
+          <p lang="en">Always checkboxes, so the learner never learns how many are right. Tap to try.</p>
+          <div class="cs-stack">
+            <span class="cs-cap" lang="en">Before Check: empty and chosen</span>
+            <label class="k-opt opt"><input type="checkbox"><span class="box"><svg class="icon ck" viewBox="0 0 24 24"><path d="M5 12l5 5 9-10"/></svg></span><span class="txt">Iš kairės artėjančiam.</span></label>
+            <label class="k-opt opt"><input type="checkbox" checked><span class="box"><svg class="icon ck" viewBox="0 0 24 24"><path d="M5 12l5 5 9-10"/></svg></span><span class="txt">Iš dešinės, jeigu trajektorijos kertasi.</span></label>
+            <span class="cs-cap" lang="en">Keyboard focus</span>
+            <label class="k-opt opt is-focus"><input type="checkbox" tabindex="-1"><span class="box"><svg class="icon ck" viewBox="0 0 24 24"><path d="M5 12l5 5 9-10"/></svg></span><span class="txt">Tik kai yra ženklai.</span></label>
+          </div>
+          <div class="cs-stack is-after">
+            <span class="cs-cap" lang="en">After Check: the four states</span>
+            <label class="k-opt opt hit"><input type="checkbox" checked disabled><span class="box"><svg class="icon ck" viewBox="0 0 24 24"><path d="M5 12l5 5 9-10"/></svg><svg class="icon x" viewBox="0 0 24 24"><path d="M7 7l10 10M17 7L7 17"/></svg></span><span class="txt" lang="en">Right and chosen.</span><span class="verdict"><svg class="icon" viewBox="0 0 24 24"><path d="M5 12l5 5 9-10"/></svg>Teisinga · tavo pasirinkimas</span></label>
+            <label class="k-opt opt missed"><input type="checkbox" disabled><span class="box"><svg class="icon ck" viewBox="0 0 24 24"><path d="M5 12l5 5 9-10"/></svg><svg class="icon x" viewBox="0 0 24 24"><path d="M7 7l10 10M17 7L7 17"/></svg></span><span class="txt" lang="en">Right but missed (dashed edge).</span><span class="verdict"><svg class="icon" viewBox="0 0 24 24"><path d="M5 12l5 5 9-10"/></svg>Teisingas variantas · nepažymėjai</span></label>
+            <label class="k-opt opt bad"><input type="checkbox" checked disabled><span class="box"><svg class="icon ck" viewBox="0 0 24 24"><path d="M5 12l5 5 9-10"/></svg><svg class="icon x" viewBox="0 0 24 24"><path d="M7 7l10 10M17 7L7 17"/></svg></span><span class="txt" lang="en">Wrong and chosen.</span><span class="verdict"><svg class="icon" viewBox="0 0 24 24"><path d="M7 7l10 10M17 7L7 17"/></svg>Neteisinga · tavo pasirinkimas</span></label>
+            <label class="k-opt opt muted"><input type="checkbox" disabled><span class="box"><svg class="icon ck" viewBox="0 0 24 24"><path d="M5 12l5 5 9-10"/></svg><svg class="icon x" viewBox="0 0 24 24"><path d="M7 7l10 10M17 7L7 17"/></svg></span><span class="txt" lang="en">Wrong and not chosen: no mark, softer text.</span></label>
+          </div>
+        </div>
+
+        <div class="cs-g">
+          <h2 lang="en">Result after Check</h2>
+          <div class="k-card"><div class="k-result k-result--ok"><span class="ic"><svg class="icon" viewBox="0 0 24 24"><path d="M5 12l5 5 9-10"/></svg></span><div><b>Teisingai</b><span>Pažymėjai visus teisingus variantus.</span></div></div></div>
+          <div class="k-card"><div class="k-result k-result--bad"><span class="ic"><svg class="icon" viewBox="0 0 24 24"><path d="M7 7l10 10M17 7L7 17"/></svg></span><div><b>Neteisingai</b><span>Teisingas variantas pažymėtas žaliai.</span></div></div></div>
+        </div>
+
+        <div class="cs-g">
+          <h2 lang="en">Learning blocks</h2>
+          <p lang="en">Shown after Check. Colour is used for teaching here, not decoration. Texts are examples.</p>
+          <div class="k-card"><div class="k-why"><h3>Kodėl</h3><p class="key"><mark>Duok kelią iš dešinės, kai jūsų keliai kertasi.</mark></p><p>Jei trajektorijos nesikerta – praleisti nereikia. <a href="#components">KET 155 p.</a></p></div></div>
+          <div class="k-block k-explainer"><h3><svg class="icon" viewBox="0 0 24 24"><path d="M4 5.5A2.5 2.5 0 0 1 6.5 3H20v15H6.5A2.5 2.5 0 0 0 4 20.5zM4 20.5A2.5 2.5 0 0 0 6.5 23H20"/></svg>Dešinės rankos taisyklė</h3><p>Nėra ženklų, šviesoforo ir reguliuotojo: pirmas važiuoja tas, kuris iš dešinės.</p></div>
+          <div class="k-block k-hook"><span class="k-chip k-chip--hook">Įsiminimui</span><p>Kas iš dešinės – tas pirmas.</p></div>
+          <div class="k-block k-trap"><h3><svg class="icon" viewBox="0 0 24 24"><path d="M12 4l9 16H3zM12 10v4M12 17v.01"/></svg>Egzamino spąstai</h3><p>Žodis „visada“. Praleidi tik tada, kai trajektorijos kertasi.</p></div>
+        </div>
+
+        <div class="cs-g">
+          <h2 lang="en">Progress</h2>
+          <span class="cs-cap" lang="en">Lesson</span>
+          <div style="display:flex;align-items:center;gap:12px"><div class="k-progress" role="img" aria-label="5 iš 22"><i style="width:23%"></i></div><span class="q-count">5 / 22</span></div>
+          <span class="cs-cap" lang="en">Rules</span>
+          <div class="k-card">
+            <div class="k-stack" role="img" aria-label="38 įsimintos, 21 mokaisi, 237 dar nesutiktos"><i style="flex:38;background:var(--teal)"></i><i style="flex:21;background:var(--mid)"></i><i style="flex:237;background:var(--teal-soft)"></i></div>
+            <div class="k-legend"><div><i style="background:var(--teal)"></i>Įsimintos<b>38</b></div><div><i style="background:var(--mid)"></i>Mokaisi<b>21</b></div><div><i style="background:var(--teal-soft);box-shadow:inset 0 0 0 1px var(--line-strong)"></i>Dar nesutiktos<b>237</b></div></div>
+          </div>
+        </div>
+
+        <div class="cs-g">
+          <h2 lang="en">Rows and notes</h2>
+          <button class="k-row" type="button"><span class="tile"><svg class="icon" viewBox="0 0 24 24"><circle cx="12" cy="13" r="8"/><path d="M12 9v4l2.5 2.5M10 2h4"/></svg></span><span class="txt"><strong>Bandomasis egzaminas</strong><small>30 klausimų · 30 min.</small></span><svg class="icon" viewBox="0 0 24 24"><path d="M9 6l6 6-6 6"/></svg></button>
+          <button class="k-row" type="button"><span class="tile"><svg class="icon" viewBox="0 0 24 24"><rect x="3.5" y="5" width="17" height="15" rx="3"/><path d="M3.5 10h17M8 3v4M16 3v4"/></svg></span><span class="txt"><strong>Egzamino data</strong><small>Lapkričio 12 d.</small></span><svg class="icon" viewBox="0 0 24 24"><path d="M9 6l6 6-6 6"/></svg></button>
+          <p class="k-note"><svg class="icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 11v5M12 8v.01"/></svg>Pasirengimą parodysime po pirmojo bandomojo egzamino.</p>
+        </div>
+
+        <div class="cs-g">
+          <h2 lang="en">Fields</h2>
+          <p lang="en">For the exam date (Onboarding) and the optional Account (email + 6-digit code).</p>
+          <div class="k-field"><label for="cs-date">Egzamino data</label><input class="k-input" id="cs-date" type="date" value="2026-11-12"></div>
+          <div class="k-field"><label for="cs-mail">El. paštas</label><input class="k-input" id="cs-mail" type="email" placeholder="vardas@pastas.lt" autocomplete="email"><span class="k-hint">Atsiųsime 6 skaitmenų kodą. Slaptažodžio nereikia.</span></div>
+          <div class="k-field"><label for="cs-mail2">El. paštas · <span lang="en">focus</span></label><input class="k-input is-focus" id="cs-mail2" type="email" value="jonas@pastas"></div>
+          <div class="k-field"><label for="cs-mail3">El. paštas · <span lang="en">error</span></label><input class="k-input" id="cs-mail3" type="email" value="jonas.pastas.lt" aria-invalid="true" aria-describedby="cs-err"><span class="k-err" id="cs-err"><svg class="icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v6M12 16.5v.01"/></svg>Trūksta „@“. Patikrink el. pašto adresą.</span></div>
+          <div class="k-field"><span class="lbl" id="cs-code-l">Kodas iš laiško</span>
+            <div class="k-code" role="group" aria-labelledby="cs-code-l"><input class="k-input" inputmode="numeric" maxlength="1" value="4" aria-label="1 skaitmuo"><input class="k-input" inputmode="numeric" maxlength="1" value="7" aria-label="2 skaitmuo"><input class="k-input" inputmode="numeric" maxlength="1" value="1" aria-label="3 skaitmuo"><input class="k-input is-focus" inputmode="numeric" maxlength="1" aria-label="4 skaitmuo"><input class="k-input" inputmode="numeric" maxlength="1" aria-label="5 skaitmuo"><input class="k-input" inputmode="numeric" maxlength="1" aria-label="6 skaitmuo"></div></div>
+        </div>
+      </div>
+    </section>
+
+  </div>
+  </div></div>
+</main>
+
+<nav class="switcher" aria-label="Prototipo valdymas">
+  <span class="group" id="screens">
+    <button type="button" data-go="landing" aria-pressed="true">Landing</button>
+    <button type="button" data-go="home" aria-pressed="false">Home</button>
+    <button type="button" data-go="question" aria-pressed="false">Question</button>
+    <button type="button" data-go="components" aria-pressed="false">Components</button>
+  </span>
+  <button type="button" id="state" aria-pressed="false" hidden>After check</button>
+  <button type="button" id="theme" aria-label="Theme: follows phone">◐ Phone</button>
+  <button type="button" class="info" id="info" aria-pressed="false">Notes</button>
+</nav>
+
+<!-- one bird's-eye scene, drawn with the tokens. Synthetic illustration. -->
+<template id="scene-tpl">
+  <svg viewBox="0 0 320 190" role="img" aria-label="Lygiareikšmių kelių sankryža: tu važiuoji tiesiai, automobilis artėja iš dešinės">
+    <rect width="320" height="190" fill="var(--s-ground)"/>
+    <rect x="0" y="70" width="320" height="52" fill="var(--s-road)"/>
+    <rect x="134" y="0" width="52" height="190" fill="var(--s-road)"/>
+    <path d="M0 70H134V0M186 0V70H320M0 122H134V190M186 190V122H320" fill="none" stroke="var(--s-edge)" stroke-width="2.5"/>
+    <path d="M0 96H120M200 96H320M160 0V56M160 136V190" stroke="var(--s-mark)" stroke-width="2" stroke-dasharray="10 9" fill="none"/>
+    <path d="M173 150V18" stroke="var(--s-path)" stroke-width="2.5" stroke-dasharray="4 6" fill="none"/>
+    <path d="M286 83H40" stroke="var(--s-path)" stroke-width="2.5" stroke-dasharray="4 6" fill="none"/>
+    <path d="M168 26l5-9 5 9M48 78l-9 5 9 5" fill="none" stroke="var(--s-path)" stroke-width="2.5" stroke-linejoin="round" stroke-linecap="round"/>
+    <g transform="translate(164 148)"><rect width="18" height="32" rx="5" fill="var(--s-me)"/><rect x="3" y="5" width="12" height="7" rx="2" fill="var(--s-ground)" opacity=".7"/></g>
+    <g transform="translate(270 74)"><rect width="32" height="18" rx="5" fill="var(--s-other)"/><rect x="4" y="3" width="7" height="12" rx="2" fill="var(--s-ground)" opacity=".7"/></g>
+    <g class="hit"><circle cx="173" cy="83" r="13" fill="none" stroke="var(--s-hit)" stroke-width="3"/><text x="194" y="64" font-size="13" font-weight="700" fill="var(--s-hit)" font-family="system-ui, sans-serif">kertasi</text></g>
+  </svg>
+</template>
+
+<script>
+(() => {
+  const NOTES = `
+    <h2>KETGO · Teal</h2>
+    <p>You chose Teal. This version improves its parts. Open <b>Components</b> to see every part and its states in one place.</p>
+    <p><b>What is new</b></p>
+    <ul>
+      <li>Buttons react when pressed. "Tikrinti" stays grey until an option is chosen.</li>
+      <li>After Check, each option shows one of four states, with an icon, a word and a colour. A missed right answer has a dashed edge.</li>
+      <li>A clear result line ("Neteisingai") sits next to the "Toliau" button.</li>
+      <li>Learning blocks: "Kodėl", Rule Explainer, Memory Hook and Exam Trap.</li>
+      <li>Fields for the exam date, email and the 6-digit code, with focus and error states.</li>
+      <li>Text is 16 px or larger everywhere. Before, some text was 14 px.</li>
+    </ul>
+    <p class="muted">All numbers on Home are examples. The road picture is a rough sketch. Older versions: v1.html and v2.html.</p>`;
+  const SCREENS = ['landing', 'home', 'question', 'components'];
+  // old links (#a-home) still work
+  const RE = /^#(?:a-)?(landing|home|question|components)(-after)?$/;
+  const root = document.documentElement;
+  const vp = document.getElementById('viewport');
+  document.getElementById('notes').innerHTML = NOTES;
+  let s = 0, after = false;
+
+  const tpl = document.getElementById('scene-tpl');
+  document.querySelectorAll('.scene').forEach(el => el.appendChild(tpl.content.cloneNode(true)));
+
+  // colour swatches read the live tokens, so they show the current theme
+  const SW = [
+    ['teal', 'Deep Teal', 'Main buttons, chosen option'], ['field', 'Night Teal', 'Next-step panel, preview'],
+    ['ink', 'Ink', 'Text'], ['ink2', 'Ink, soft', 'Second text'],
+    ['bg', 'Mist', 'Page'], ['surface', 'Surface', 'Cards, options'],
+    ['teal-soft', 'Teal Wash', 'Labels, explainer'], ['line', 'Line', 'Card edges'],
+    ['lime', 'Highlighter Lime', 'Only the one thing to remember'], ['mid', 'Teal, middle', 'Rules you are learning'],
+    ['ok', 'Right', 'Right answer (with ✓ and a word)'], ['bad', 'Wrong', 'Wrong answer (with ✕ and a word)'],
+    ['warn', 'Trap', 'Exam Trap text'], ['warn-bg', 'Trap Wash', 'Exam Trap block'],
+  ];
+  const drawSwatches = () => {
+    const cs = getComputedStyle(root);
+    document.getElementById('swatches').innerHTML = SW.map(([t, n, r]) => {
+      const hex = cs.getPropertyValue('--' + t).trim();
+      return `<div class="sw" lang="en"><i style="background:var(--${t})"></i><div><b>${n}</b><code>${hex}</code><span>${r}</span></div></div>`;
+    }).join('');
+  };
+
+  const q = document.querySelector('[data-screen="question"]');
+  const syncCheck = () => {
+    const any = [...q.querySelectorAll('.q-opts input')].some(i => i.checked);
+    q.querySelectorAll('[data-needs-choice]').forEach(b => { b.disabled = !any; });
+  };
+  q.querySelector('.q-opts').addEventListener('change', syncCheck);
+
+  function render(push) {
+    const sk = SCREENS[s];
+    document.querySelectorAll('.screen').forEach(el => { el.hidden = el.dataset.screen !== sk; });
+    q.classList.toggle('is-after', after);
+    q.querySelectorAll('.q-opts input').forEach(i => { i.disabled = after; });
+    syncCheck();
+    document.querySelectorAll('#screens button').forEach(b => b.setAttribute('aria-pressed', String(b.dataset.go === sk)));
+    const st = document.getElementById('state');
+    st.hidden = sk !== 'question';
+    st.setAttribute('aria-pressed', String(after));
+    if (sk === 'components') drawSwatches();
+    if (push) { try { history.replaceState(null, '', `#${sk}${after && sk === 'question' ? '-after' : ''}`); } catch (e) {} }
+    vp.scrollTop = 0;
+  }
+  function go(hash) {
+    const m = (hash || '').match(RE);
+    if (!m) return false;
+    s = SCREENS.indexOf(m[1]); after = !!m[2] && m[1] === 'question';
+    return true;
+  }
+  document.querySelectorAll('#screens button').forEach(b => b.onclick = () => { s = SCREENS.indexOf(b.dataset.go); render(true); });
+  document.getElementById('state').onclick = () => { after = !after; render(true); };
+  document.querySelectorAll('[data-check]').forEach(b => b.onclick = () => { after = true; render(true); });
+  document.querySelectorAll('[data-next]').forEach(b => b.onclick = () => { after = false; render(true); });
+  document.addEventListener('click', e => {
+    const a = e.target.closest('a[href^="#"]');
+    if (!a || !go(a.getAttribute('href'))) return;
+    e.preventDefault();
+    render(true);
+  });
+  const themes = [null, 'light', 'dark'], names = ['Phone', 'Light', 'Dark'];
+  let t = 0;
+  document.getElementById('theme').onclick = e => {
+    t = (t + 1) % 3;
+    if (themes[t]) root.setAttribute('data-theme', themes[t]); else root.removeAttribute('data-theme');
+    e.currentTarget.textContent = '◐ ' + names[t];
+    e.currentTarget.setAttribute('aria-label', 'Theme: ' + (t ? names[t] : 'follows phone'));
+    if (SCREENS[s] === 'components') drawSwatches();
+  };
+  matchMedia('(prefers-color-scheme: dark)').addEventListener('change', () => { if (SCREENS[s] === 'components') drawSwatches(); });
+  document.getElementById('info').onclick = e => {
+    const on = document.body.classList.toggle('show-notes');
+    e.currentTarget.setAttribute('aria-pressed', String(on));
+  };
+  window.addEventListener('hashchange', () => { if (go(location.hash)) render(false); });
+  go(location.hash);
+  render(false);
+})();
+</script>

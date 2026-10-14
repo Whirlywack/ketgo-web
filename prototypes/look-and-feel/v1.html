@@ -1,0 +1,885 @@
+<title>KETGO Look Directions</title>
+<!--
+  VERSION 1 (rejected 2026-10-14: B and C out, A "debatable"). Current version: index.html.
+  PROTOTYPE, throwaway. Ticket: "Look and feel" (Whirlywack/ketgo-web#12).
+  Plan: three look directions (A Teal + lime evolved, B Course map, C Atšvaitas),
+  each on Landing, Home and Question, switched from the bar at the bottom.
+  Deep link: #a-landing, #b-home, #c-question, #c-question-after.
+  Keys: ← → change direction. All numbers on Home are examples.
+
+  THESIS A: the 2025 identity, light-first; refuses glow and lime-as-text.
+  THESIS B: the Program is an orienteering course; Lessons are controls visited in order, the exam is the finish.
+  THESIS C: every Rule is a reflector that lights up when Remembered; refuses decoration, the lit grid is real progress.
+-->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible+Next:wght@400;700&family=Barlow:wght@400;600&family=Barlow+Condensed:wght@600;700&family=Archivo:wdth,wght@100..125,400..900&display=swap">
+<style>
+/* Layout: prototype chrome (notes + phone frame + switcher bar) around three self-contained screen worlds. */
+:root {
+  /* prototype chrome */
+  --ui-bg: #E6E7EA; --ui-fg: #17181B; --ui-muted: #555963; --ui-line: #CDD0D6;
+  --ui-bar: #17181B; --ui-bar-fg: #FFFFFF; --ui-bar-dim: #A3A7B0; --ui-bar-on: #FFFFFF; --ui-bar-on-fg: #17181B;
+
+  /* A · Teal + lime */
+  --a-bg: #F2F5F1; --a-surface: #FFFFFF; --a-ink: #142627; --a-ink2: #3B5355; --a-line: #C6D4C3;
+  --a-field: #142627; --a-on-field: #F2F5F1; --a-on-field2: #B9CCC2; --a-field-line: #2C4A4C;
+  --a-lime: #CCFF00; --a-on-lime: #142627; --a-sel: #223E40; --a-chip: #E1EBDD;
+  --a-ok: #16703A; --a-ok-bg: #E2F3E5; --a-bad: #B3261E; --a-bad-bg: #FBE8E6;
+  --a-s-ground: #CFDFC8; --a-s-road: #FFFFFF; --a-s-edge: #9DB5A2; --a-s-mark: #B7C9B8; --a-s-me: #142627; --a-s-other: #6F8B86; --a-s-path: #3B5355; --a-s-hit: #B3261E;
+
+  /* B · Course map */
+  --b-bg: #FFFFFF; --b-ink: #121212; --b-ink2: #4A453F; --b-line: #121212; --b-hair: #DCD5CA;
+  --b-purple: #A0167E; --b-on-purple: #FFFFFF; --b-purple-soft: #F7E4F1;
+  --b-yellow: #FFD27A; --b-yellow2: #FFEDC6; --b-green: #9FD68F; --b-green2: #D4EFCB; --b-brown: #C2672A; --b-blue: #57B6E6;
+  --b-ok: #14743A; --b-ok-bg: #E1F4E5; --b-bad: #B51E1E; --b-bad-bg: #FCE7E7;
+  --b-s-ground: #FFEDC6; --b-s-road: #FFFFFF; --b-s-edge: #121212; --b-s-mark: #121212; --b-s-me: #A0167E; --b-s-other: #121212; --b-s-path: #A0167E; --b-s-hit: #B51E1E;
+
+  /* C · Atšvaitas */
+  --c-bg: #F0F2F6; --c-surface: #FFFFFF; --c-ink: #0D1830; --c-ink2: #44506B; --c-line: #C9D0DD;
+  --c-night: #0D1830; --c-on-night: #EEF2F8; --c-on-night2: #A9B5CC; --c-night-cell: #1F2B47; --c-night-half: #7E4220;
+  --c-lit: #FF6B1A; --c-on-lit: #0D1830; --c-cell: #D3D9E4; --c-half: #FFC29C; --c-silver: #E2E7EF;
+  --c-ok: #12733A; --c-ok-bg: #E0F3E6; --c-bad: #A3142E; --c-bad-bg: #FBE5EA;
+  --c-s-ground: #DCE1EA; --c-s-road: #FFFFFF; --c-s-edge: #A9B3C5; --c-s-mark: #FF6B1A; --c-s-me: #0D1830; --c-s-other: #7A869E; --c-s-path: #0D1830; --c-s-hit: #A3142E;
+}
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) {
+  --ui-bg: #111214; --ui-fg: #ECEDEF; --ui-muted: #A3A7B0; --ui-line: #2B2D33;
+  --ui-bar: #F1F2F4; --ui-bar-fg: #17181B; --ui-bar-dim: #5A5E68; --ui-bar-on: #17181B; --ui-bar-on-fg: #FFFFFF;
+  --a-bg: #142627; --a-surface: #1C3335; --a-ink: #F2F5F1; --a-ink2: #B9CCC2; --a-line: #2F4C4E;
+  --a-field: #0C1A1B; --a-on-field: #F2F5F1; --a-on-field2: #B9CCC2; --a-field-line: #24403F;
+  --a-lime: #CCFF00; --a-on-lime: #142627; --a-sel: #CCFF00; --a-chip: #223E40;
+  --a-ok: #6FDC97; --a-ok-bg: #173A2A; --a-bad: #FF8F86; --a-bad-bg: #432222;
+  --a-s-ground: #22403E; --a-s-road: #3A5557; --a-s-edge: #4E6B6C; --a-s-mark: #6B8786; --a-s-me: #CCFF00; --a-s-other: #9DB5A2; --a-s-path: #F2F5F1; --a-s-hit: #FF8F86;
+  --b-bg: #15181B; --b-ink: #F1EFEA; --b-ink2: #BDB7AD; --b-line: #E9E5DE; --b-hair: #3A3631;
+  --b-purple: #F27FD3; --b-on-purple: #1A0614; --b-purple-soft: #3B1732;
+  --b-yellow: #6A5420; --b-yellow2: #3A3121; --b-green: #34622F; --b-green2: #233821; --b-brown: #B07444; --b-blue: #2D7298;
+  --b-ok: #6BDB8D; --b-ok-bg: #163420; --b-bad: #FF9090; --b-bad-bg: #3E1C1C;
+  --b-s-ground: #3A3121; --b-s-road: #24272B; --b-s-edge: #E9E5DE; --b-s-mark: #E9E5DE; --b-s-me: #F27FD3; --b-s-other: #E9E5DE; --b-s-path: #F27FD3; --b-s-hit: #FF9090;
+  --c-bg: #070D1A; --c-surface: #0F182B; --c-ink: #EEF2F8; --c-ink2: #A9B5CC; --c-line: #24314A;
+  --c-night: #03070F; --c-on-night: #EEF2F8; --c-on-night2: #A9B5CC; --c-night-cell: #18233A; --c-night-half: #7E4220;
+  --c-lit: #FF7A26; --c-on-lit: #0D1830; --c-cell: #18233A; --c-half: #7E4220; --c-silver: #1A2540;
+  --c-ok: #62D68E; --c-ok-bg: #12301F; --c-bad: #FF8FA3; --c-bad-bg: #3A1420;
+  --c-s-ground: #121C30; --c-s-road: #2A3550; --c-s-edge: #3C4864; --c-s-mark: #FF7A26; --c-s-me: #EEF2F8; --c-s-other: #6D7A94; --c-s-path: #EEF2F8; --c-s-hit: #FF8FA3;
+  color-scheme: dark;
+} }
+:root[data-theme="dark"] {
+  --ui-bg: #111214; --ui-fg: #ECEDEF; --ui-muted: #A3A7B0; --ui-line: #2B2D33;
+  --ui-bar: #F1F2F4; --ui-bar-fg: #17181B; --ui-bar-dim: #5A5E68; --ui-bar-on: #17181B; --ui-bar-on-fg: #FFFFFF;
+  --a-bg: #142627; --a-surface: #1C3335; --a-ink: #F2F5F1; --a-ink2: #B9CCC2; --a-line: #2F4C4E;
+  --a-field: #0C1A1B; --a-on-field: #F2F5F1; --a-on-field2: #B9CCC2; --a-field-line: #24403F;
+  --a-lime: #CCFF00; --a-on-lime: #142627; --a-sel: #CCFF00; --a-chip: #223E40;
+  --a-ok: #6FDC97; --a-ok-bg: #173A2A; --a-bad: #FF8F86; --a-bad-bg: #432222;
+  --a-s-ground: #22403E; --a-s-road: #3A5557; --a-s-edge: #4E6B6C; --a-s-mark: #6B8786; --a-s-me: #CCFF00; --a-s-other: #9DB5A2; --a-s-path: #F2F5F1; --a-s-hit: #FF8F86;
+  --b-bg: #15181B; --b-ink: #F1EFEA; --b-ink2: #BDB7AD; --b-line: #E9E5DE; --b-hair: #3A3631;
+  --b-purple: #F27FD3; --b-on-purple: #1A0614; --b-purple-soft: #3B1732;
+  --b-yellow: #6A5420; --b-yellow2: #3A3121; --b-green: #34622F; --b-green2: #233821; --b-brown: #B07444; --b-blue: #2D7298;
+  --b-ok: #6BDB8D; --b-ok-bg: #163420; --b-bad: #FF9090; --b-bad-bg: #3E1C1C;
+  --b-s-ground: #3A3121; --b-s-road: #24272B; --b-s-edge: #E9E5DE; --b-s-mark: #E9E5DE; --b-s-me: #F27FD3; --b-s-other: #E9E5DE; --b-s-path: #F27FD3; --b-s-hit: #FF9090;
+  --c-bg: #070D1A; --c-surface: #0F182B; --c-ink: #EEF2F8; --c-ink2: #A9B5CC; --c-line: #24314A;
+  --c-night: #03070F; --c-on-night: #EEF2F8; --c-on-night2: #A9B5CC; --c-night-cell: #18233A; --c-night-half: #7E4220;
+  --c-lit: #FF7A26; --c-on-lit: #0D1830; --c-cell: #18233A; --c-half: #7E4220; --c-silver: #1A2540;
+  --c-ok: #62D68E; --c-ok-bg: #12301F; --c-bad: #FF8FA3; --c-bad-bg: #3A1420;
+  --c-s-ground: #121C30; --c-s-road: #2A3550; --c-s-edge: #3C4864; --c-s-mark: #FF7A26; --c-s-me: #EEF2F8; --c-s-other: #6D7A94; --c-s-path: #EEF2F8; --c-s-hit: #FF8FA3;
+  color-scheme: dark;
+}
+
+/* ---------- prototype chrome ---------- */
+html, body { height: 100%; }
+body { background: var(--ui-bg); color: var(--ui-fg); display: grid; grid-template-rows: minmax(0, 1fr) auto; overflow: hidden; }
+.stage { display: flex; justify-content: center; align-items: center; gap: 40px; min-height: 0; padding-block: 16px; padding-inline: 16px; }
+.notes { width: 300px; flex: none; font: 15px/1.5 system-ui, sans-serif; color: var(--ui-fg); }
+.notes h2 { font-size: 20px; line-height: 1.25; margin: 0 0 6px; text-wrap: balance; }
+.notes p { margin: 0 0 10px; }
+.notes .muted { color: var(--ui-muted); }
+.notes .judge { border-top: 1px solid var(--ui-line); padding-top: 10px; margin-top: 14px; }
+.notes ul { margin: 0; padding-left: 18px; }
+.swatches { display: flex; gap: 6px; margin: 10px 0 12px; }
+.swatches span { width: 28px; height: 28px; border-radius: 6px; border: 1px solid var(--ui-line); }
+.device { width: 390px; height: min(844px, 100%); flex: none; border-radius: 40px; border: 10px solid #0B0B0C; overflow: hidden; position: relative; box-shadow: 0 18px 50px -12px rgb(0 0 0 / .35); background: #0B0B0C; }
+.viewport { height: 100%; overflow-y: auto; overscroll-behavior: contain; position: relative; }
+.switcher { background: var(--ui-bar); color: var(--ui-bar-fg); font: 600 14px/1.2 system-ui, sans-serif; padding: 8px 12px calc(8px + env(safe-area-inset-bottom, 0px)); display: flex; flex-wrap: wrap; gap: 8px 14px; justify-content: center; align-items: center; }
+.switcher button { font: inherit; color: inherit; background: transparent; border: 1px solid var(--ui-bar-dim); border-radius: 999px; min-height: 44px; padding: 0 14px; cursor: pointer; }
+.switcher button[aria-pressed="true"] { background: var(--ui-bar-on); color: var(--ui-bar-on-fg); border-color: var(--ui-bar-on); }
+.switcher button:focus-visible { outline: 2px solid var(--ui-bar-fg); outline-offset: 2px; }
+.switcher .cycle { display: flex; align-items: center; gap: 6px; }
+.switcher .cycle button { width: 44px; padding: 0; font-size: 18px; }
+.switcher .label { min-width: 150px; text-align: center; }
+.switcher .group { display: flex; gap: 4px; }
+.switcher .info { display: none; }
+@media (max-width: 760px) {
+  .stage { padding: 0; }
+  .notes { display: none; position: absolute; inset: 0 0 auto 0; z-index: 20; width: auto; background: var(--ui-bg); padding: 20px; max-height: 100%; overflow: auto; box-shadow: 0 10px 30px rgb(0 0 0 / .3); }
+  body.show-notes .notes { display: block; }
+  .device { width: 100%; height: 100%; border: 0; border-radius: 0; box-shadow: none; }
+  .switcher .info { display: inline-block; }
+  .switcher .label { min-width: 120px; }
+}
+
+/* ---------- shared screen mechanics (each world restyles everything visible) ---------- */
+.variant { min-height: 100%; }
+.screen { min-height: 100%; display: flex; flex-direction: column; font-size: 18px; line-height: 1.5; }
+.screen h1, .screen h2, .screen h3, .screen p { margin: 0; }
+.screen h1, .screen h2, .screen h3 { text-wrap: balance; }
+:where(.screen) button { font: inherit; cursor: pointer; }
+.grow { flex: 1; }
+.dock { position: sticky; bottom: 0; z-index: 5; }
+.opt input { position: absolute; opacity: 0; width: 1px; height: 1px; }
+.screen :focus-visible { outline: 3px solid currentColor; outline-offset: 2px; }
+/* ponytail: !important so each world's own display (grid/flex) survives when shown */
+.screen:not(.is-after) .after-only, .is-after .before-only { display: none !important; }
+.scene svg { display: block; width: 100%; height: auto; }
+.scene .hit { opacity: 0; }
+.is-after .scene .hit { opacity: 1; }
+.sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); }
+.icon { width: 24px; height: 24px; stroke: currentColor; fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+
+/* =================== A · TEAL + LIME =================== */
+.va { font-family: "Atkinson Hyperlegible Next", "Segoe UI", system-ui, sans-serif; background: var(--a-bg); color: var(--a-ink);
+  --s-ground: var(--a-s-ground); --s-road: var(--a-s-road); --s-edge: var(--a-s-edge); --s-mark: var(--a-s-mark); --s-me: var(--a-s-me); --s-other: var(--a-s-other); --s-path: var(--a-s-path); --s-hit: var(--a-s-hit); }
+.va .pad { padding: 0 20px; }
+.a-mark { font-weight: 700; font-size: 22px; letter-spacing: -0.01em; display: inline-flex; align-items: center; gap: 2px; }
+.a-mark b { background: var(--a-lime); color: var(--a-on-lime); border-radius: 6px; padding: 0 5px; margin-left: 2px; }
+.a-btn { display: flex; align-items: center; justify-content: center; gap: 8px; width: 100%; min-height: 56px; border-radius: 14px; border: 0; background: var(--a-lime); color: var(--a-on-lime); font-weight: 700; font-size: 18px; text-decoration: none; box-shadow: 0 4px 14px -6px rgb(20 38 39 / .45); }
+.a-btn.ghost { background: transparent; color: var(--a-ink); border: 1.5px solid var(--a-line); box-shadow: none; }
+.a-topbar { display: flex; align-items: center; justify-content: space-between; padding: 14px 20px; }
+.a-iconbtn { width: 48px; height: 48px; display: grid; place-items: center; border-radius: 12px; border: 1.5px solid var(--a-line); background: var(--a-surface); color: var(--a-ink); }
+/* landing */
+.a-hero { background: var(--a-field); color: var(--a-on-field); padding: 0 20px 28px; display: grid; gap: 18px; }
+.a-hero .a-topbar { padding: 14px 0; }
+.a-chip { justify-self: start; border: 1.5px solid var(--a-lime); color: var(--a-on-field); border-radius: 999px; padding: 2px 12px; font-size: 15px; font-weight: 700; }
+.a-hero h1 { font-size: 36px; line-height: 1.12; letter-spacing: -0.02em; }
+.a-hero p { color: var(--a-on-field2); }
+.a-hero small { color: var(--a-on-field2); font-size: 16px; text-align: center; }
+.a-sec { padding: 28px 20px 0; display: grid; gap: 14px; }
+.a-sec h2 { font-size: 24px; line-height: 1.2; }
+.a-sec > p { color: var(--a-ink2); }
+.a-pair { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+.a-mini { background: var(--a-surface); border: 1.5px solid var(--a-line); border-radius: 16px; padding: 12px; display: grid; gap: 8px; font-size: 14px; line-height: 1.35; min-width: 0; }
+.a-mini h3 { font-size: 13px; text-transform: uppercase; letter-spacing: .08em; color: var(--a-ink2); }
+.a-mini div { border: 1.5px solid var(--a-line); border-radius: 10px; padding: 6px 8px; overflow-wrap: anywhere; }
+.a-mini .new { border-color: var(--a-ink); background: var(--a-chip); font-weight: 700; }
+.a-steps { list-style: none; margin: 0; padding: 0; display: grid; gap: 12px; }
+.a-steps li { display: grid; grid-template-columns: 40px 1fr; gap: 12px; align-items: start; }
+.a-steps li > span { width: 40px; height: 40px; border-radius: 12px; background: var(--a-chip); display: grid; place-items: center; font-weight: 700; }
+.a-steps p { color: var(--a-ink2); font-size: 16px; }
+.a-facts { margin: 28px 20px 0; border-radius: 20px; background: var(--a-surface); border: 1.5px solid var(--a-line); padding: 18px; display: grid; gap: 10px; }
+.a-facts .row { display: flex; gap: 10px; flex-wrap: wrap; }
+.a-facts .row span { background: var(--a-chip); border-radius: 10px; padding: 4px 10px; font-weight: 700; font-variant-numeric: tabular-nums; }
+.a-end { padding: 28px 20px 32px; display: grid; gap: 10px; text-align: center; color: var(--a-ink2); font-size: 15px; }
+/* home */
+.a-date { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; padding: 4px 20px 0; }
+.a-date span { background: var(--a-chip); border-radius: 999px; padding: 4px 12px; font-size: 16px; font-weight: 700; }
+.a-pace { padding: 10px 20px 0; color: var(--a-ink2); font-size: 16px; }
+.a-card { margin: 16px 20px 0; background: var(--a-surface); border: 1.5px solid var(--a-line); border-radius: 18px; padding: 18px; display: grid; gap: 12px; }
+.a-card h2 { font-size: 18px; }
+.a-stack { display: flex; height: 14px; border-radius: 7px; overflow: hidden; background: var(--a-chip); }
+.a-stack i { display: block; }
+.a-legend { display: grid; gap: 6px; font-size: 16px; }
+.a-legend div { display: flex; align-items: center; gap: 10px; }
+.a-legend b { margin-left: auto; font-variant-numeric: tabular-nums; }
+.a-legend i { width: 14px; height: 14px; border-radius: 4px; flex: none; }
+.a-row { margin: 12px 20px 0; min-height: 64px; display: flex; align-items: center; gap: 12px; padding: 0 16px; border-radius: 16px; border: 1.5px solid var(--a-line); background: transparent; color: var(--a-ink); text-align: left; width: calc(100% - 40px); }
+.a-row span { flex: 1; display: grid; }
+.a-row small { color: var(--a-ink2); font-size: 15px; }
+.a-note { padding: 12px 20px 0; color: var(--a-ink2); font-size: 15px; }
+.a-next { background: var(--a-field); color: var(--a-on-field); border-radius: 22px 22px 0 0; padding: 18px 20px calc(18px + env(safe-area-inset-bottom, 0px)); display: grid; gap: 4px; margin-top: 20px; }
+.a-next .k { color: var(--a-on-field2); font-size: 15px; font-weight: 700; }
+.a-next h2 { font-size: 24px; line-height: 1.2; }
+.a-next p { color: var(--a-on-field2); font-size: 16px; margin-bottom: 10px; }
+/* question */
+.a-qtop { display: flex; align-items: center; gap: 12px; padding: 12px 20px; }
+.a-prog { flex: 1; height: 10px; border-radius: 5px; background: var(--a-chip); overflow: hidden; }
+.a-prog i { display: block; height: 100%; width: 23%; background: var(--a-sel); border-radius: 5px; }
+.a-count { font-size: 15px; font-weight: 700; color: var(--a-ink2); font-variant-numeric: tabular-nums; }
+.a-badge { margin: 4px 20px 12px; justify-self: start; display: inline-flex; align-self: flex-start; gap: 8px; align-items: center; background: var(--a-chip); border-radius: 999px; padding: 4px 12px; font-size: 15px; font-weight: 700; }
+.a-scene { margin: 0 20px; border-radius: 16px; overflow: hidden; border: 1.5px solid var(--a-line); }
+.a-stem { padding: 16px 20px 12px; font-size: 22px; line-height: 1.3; font-weight: 700; }
+.a-opts { display: grid; gap: 12px; padding: 0 20px; }
+.a-opt { position: relative; display: grid; grid-template-columns: 28px 1fr; gap: 12px; align-items: start; min-height: 56px; padding: 14px; border-radius: 14px; border: 1.5px solid var(--a-line); background: var(--a-surface); cursor: pointer; }
+.a-opt .box { width: 28px; height: 28px; border-radius: 8px; border: 2px solid var(--a-ink2); display: grid; place-items: center; }
+.a-opt .box svg { opacity: 0; }
+.a-opt:has(input:checked) { border: 2.5px solid var(--a-sel); padding: 13px; }
+.a-opt:has(input:checked) .box { background: var(--a-sel); border-color: var(--a-sel); color: var(--a-bg); }
+.a-opt:has(input:checked) .box svg { opacity: 1; }
+.a-opt:has(input:focus-visible) { outline: 3px solid var(--a-ink); outline-offset: 2px; }
+.a-opt .verdict { grid-column: 2; font-size: 15px; font-weight: 700; display: none; align-items: center; gap: 6px; }
+.is-after .a-opt.ok { background: var(--a-ok-bg); border: 2.5px solid var(--a-ok); padding: 13px; }
+.is-after .a-opt.ok .verdict { display: flex; color: var(--a-ok); }
+.is-after .a-opt.bad { background: var(--a-bad-bg); border: 2.5px solid var(--a-bad); padding: 13px; }
+.is-after .a-opt.bad .verdict { display: flex; color: var(--a-bad); }
+.is-after .a-opt.bad .box { background: var(--a-bad); border-color: var(--a-bad); }
+.a-why { margin: 16px 20px 0; padding: 16px; border-radius: 16px; background: var(--a-surface); border: 1.5px solid var(--a-line); display: grid; gap: 8px; }
+.a-why h3 { font-size: 15px; text-transform: uppercase; letter-spacing: .08em; color: var(--a-ink2); }
+.a-why .key { font-weight: 700; font-size: 20px; line-height: 1.35; }
+.a-why p { font-size: 17px; }
+.a-why a { color: var(--a-ink); font-weight: 700; }
+.a-explainer { margin: 12px 20px 0; padding: 16px; border-radius: 16px; background: var(--a-chip); display: grid; gap: 6px; }
+.a-explainer h3 { font-size: 18px; }
+.a-explainer p { font-size: 16px; color: var(--a-ink2); }
+.a-dock { padding: 14px 20px calc(14px + env(safe-area-inset-bottom, 0px)); background: linear-gradient(to top, var(--a-bg) 75%, transparent); display: grid; grid-template-columns: 1fr 1.6fr; gap: 10px; margin-top: 16px; }
+.a-dock.one { grid-template-columns: 1fr; }
+
+/* =================== B · COURSE MAP =================== */
+.vb { font-family: "Barlow", "Segoe UI", system-ui, sans-serif; background: var(--b-bg); color: var(--b-ink);
+  --s-ground: var(--b-s-ground); --s-road: var(--b-s-road); --s-edge: var(--b-s-edge); --s-mark: var(--b-s-mark); --s-me: var(--b-s-me); --s-other: var(--b-s-other); --s-path: var(--b-s-path); --s-hit: var(--b-s-hit); }
+.vb .cond { font-family: "Barlow Condensed", "Arial Narrow", sans-serif; }
+.b-top { display: flex; align-items: center; justify-content: space-between; padding: 12px 16px; border-bottom: 2px solid var(--b-line); }
+.b-mark { font-family: "Barlow Condensed", "Arial Narrow", sans-serif; font-weight: 700; font-size: 26px; letter-spacing: .02em; display: flex; align-items: center; gap: 8px; }
+.b-mark svg { width: 26px; height: 26px; }
+.b-iconbtn { width: 48px; height: 48px; display: grid; place-items: center; border: 2px solid var(--b-line); background: var(--b-bg); color: var(--b-ink); border-radius: 0; }
+.b-btn { display: flex; align-items: center; justify-content: center; gap: 10px; width: 100%; min-height: 56px; border: 0; border-radius: 0; background: var(--b-purple); color: var(--b-on-purple); font-family: "Barlow Condensed", "Arial Narrow", sans-serif; font-weight: 700; font-size: 22px; letter-spacing: .03em; text-decoration: none; }
+.b-btn.ghost { background: var(--b-bg); color: var(--b-ink); border: 2px solid var(--b-line); }
+.b-map { position: relative; border-bottom: 2px solid var(--b-line); }
+.b-map svg { display: block; width: 100%; height: auto; }
+.b-map .lbl { font-family: "Barlow Condensed", "Arial Narrow", sans-serif; font-weight: 700; fill: var(--b-purple); }
+.b-map .lbl2 { font-family: "Barlow", sans-serif; font-weight: 600; fill: var(--b-ink); }
+/* landing */
+.b-hero { padding: 20px 16px 22px; display: grid; gap: 14px; }
+.b-hero h1 { font-family: "Barlow Condensed", "Arial Narrow", sans-serif; font-weight: 700; font-size: 44px; line-height: 1.02; letter-spacing: -0.005em; text-transform: none; }
+.b-hero p { color: var(--b-ink2); }
+.b-hero small { color: var(--b-ink2); font-size: 16px; }
+.b-sheet { margin: 0 16px; border: 2px solid var(--b-line); }
+.b-sheet .head { display: grid; grid-template-columns: 1fr auto; padding: 8px 12px; border-bottom: 2px solid var(--b-line); font-family: "Barlow Condensed", "Arial Narrow", sans-serif; font-weight: 700; font-size: 20px; }
+.b-sheet .r { display: grid; grid-template-columns: 52px 1fr; border-bottom: 1px solid var(--b-line); }
+.b-sheet .r:last-child { border-bottom: 0; }
+.b-sheet .r > :first-child { border-right: 1px solid var(--b-line); display: grid; place-items: center; font-family: "Barlow Condensed", "Arial Narrow", sans-serif; font-weight: 700; font-size: 24px; color: var(--b-purple); }
+.b-sheet .r > :last-child { padding: 10px 12px; display: grid; gap: 2px; min-width: 0; }
+.b-sheet .r b { font-weight: 600; }
+.b-sheet .r small { color: var(--b-ink2); font-size: 16px; line-height: 1.4; }
+.b-legend { margin: 22px 16px 0; display: grid; gap: 8px; }
+.b-legend h2 { font-family: "Barlow Condensed", "Arial Narrow", sans-serif; font-weight: 700; font-size: 24px; }
+.b-legend .item { display: grid; grid-template-columns: 34px 1fr; gap: 12px; align-items: center; font-size: 17px; }
+.b-sym { width: 34px; height: 24px; border: 1.5px solid var(--b-line); }
+.b-end { padding: 24px 16px 30px; display: grid; gap: 10px; }
+.b-end p { color: var(--b-ink2); font-size: 15px; text-align: center; }
+.b-sectitle { margin: 26px 16px 10px; font-family: "Barlow Condensed", "Arial Narrow", sans-serif; font-weight: 700; font-size: 26px; line-height: 1.1; }
+/* home */
+.b-meta { display: flex; justify-content: space-between; align-items: baseline; gap: 10px; padding: 10px 16px; border-bottom: 1px solid var(--b-line); font-size: 16px; }
+.b-meta b { font-family: "Barlow Condensed", "Arial Narrow", sans-serif; font-size: 20px; font-variant-numeric: tabular-nums; }
+.b-strip { display: flex; gap: 3px; padding: 12px 16px 4px; }
+.b-strip i { flex: 1; height: 8px; border: 1.5px solid var(--b-purple); }
+.b-strip i.done { background: var(--b-purple); }
+.b-strip i.now { background: var(--b-purple-soft); border-width: 2.5px; }
+.b-strip-cap { padding: 0 16px 10px; font-size: 15px; color: var(--b-ink2); font-variant-numeric: tabular-nums; }
+.b-progress { margin: 14px 16px 0; display: grid; gap: 6px; }
+.b-progress h2 { font-family: "Barlow Condensed", "Arial Narrow", sans-serif; font-weight: 700; font-size: 22px; }
+.b-bar { display: flex; height: 18px; border: 1.5px solid var(--b-line); }
+.b-bar i { display: block; height: 100%; }
+.b-progress .item { display: grid; grid-template-columns: 26px 1fr auto; gap: 10px; align-items: center; font-size: 16px; }
+.b-progress .item b { font-variant-numeric: tabular-nums; }
+.b-progress .item .b-sym { width: 26px; height: 18px; }
+.b-dock { padding: 12px 16px calc(12px + env(safe-area-inset-bottom, 0px)); background: var(--b-bg); border-top: 2px solid var(--b-line); display: grid; gap: 10px; margin-top: 18px; }
+.b-dock.two { grid-template-columns: 1fr 1.6fr; }
+.b-exam { margin: 14px 16px 0; display: grid; grid-template-columns: 1fr auto; align-items: center; gap: 10px; padding: 10px 12px; min-height: 60px; border: 2px solid var(--b-line); background: var(--b-bg); color: var(--b-ink); text-align: left; width: calc(100% - 32px); }
+.b-exam span { display: grid; }
+.b-exam b { font-family: "Barlow Condensed", "Arial Narrow", sans-serif; font-weight: 700; font-size: 21px; }
+.b-exam small { color: var(--b-ink2); font-size: 15px; }
+.b-note { padding: 10px 16px 0; color: var(--b-ink2); font-size: 15px; }
+/* question */
+.b-qtop { display: grid; grid-template-columns: 48px 1fr auto; align-items: center; gap: 12px; padding: 10px 16px; border-bottom: 2px solid var(--b-line); }
+.b-ctrl { display: flex; align-items: center; gap: 10px; }
+.b-ctrl .cond { font-weight: 700; font-size: 20px; }
+.b-leg { display: flex; gap: 2px; padding: 8px 16px 0; }
+.b-leg i { flex: 1; height: 4px; background: var(--b-hair); }
+.b-leg i.done { background: var(--b-purple); }
+.b-badge { margin: 12px 16px 10px; align-self: flex-start; font-family: "Barlow Condensed", "Arial Narrow", sans-serif; font-weight: 700; font-size: 18px; letter-spacing: .03em; color: var(--b-purple); display: flex; gap: 8px; align-items: center; }
+.b-scene { margin: 0 16px; border: 2px solid var(--b-line); }
+.b-stem { padding: 14px 16px 12px; font-size: 21px; line-height: 1.3; font-weight: 600; }
+.b-opts { margin: 0 16px; border: 2px solid var(--b-line); }
+.b-opt { position: relative; display: grid; grid-template-columns: 56px 1fr; min-height: 56px; border-bottom: 1px solid var(--b-line); cursor: pointer; }
+.b-opt:last-child { border-bottom: 0; }
+.b-opt .cell { border-right: 1px solid var(--b-line); display: grid; place-items: center; }
+.b-opt .box { width: 26px; height: 26px; border: 2px solid var(--b-ink); display: grid; place-items: center; }
+.b-opt .box svg { opacity: 0; }
+.b-opt .txt { padding: 12px 14px; display: grid; gap: 4px; }
+.b-opt:has(input:checked) .cell { background: var(--b-purple-soft); }
+.b-opt:has(input:checked) .box { background: var(--b-purple); border-color: var(--b-purple); color: var(--b-on-purple); }
+.b-opt:has(input:checked) .box svg { opacity: 1; }
+.b-opt:has(input:focus-visible) { outline: 3px solid var(--b-purple); outline-offset: -3px; }
+.b-opt .verdict { display: none; font-weight: 600; font-size: 15px; align-items: center; gap: 6px; }
+.is-after .b-opt.ok { background: var(--b-ok-bg); }
+.is-after .b-opt.ok .cell { background: var(--b-ok); }
+.is-after .b-opt.ok .box { border-color: var(--b-bg); background: var(--b-bg); }
+.is-after .b-opt.ok .verdict { display: flex; color: var(--b-ok); }
+.is-after .b-opt.bad { background: var(--b-bad-bg); }
+.is-after .b-opt.bad .cell { background: var(--b-bad); }
+.is-after .b-opt.bad .box { background: var(--b-bg); border-color: var(--b-bg); color: var(--b-bad); }
+.is-after .b-opt.bad .verdict { display: flex; color: var(--b-bad); }
+.b-why { margin: 14px 16px 0; border: 2px solid var(--b-line); }
+.b-why .head { padding: 8px 12px; border-bottom: 2px solid var(--b-line); font-family: "Barlow Condensed", "Arial Narrow", sans-serif; font-weight: 700; font-size: 20px; display: flex; justify-content: space-between; }
+.b-why .head a { color: var(--b-purple); }
+.b-why .body { padding: 12px; display: grid; gap: 8px; }
+.b-why .key { font-weight: 600; font-size: 20px; line-height: 1.35; }
+.b-why p { font-size: 17px; }
+.b-why .exp { border-top: 1px solid var(--b-line); padding: 12px; display: grid; gap: 4px; background: var(--b-yellow2); }
+.b-why .exp b { font-family: "Barlow Condensed", "Arial Narrow", sans-serif; font-size: 20px; }
+.b-why .exp p { font-size: 16px; color: var(--b-ink2); }
+
+/* =================== C · ATŠVAITAS =================== */
+.vc { font-family: "Archivo", "Segoe UI", system-ui, sans-serif; font-stretch: 100%; background: var(--c-bg); color: var(--c-ink);
+  --s-ground: var(--c-s-ground); --s-road: var(--c-s-road); --s-edge: var(--c-s-edge); --s-mark: var(--c-s-mark); --s-me: var(--c-s-me); --s-other: var(--c-s-other); --s-path: var(--c-s-path); --s-hit: var(--c-s-hit); }
+.vc .wide { font-stretch: 125%; font-weight: 800; letter-spacing: -0.01em; }
+.c-mark { font-stretch: 125%; font-weight: 900; font-size: 22px; letter-spacing: .01em; display: flex; align-items: center; gap: 8px; }
+.c-mark i { width: 16px; height: 16px; border-radius: 50%; background: var(--c-lit); box-shadow: inset 0 0 0 3px rgb(255 255 255 / .35); }
+.c-btn { display: flex; align-items: center; justify-content: center; gap: 10px; width: 100%; min-height: 60px; border: 0; border-radius: 4px; background: var(--c-lit); color: var(--c-on-lit); font-stretch: 125%; font-weight: 800; font-size: 19px; letter-spacing: .01em; text-decoration: none;
+  background-image: repeating-linear-gradient(60deg, rgb(255 255 255 / .12) 0 2px, transparent 2px 9px), repeating-linear-gradient(-60deg, rgb(255 255 255 / .12) 0 2px, transparent 2px 9px); }
+.c-btn.ghost { background: var(--c-silver); color: var(--c-ink); background-image: none; border: 2px solid var(--c-line); }
+.c-top { display: flex; align-items: center; justify-content: space-between; padding: 14px 20px; }
+.c-iconbtn { width: 48px; height: 48px; display: grid; place-items: center; border-radius: 4px; border: 2px solid var(--c-line); background: var(--c-surface); color: var(--c-ink); }
+/* reflector grid */
+.c-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(10px, 1fr)); gap: 4px; }
+.c-grid i { aspect-ratio: 1; border-radius: 50%; background: var(--c-cell); }
+.c-grid i.l { background: var(--c-lit); }
+.c-grid i.h { background: var(--c-half); }
+/* landing */
+.c-hero { background: var(--c-night); color: var(--c-on-night); padding: 0 20px 26px; display: grid; gap: 18px; position: relative; overflow: hidden; }
+.c-hero .c-top { padding: 14px 0; }
+.c-hero .c-mark { color: var(--c-on-night); }
+.c-hero h1 { font-size: 38px; line-height: 1.04; }
+.c-hero p { color: var(--c-on-night2); }
+.c-hero small { color: var(--c-on-night2); font-size: 16px; text-align: center; }
+.c-hero .c-grid { grid-template-columns: repeat(24, 1fr); }
+.c-hero .c-grid i { background: var(--c-night-cell); }
+.c-hero .c-grid i.l { background: var(--c-lit); }
+.c-hero .c-grid i.h { background: var(--c-night-half); }
+.c-sweep { position: absolute; inset: 0; pointer-events: none; background: linear-gradient(105deg, transparent 35%, rgb(255 244 214 / .16) 48%, rgb(255 244 214 / .05) 56%, transparent 66%); transform: translateX(-100%); animation: sweep 2.6s cubic-bezier(.16, 1, .3, 1) .4s both; }
+@keyframes sweep { to { transform: translateX(100%); } }
+.c-hero .c-grid i.l { animation: catch 1.6s ease-out both; animation-delay: calc(.35s + var(--d, 0) * 1ms); }
+@keyframes catch { from { background: var(--c-night-cell); } to { background: var(--c-lit); } }
+@media (prefers-reduced-motion: reduce) { .c-sweep { display: none; } .c-hero .c-grid i.l { animation: none; } }
+.c-band { display: grid; grid-template-columns: 54px 1fr; gap: 14px; align-items: start; padding: 16px 20px; border-top: 2px solid var(--c-line); }
+.c-band:last-child { border-bottom: 2px solid var(--c-line); }
+.c-band .n { height: 54px; display: grid; place-items: center; background: var(--c-silver); border-radius: 4px; font-stretch: 125%; font-weight: 800; font-size: 22px; }
+.c-band h3 { font-stretch: 112%; font-weight: 800; font-size: 19px; line-height: 1.25; }
+.c-band p { color: var(--c-ink2); font-size: 16px; }
+.c-sec { padding: 28px 0 0; }
+.c-sec > h2 { padding: 0 20px 14px; font-size: 26px; line-height: 1.1; }
+.c-facts { margin: 26px 20px 0; background: var(--c-night); color: var(--c-on-night); border-radius: 4px; padding: 18px; display: grid; gap: 12px; }
+.c-facts h2 { font-size: 20px; line-height: 1.2; }
+.c-facts .nums { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; text-align: center; }
+.c-facts .nums b { display: block; font-stretch: 125%; font-weight: 800; font-size: 28px; color: var(--c-lit); font-variant-numeric: tabular-nums; }
+.c-facts .nums span { font-size: 14px; color: var(--c-on-night2); }
+.c-end { padding: 26px 20px 30px; display: grid; gap: 10px; text-align: center; color: var(--c-ink2); font-size: 15px; }
+/* home */
+.c-rules { margin: 4px 20px 0; padding: 18px; background: var(--c-surface); border-radius: 4px; border: 2px solid var(--c-line); display: grid; gap: 14px; }
+.c-rules h2 { font-size: 22px; line-height: 1.15; }
+.c-rules .key { display: flex; flex-wrap: wrap; gap: 6px 16px; font-size: 16px; }
+.c-rules .key span { display: inline-flex; align-items: center; gap: 8px; }
+.c-rules .key i { width: 12px; height: 12px; border-radius: 50%; }
+.c-rules .key b { font-variant-numeric: tabular-nums; }
+.c-meta { display: flex; flex-wrap: wrap; gap: 8px 14px; padding: 0 20px 12px; font-size: 16px; color: var(--c-ink2); }
+.c-meta b { color: var(--c-ink); }
+.c-line { margin: 14px 20px 0; display: grid; grid-template-columns: 1fr auto; gap: 12px; align-items: center; min-height: 64px; padding: 10px 16px; border-radius: 4px; border: 2px solid var(--c-line); background: var(--c-silver); color: var(--c-ink); text-align: left; width: calc(100% - 40px); }
+.c-line span { display: grid; }
+.c-line b { font-stretch: 112%; font-weight: 800; }
+.c-line small { color: var(--c-ink2); font-size: 15px; }
+.c-note { padding: 12px 20px 0; color: var(--c-ink2); font-size: 15px; }
+.c-dock { padding: 14px 20px calc(14px + env(safe-area-inset-bottom, 0px)); background: var(--c-bg); display: grid; gap: 8px; margin-top: 18px; border-top: 2px solid var(--c-line); }
+.c-dock .what { display: flex; justify-content: space-between; gap: 10px; font-size: 16px; }
+.c-dock .what b { font-stretch: 112%; font-weight: 800; }
+.c-dock .what span { color: var(--c-ink2); }
+.c-dock.two { grid-template-columns: 1fr 1.6fr; }
+/* question */
+.c-qtop { display: grid; grid-template-columns: 48px 1fr; gap: 14px; align-items: center; padding: 12px 20px; }
+.c-tape { display: grid; grid-template-columns: repeat(22, 1fr); gap: 3px; }
+.c-tape i { height: 12px; background: var(--c-cell); border-radius: 2px; }
+.c-tape i.l { background: var(--c-lit); }
+.c-tape i.now { background: transparent; box-shadow: inset 0 0 0 2px var(--c-lit); }
+.c-qmeta { padding: 0 20px; display: flex; justify-content: space-between; font-size: 15px; color: var(--c-ink2); font-variant-numeric: tabular-nums; }
+.c-badge { margin: 14px 20px 10px; align-self: flex-start; font-stretch: 125%; font-weight: 800; font-size: 15px; letter-spacing: .04em; text-transform: uppercase; padding: 4px 10px; border-radius: 4px; background: var(--c-night); color: var(--c-on-night); }
+.c-scene { margin: 0 20px; border-radius: 4px; overflow: hidden; }
+.c-stem { padding: 16px 20px 14px; font-size: 22px; line-height: 1.3; font-weight: 700; }
+.c-opts { display: grid; gap: 10px; }
+.c-opt { position: relative; display: grid; grid-template-columns: 30px 1fr; gap: 14px; align-items: start; min-height: 56px; padding: 14px 20px; background: var(--c-surface); border-block: 2px solid var(--c-line); cursor: pointer; }
+.c-opt .box { width: 30px; height: 30px; border-radius: 4px; border: 2.5px solid var(--c-ink); display: grid; place-items: center; }
+.c-opt .box svg { opacity: 0; }
+.c-opt:has(input:checked) { background: var(--c-silver); border-color: var(--c-ink); background-image: repeating-linear-gradient(60deg, rgb(127 140 170 / .10) 0 2px, transparent 2px 10px), repeating-linear-gradient(-60deg, rgb(127 140 170 / .10) 0 2px, transparent 2px 10px); }
+.c-opt:has(input:checked) .box { background: var(--c-ink); color: var(--c-bg); }
+.c-opt:has(input:checked) .box svg { opacity: 1; }
+.c-opt:has(input:focus-visible) { outline: 3px solid var(--c-lit); outline-offset: -3px; }
+.c-opt .verdict { grid-column: 2; display: none; font-weight: 700; font-size: 15px; align-items: center; gap: 6px; }
+.is-after .c-opt.ok { background: var(--c-ok-bg); border-color: var(--c-ok); background-image: none; }
+.is-after .c-opt.ok .box { border-color: var(--c-ok); }
+.is-after .c-opt.ok .verdict { display: flex; color: var(--c-ok); }
+.is-after .c-opt.bad { background: var(--c-bad-bg); border-color: var(--c-bad); background-image: none; }
+.is-after .c-opt.bad .box { background: var(--c-bad); border-color: var(--c-bad); }
+.is-after .c-opt.bad .verdict { display: flex; color: var(--c-bad); }
+.c-why { margin: 16px 20px 0; display: grid; gap: 8px; }
+.c-why h3 { font-stretch: 125%; font-weight: 800; font-size: 15px; letter-spacing: .04em; text-transform: uppercase; color: var(--c-ink2); }
+.c-why .key { font-weight: 700; font-size: 21px; line-height: 1.3; }
+.c-why p { font-size: 17px; }
+.c-why a { color: var(--c-ink); font-weight: 700; }
+.c-explainer { margin: 14px 20px 0; padding: 16px; border-radius: 4px; background: var(--c-night); color: var(--c-on-night); display: grid; grid-template-columns: 1fr; gap: 6px; }
+.c-explainer h3 { font-stretch: 112%; font-weight: 800; font-size: 19px; display: flex; gap: 10px; align-items: center; }
+.c-explainer h3 i { width: 14px; height: 14px; border-radius: 50%; background: var(--c-half); flex: none; }
+.c-explainer p { font-size: 16px; color: var(--c-on-night2); }
+</style>
+
+<main class="stage">
+  <aside class="notes" id="notes" aria-live="polite"></aside>
+  <div class="device"><div class="viewport" id="viewport">
+
+  <!-- =========================== A · TEAL + LIME =========================== -->
+  <div class="variant va" data-variant="a" lang="lt">
+
+    <!-- A · Landing -->
+    <section class="screen" data-screen="landing">
+      <div class="a-hero">
+        <div class="a-topbar"><span class="a-mark">KET<b>GO</b></span></div>
+        <span class="a-chip">Nemokama beta</span>
+        <h1>Išmok KET taisykles taip, kad jos liktų.</h1>
+        <p>Klausimai, trumpas „kodėl“ po kiekvieno atsakymo ir kartojimai, suplanuoti iki tavo egzamino dienos.</p>
+        <a class="a-btn" href="#a-home">Pradėti</a>
+        <small>Be registracijos. Pirmas klausimas – per minutę.</small>
+      </div>
+      <div class="a-sec">
+        <h2>Klausimas grįžta kitoks</h2>
+        <p>Kitą kartą – kita variantų tvarka ir kiti klaidinantys variantai. Išmoksti taisyklę, ne atsakymo vietą.</p>
+        <div class="a-pair">
+          <div class="a-mini"><h3>Šiandien</h3><strong>Kam duodi kelią lygiareikšmių kelių sankryžoje?</strong><div>Iš dešinės, jei trajektorijos kertasi</div><div>Iš dešinės visada</div><div>Tik kai yra ženklai</div></div>
+          <div class="a-mini"><h3>Po 3 dienų</h3><strong>Kam duodi kelią lygiareikšmių kelių sankryžoje?</strong><div class="new">Iš kairės artėjančiam</div><div>Tik kai yra ženklai</div><div>Iš dešinės, jei trajektorijos kertasi</div></div>
+        </div>
+      </div>
+      <div class="a-sec">
+        <h2>Kaip tai veikia</h2>
+        <ol class="a-steps">
+          <li><span>1</span><div><strong>Pirma spėji, tada supranti.</strong><p>Nauja taisyklė prasideda klausimu. Po atsakymo – paaiškinimas.</p></div></li>
+          <li><span>2</span><div><strong>Taisyklė grįžta, kai pradedi pamiršti.</strong><p>Kartojimai suplanuoti pagal tavo egzamino datą.</p></div></li>
+          <li><span>3</span><div><strong>Bandomasis egzaminas kaip tikras.</strong><p>Tos pačios sąlygos kaip „Regitroje“.</p></div></li>
+        </ol>
+      </div>
+      <div class="a-facts">
+        <strong>Teorijos egzaminas, B kategorija</strong>
+        <div class="row"><span>30 klausimų</span><span>30 min.</span><span>24 – išlaikyta</span></div>
+      </div>
+      <div class="a-end"><a class="a-btn" href="#a-home">Pradėti nemokamai</a>KETGO · nemokama beta · 2026</div>
+    </section>
+
+    <!-- A · Home -->
+    <section class="screen" data-screen="home" hidden>
+      <div class="a-topbar"><span class="a-mark">KET<b>GO</b></span>
+        <span style="display:flex;gap:8px">
+          <button class="a-iconbtn" type="button" aria-label="Pažanga"><svg class="icon" viewBox="0 0 24 24"><path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/></svg></button>
+          <button class="a-iconbtn" type="button" aria-label="Meniu"><svg class="icon" viewBox="0 0 24 24"><path d="M4 7h16M4 12h16M4 17h16"/></svg></button>
+        </span></div>
+      <div class="a-date"><span>Egzaminas lapkričio 12 d.</span><span>liko 29 d.</span></div>
+      <p class="a-pace">Kad spėtum, užtenka apie 1 pamokos per dieną.</p>
+      <div class="a-card">
+        <h2>Taisyklės</h2>
+        <div class="a-stack" role="img" aria-label="38 įsimintos, 21 mokaisi, 237 dar nesutiktos"><i style="width:12.8%;background:var(--a-sel)"></i><i style="width:7.1%;background:var(--a-s-other)"></i></div>
+        <div class="a-legend">
+          <div><i style="background:var(--a-sel)"></i>Įsimintos<b>38</b></div>
+          <div><i style="background:var(--a-s-other)"></i>Mokaisi<b>21</b></div>
+          <div><i style="background:var(--a-chip);border:1.5px solid var(--a-line)"></i>Dar nesutiktos<b>237</b></div>
+        </div>
+      </div>
+      <button class="a-row" type="button"><span><strong>Bandomasis egzaminas</strong><small>30 klausimų · 30 min.</small></span><svg class="icon" viewBox="0 0 24 24"><path d="M9 6l6 6-6 6"/></svg></button>
+      <p class="a-note">Pasirengimą parodysime po pirmojo bandomojo egzamino antroje programos pusėje.</p>
+      <div class="grow"></div>
+      <div class="a-next dock">
+        <span class="k">Toliau · 7 pamoka iš 36</span>
+        <h2>Lygiareikšmių kelių sankryžos</h2>
+        <p>8 naujos taisyklės · 6 kartoti · apie 18 min.</p>
+        <a class="a-btn" href="#a-question">Tęsti</a>
+      </div>
+    </section>
+
+    <!-- A · Question -->
+    <section class="screen" data-screen="question" hidden>
+      <div class="a-qtop">
+        <button class="a-iconbtn" type="button" aria-label="Uždaryti"><svg class="icon" viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
+        <div class="a-prog" role="progressbar" aria-valuemin="1" aria-valuemax="22" aria-valuenow="5"><i></i></div>
+        <span class="a-count">5 / 22</span>
+      </div>
+      <span class="a-badge"><svg class="icon" viewBox="0 0 24 24" style="width:18px;height:18px"><path d="M12 3v3M12 18v3M3 12h3M18 12h3"/><circle cx="12" cy="12" r="4"/></svg>Nauja taisyklė · pabandyk atspėti</span>
+      <div class="a-scene scene"></div>
+      <h2 class="a-stem">Kam vairuotojas privalo duoti kelią lygia&shy;reikšmių kelių sankryžoje?</h2>
+      <fieldset class="a-opts" style="border:0;margin:0;min-width:0">
+        <legend class="sr">Pasirink visus teisingus variantus</legend>
+        <label class="a-opt opt"><input type="checkbox" id="a-o1"><span class="box"><svg class="icon" viewBox="0 0 24 24" style="width:18px;height:18px"><path d="M5 12l5 5 9-10"/></svg></span><span>Iš dešinės artėjančioms transporto priemonėms tik tada, kai sankryžoje stovi pirmenybės ženklai.</span></label>
+        <label class="a-opt opt ok"><input type="checkbox" id="a-o2"><span class="box"><svg class="icon" viewBox="0 0 24 24" style="width:18px;height:18px"><path d="M5 12l5 5 9-10"/></svg></span><span>Iš dešinės artėjančioms transporto priemonėms, jeigu jų važiavimo trajektorijos kertasi.</span><span class="verdict"><svg class="icon" viewBox="0 0 24 24" style="width:18px;height:18px"><path d="M5 12l5 5 9-10"/></svg>Teisinga</span></label>
+        <label class="a-opt opt bad"><input type="checkbox" id="a-o3" checked><span class="box"><svg class="icon" viewBox="0 0 24 24" style="width:18px;height:18px"><path d="M5 12l5 5 9-10"/></svg></span><span>Iš dešinės artėjančioms transporto priemonėms visada, net jeigu jų trajektorijos nesikerta.</span><span class="verdict"><svg class="icon" viewBox="0 0 24 24" style="width:18px;height:18px"><path d="M6 6l12 12M18 6L6 18"/></svg>Neteisinga · tavo pasirinkimas</span></label>
+      </fieldset>
+      <div class="a-why after-only">
+        <h3>Kodėl</h3>
+        <p class="key">Duok kelią iš dešinės, kai jūsų keliai kertasi.</p>
+        <p>Lygiareikšmių kelių sankryžoje praleidi iš dešinės artėjančią transporto priemonę, jeigu jūsų važiavimo trajektorijos kertasi. Jei nesikerta – praleisti nereikia. <a href="#a-question-after">KET 155 p.</a></p>
+      </div>
+      <div class="a-explainer after-only">
+        <h3>Dešinės rankos taisyklė</h3>
+        <p>Nėra ženklų, šviesoforo ir reguliuotojo, keliai lygiareikšmiai: pirmas važiuoja tas, kuris iš dešinės. Ši taisyklė dar grįš šioje pamokoje – su kitais variantais.</p>
+      </div>
+      <div class="grow"></div>
+      <div class="a-dock dock before-only"><button class="a-btn ghost" type="button" data-check>Spėju</button><button class="a-btn" type="button" data-check>Tikrinti</button></div>
+      <div class="a-dock one dock after-only"><button class="a-btn" type="button" data-next>Toliau</button></div>
+    </section>
+  </div>
+
+  <!-- =========================== B · COURSE MAP =========================== -->
+  <div class="variant vb" data-variant="b" lang="lt" hidden>
+
+    <!-- B · Landing -->
+    <section class="screen" data-screen="landing">
+      <div class="b-top"><span class="b-mark"><svg viewBox="0 0 26 26"><path d="M13 3L24 22H2z" fill="none" stroke="var(--b-purple)" stroke-width="3"/></svg>KETGO</span><span class="cond" style="font-weight:700;font-size:18px;color:var(--b-purple)">Nemokama beta</span></div>
+      <div class="b-map" data-map="landing"></div>
+      <div class="b-hero">
+        <h1>Tavo kelias iki teorijos egzamino</h1>
+        <p>Pamokos eina iš eilės, kaip kontroliniai punktai trasoje. Tu renkiesi tempą, KETGO – ką kartoti ir kada.</p>
+        <a class="b-btn" href="#b-home">Pradėti</a>
+        <small>Be registracijos. Pirmas klausimas – per minutę.</small>
+      </div>
+      <h2 class="b-sectitle">Kaip tai veikia</h2>
+      <div class="b-sheet">
+        <div class="head"><span>KETGO trasa</span><span>B kat.</span></div>
+        <div class="r"><span>1</span><span><b>Pirma spėji, tada supranti</b><small>Nauja taisyklė prasideda klausimu. Po atsakymo – paaiškinimas.</small></span></div>
+        <div class="r"><span>2</span><span><b>Klausimas grįžta kitoks</b><small>Kita variantų tvarka ir kiti klaidinantys variantai. Išmoksti taisyklę, ne atsakymo vietą.</small></span></div>
+        <div class="r"><span>3</span><span><b>Kartojimai iki egzamino dienos</b><small>Taisyklė grįžta, kai ją pradedi pamiršti.</small></span></div>
+        <div class="r"><span><svg viewBox="0 0 30 30" width="30" height="30"><circle cx="15" cy="15" r="12" fill="none" stroke="var(--b-purple)" stroke-width="2.5"/><circle cx="15" cy="15" r="7" fill="none" stroke="var(--b-purple)" stroke-width="2.5"/></svg></span><span><b>Bandomasis egzaminas kaip tikras</b><small>30 klausimų · 30 min. · išlaikyta nuo 24.</small></span></div>
+      </div>
+      <div class="b-legend">
+        <h2>Legenda</h2>
+        <div class="item"><span class="b-sym" style="background:var(--b-green)"></span>Įsiminta taisyklė</div>
+        <div class="item"><span class="b-sym" style="background:var(--b-yellow)"></span>Mokaisi</div>
+        <div class="item"><span class="b-sym" style="background:var(--b-bg)"></span>Dar nesutikta</div>
+      </div>
+      <div class="b-end"><a class="b-btn" href="#b-home">Pradėti nemokamai</a><p>KETGO · nemokama beta · 2026</p></div>
+    </section>
+
+    <!-- B · Home -->
+    <section class="screen" data-screen="home" hidden>
+      <div class="b-top"><span class="b-mark"><svg viewBox="0 0 26 26"><path d="M13 3L24 22H2z" fill="none" stroke="var(--b-purple)" stroke-width="3"/></svg>KETGO</span>
+        <span style="display:flex;gap:8px">
+          <button class="b-iconbtn" type="button" aria-label="Pažanga"><svg class="icon" viewBox="0 0 24 24"><path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/></svg></button>
+          <button class="b-iconbtn" type="button" aria-label="Meniu"><svg class="icon" viewBox="0 0 24 24"><path d="M4 7h16M4 12h16M4 17h16"/></svg></button>
+        </span></div>
+      <div class="b-meta"><span>Finišas: egzaminas lapkričio 12 d.</span><b>liko 29 d.</b></div>
+      <div class="b-map" data-map="home"></div>
+      <div class="b-strip" aria-hidden="true"></div>
+      <p class="b-strip-cap">6 pamokos iš 36 įveiktos · užtenka apie 1 per dieną</p>
+      <div class="b-progress">
+        <h2>Taisyklės</h2>
+        <div class="b-bar" role="img" aria-label="38 įsimintos, 21 mokaisi, 237 dar nesutiktos"><i style="width:12.8%;background:var(--b-green)"></i><i style="width:7.1%;background:var(--b-yellow)"></i></div>
+        <div class="item"><span class="b-sym" style="background:var(--b-green)"></span>Įsimintos<b>38</b></div>
+        <div class="item"><span class="b-sym" style="background:var(--b-yellow)"></span>Mokaisi<b>21</b></div>
+        <div class="item"><span class="b-sym" style="background:var(--b-bg)"></span>Dar nesutiktos<b>237</b></div>
+      </div>
+      <button class="b-exam" type="button"><span><b>Bandomasis egzaminas</b><small>30 klausimų · 30 min.</small></span><svg viewBox="0 0 30 30" width="30" height="30"><circle cx="15" cy="15" r="12" fill="none" stroke="currentColor" stroke-width="2.5"/><circle cx="15" cy="15" r="7" fill="none" stroke="currentColor" stroke-width="2.5"/></svg></button>
+      <p class="b-note">Pasirengimą parodysime po pirmojo bandomojo egzamino antroje programos pusėje.</p>
+      <div class="grow"></div>
+      <div class="b-dock dock">
+        <div class="b-sheet" style="margin:0"><div class="r"><span>7</span><span><b>Lygiareikšmių kelių sankryžos</b><small>8 naujos taisyklės · 6 kartoti · apie 18 min.</small></span></div></div>
+        <a class="b-btn" href="#b-question">Tęsti</a>
+      </div>
+    </section>
+
+    <!-- B · Question -->
+    <section class="screen" data-screen="question" hidden>
+      <div class="b-qtop">
+        <button class="b-iconbtn" type="button" aria-label="Uždaryti"><svg class="icon" viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
+        <div class="b-ctrl"><svg viewBox="0 0 34 34" width="34" height="34"><circle cx="17" cy="17" r="14" fill="none" stroke="var(--b-purple)" stroke-width="3"/><text x="17" y="23" text-anchor="middle" font-family="Barlow Condensed, sans-serif" font-weight="700" font-size="17" fill="var(--b-purple)">7</text></svg><span class="cond">Lygiareikšmių sankryžos</span></div>
+        <span class="cond" style="font-weight:700;font-size:18px;font-variant-numeric:tabular-nums">5/22</span>
+      </div>
+      <div class="b-leg" aria-hidden="true"></div>
+      <span class="b-badge"><svg viewBox="0 0 20 20" width="18" height="18"><path d="M10 2L18 17H2z" fill="none" stroke="currentColor" stroke-width="2.5"/></svg>Nauja taisyklė · pabandyk atspėti</span>
+      <div class="b-scene scene"></div>
+      <h2 class="b-stem">Kam vairuotojas privalo duoti kelią lygia&shy;reikšmių kelių sankryžoje?</h2>
+      <fieldset class="b-opts" style="margin:0 16px;padding:0;min-width:0">
+        <legend class="sr">Pasirink visus teisingus variantus</legend>
+        <label class="b-opt opt"><input type="checkbox" id="b-o1"><span class="cell"><span class="box"><svg class="icon" viewBox="0 0 24 24" style="width:18px;height:18px"><path d="M5 12l5 5 9-10"/></svg></span></span><span class="txt">Iš dešinės artėjančioms transporto priemonėms tik tada, kai sankryžoje stovi pirmenybės ženklai.</span></label>
+        <label class="b-opt opt ok"><input type="checkbox" id="b-o2"><span class="cell"><span class="box"><svg class="icon" viewBox="0 0 24 24" style="width:18px;height:18px"><path d="M5 12l5 5 9-10"/></svg></span></span><span class="txt">Iš dešinės artėjančioms transporto priemonėms, jeigu jų važiavimo trajektorijos kertasi.<span class="verdict"><svg class="icon" viewBox="0 0 24 24" style="width:18px;height:18px"><path d="M5 12l5 5 9-10"/></svg>Teisinga</span></span></label>
+        <label class="b-opt opt bad"><input type="checkbox" id="b-o3" checked><span class="cell"><span class="box"><svg class="icon" viewBox="0 0 24 24" style="width:18px;height:18px"><path d="M6 6l12 12M18 6L6 18"/></svg></span></span><span class="txt">Iš dešinės artėjančioms transporto priemonėms visada, net jeigu jų trajektorijos nesikerta.<span class="verdict"><svg class="icon" viewBox="0 0 24 24" style="width:18px;height:18px"><path d="M6 6l12 12M18 6L6 18"/></svg>Neteisinga · tavo pasirinkimas</span></span></label>
+      </fieldset>
+      <div class="b-why after-only">
+        <div class="head"><span>Kodėl</span><a href="#b-question-after">KET 155 p.</a></div>
+        <div class="body"><p class="key">Duok kelią iš dešinės, kai jūsų keliai kertasi.</p><p>Lygiareikšmių kelių sankryžoje praleidi iš dešinės artėjančią transporto priemonę, jeigu jūsų važiavimo trajektorijos kertasi. Jei nesikerta – praleisti nereikia.</p></div>
+        <div class="exp"><b>Dešinės rankos taisyklė</b><p>Nėra ženklų, šviesoforo ir reguliuotojo, keliai lygiareikšmiai: pirmas važiuoja tas, kuris iš dešinės. Ši taisyklė dar grįš šioje pamokoje – su kitais variantais.</p></div>
+      </div>
+      <div class="grow"></div>
+      <div class="b-dock two dock before-only"><button class="b-btn ghost" type="button" data-check>Spėju</button><button class="b-btn" type="button" data-check>Tikrinti</button></div>
+      <div class="b-dock dock after-only"><button class="b-btn" type="button" data-next>Toliau</button></div>
+    </section>
+  </div>
+
+  <!-- =========================== C · ATŠVAITAS =========================== -->
+  <div class="variant vc" data-variant="c" lang="lt" hidden>
+
+    <!-- C · Landing -->
+    <section class="screen" data-screen="landing">
+      <div class="c-hero">
+        <div class="c-sweep" aria-hidden="true"></div>
+        <div class="c-top"><span class="c-mark"><i></i>KETGO</span><span style="font-size:15px;color:var(--c-on-night2);font-weight:700">Nemokama beta</span></div>
+        <h1 class="wide">Įžiebk kiekvieną taisyklę.</h1>
+        <div class="c-grid" data-grid="landing" role="img" aria-label="Taisyklės kaip atšvaitai: įsimintos šviečia"></div>
+        <p>Kiekviena KET taisyklė – kaip atšvaitas. Kai ją tikrai prisimeni, ji šviečia. KETGO klausia, paaiškina ir grąžina taisyklę tada, kai ji pradeda blėsti.</p>
+        <a class="c-btn" href="#c-home">Pradėti</a>
+        <small>Be registracijos. Pirmas klausimas – per minutę.</small>
+      </div>
+      <div class="c-sec">
+        <h2 class="wide">Kaip tai veikia</h2>
+        <div class="c-band"><span class="n">1</span><div><h3>Pirma spėji, tada supranti</h3><p>Nauja taisyklė prasideda klausimu. Po atsakymo – paaiškinimas.</p></div></div>
+        <div class="c-band"><span class="n">2</span><div><h3>Klausimas grįžta kitoks</h3><p>Kita variantų tvarka ir kiti klaidinantys variantai. Išmoksti taisyklę, ne atsakymo vietą.</p></div></div>
+        <div class="c-band"><span class="n">3</span><div><h3>Grįžta, kai pradedi pamiršti</h3><p>Kartojimai suplanuoti pagal tavo egzamino datą.</p></div></div>
+      </div>
+      <div class="c-facts">
+        <h2 class="wide">Bandomasis egzaminas kaip „Regitroje“</h2>
+        <div class="nums"><div><b>30</b><span>klausimų</span></div><div><b>30</b><span>minučių</span></div><div><b>24</b><span>išlaikyti</span></div></div>
+      </div>
+      <div class="c-end"><a class="c-btn" href="#c-home">Pradėti nemokamai</a>KETGO · nemokama beta · 2026</div>
+    </section>
+
+    <!-- C · Home -->
+    <section class="screen" data-screen="home" hidden>
+      <div class="c-top"><span class="c-mark"><i></i>KETGO</span>
+        <span style="display:flex;gap:8px">
+          <button class="c-iconbtn" type="button" aria-label="Pažanga"><svg class="icon" viewBox="0 0 24 24"><path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/></svg></button>
+          <button class="c-iconbtn" type="button" aria-label="Meniu"><svg class="icon" viewBox="0 0 24 24"><path d="M4 7h16M4 12h16M4 17h16"/></svg></button>
+        </span></div>
+      <div class="c-meta"><span>Egzaminas <b>lapkričio 12 d.</b></span><span>liko <b>29 d.</b></span><span>užtenka <b>~1 pamokos</b> per dieną</span></div>
+      <div class="c-rules">
+        <h2 class="wide">38 taisyklės šviečia</h2>
+        <div class="c-grid" data-grid="home" role="img" aria-label="296 taisyklės: 38 įsimintos, 21 mokaisi, 237 dar nesutiktos"></div>
+        <div class="key"><span><i style="background:var(--c-lit)"></i>Įsimintos <b>38</b></span><span><i style="background:var(--c-half)"></i>Mokaisi <b>21</b></span><span><i style="background:var(--c-cell)"></i>Dar nesutiktos <b>237</b></span></div>
+      </div>
+      <button class="c-line" type="button"><span><b>Bandomasis egzaminas</b><small>30 klausimų · 30 min.</small></span><svg class="icon" viewBox="0 0 24 24"><path d="M9 6l6 6-6 6"/></svg></button>
+      <p class="c-note">Pasirengimą parodysime po pirmojo bandomojo egzamino antroje programos pusėje.</p>
+      <div class="grow"></div>
+      <div class="c-dock dock">
+        <div class="what"><b>7 pamoka iš 36 · Lygiareikšmių kelių sankryžos</b></div>
+        <div class="what"><span>8 naujos taisyklės · 6 kartoti · apie 18 min.</span></div>
+        <a class="c-btn" href="#c-question">Tęsti</a>
+      </div>
+    </section>
+
+    <!-- C · Question -->
+    <section class="screen" data-screen="question" hidden>
+      <div class="c-qtop">
+        <button class="c-iconbtn" type="button" aria-label="Uždaryti"><svg class="icon" viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
+        <div class="c-tape" aria-hidden="true"></div>
+      </div>
+      <div class="c-qmeta"><span>7 pamoka</span><span>5 / 22</span></div>
+      <span class="c-badge">Nauja taisyklė · spėk</span>
+      <div class="c-scene scene"></div>
+      <h2 class="c-stem">Kam vairuotojas privalo duoti kelią lygia&shy;reikšmių kelių sankryžoje?</h2>
+      <fieldset class="c-opts" style="border:0;margin:0;padding:0;min-width:0">
+        <legend class="sr">Pasirink visus teisingus variantus</legend>
+        <label class="c-opt opt"><input type="checkbox" id="c-o1"><span class="box"><svg class="icon" viewBox="0 0 24 24" style="width:20px;height:20px"><path d="M5 12l5 5 9-10"/></svg></span><span>Iš dešinės artėjančioms transporto priemonėms tik tada, kai sankryžoje stovi pirmenybės ženklai.</span></label>
+        <label class="c-opt opt ok"><input type="checkbox" id="c-o2"><span class="box"><svg class="icon" viewBox="0 0 24 24" style="width:20px;height:20px"><path d="M5 12l5 5 9-10"/></svg></span><span>Iš dešinės artėjančioms transporto priemonėms, jeigu jų važiavimo trajektorijos kertasi.</span><span class="verdict"><svg class="icon" viewBox="0 0 24 24" style="width:18px;height:18px"><path d="M5 12l5 5 9-10"/></svg>Teisinga</span></label>
+        <label class="c-opt opt bad"><input type="checkbox" id="c-o3" checked><span class="box"><svg class="icon" viewBox="0 0 24 24" style="width:20px;height:20px"><path d="M5 12l5 5 9-10"/></svg></span><span>Iš dešinės artėjančioms transporto priemonėms visada, net jeigu jų trajektorijos nesikerta.</span><span class="verdict"><svg class="icon" viewBox="0 0 24 24" style="width:18px;height:18px"><path d="M6 6l12 12M18 6L6 18"/></svg>Neteisinga · tavo pasirinkimas</span></label>
+      </fieldset>
+      <div class="c-why after-only">
+        <h3>Kodėl</h3>
+        <p class="key">Duok kelią iš dešinės, kai jūsų keliai kertasi.</p>
+        <p>Lygiareikšmių kelių sankryžoje praleidi iš dešinės artėjančią transporto priemonę, jeigu jūsų važiavimo trajektorijos kertasi. Jei nesikerta – praleisti nereikia. <a href="#c-question-after">KET 155 p.</a></p>
+      </div>
+      <div class="c-explainer after-only">
+        <h3><i></i>Dešinės rankos taisyklė</h3>
+        <p>Nėra ženklų, šviesoforo ir reguliuotojo, keliai lygiareikšmiai: pirmas važiuoja tas, kuris iš dešinės. Ši taisyklė pradėjo šviesti – grįš šioje pamokoje su kitais variantais.</p>
+      </div>
+      <div class="grow"></div>
+      <div class="c-dock two dock before-only"><button class="c-btn ghost" type="button" data-check>Spėju</button><button class="c-btn" type="button" data-check>Tikrinti</button></div>
+      <div class="c-dock dock after-only"><button class="c-btn" type="button" data-next>Toliau</button></div>
+    </section>
+  </div>
+
+  </div></div>
+</main>
+
+<nav class="switcher" aria-label="Prototipo valdymas">
+  <span class="cycle"><button type="button" id="prev" aria-label="Previous direction">‹</button><span class="label" id="vlabel">A · Teal + lime</span><button type="button" id="next" aria-label="Next direction">›</button></span>
+  <span class="group" id="screens">
+    <button type="button" data-go="landing" aria-pressed="true">Landing</button>
+    <button type="button" data-go="home" aria-pressed="false">Home</button>
+    <button type="button" data-go="question" aria-pressed="false">Question</button>
+  </span>
+  <button type="button" id="state" aria-pressed="false" hidden>After Check</button>
+  <button type="button" id="theme">Theme: phone</button>
+  <button type="button" class="info" id="info" aria-pressed="false">Notes</button>
+</nav>
+
+<!-- one bird's-eye scene, drawn by each world's tokens. Synthetic illustration. -->
+<template id="scene-tpl">
+  <svg viewBox="0 0 320 190" role="img" aria-label="Lygiareikšmių kelių sankryža: tu važiuoji tiesiai, automobilis artėja iš dešinės">
+    <rect width="320" height="190" fill="var(--s-ground)"/>
+    <rect x="0" y="70" width="320" height="52" fill="var(--s-road)"/>
+    <rect x="134" y="0" width="52" height="190" fill="var(--s-road)"/>
+    <path d="M0 70H134V0M186 0V70H320M0 122H134V190M186 190V122H320" fill="none" stroke="var(--s-edge)" stroke-width="2.5"/>
+    <path d="M0 96H120M200 96H320M160 0V56M160 136V190" stroke="var(--s-mark)" stroke-width="2" stroke-dasharray="10 9" fill="none"/>
+    <path d="M173 150V18" stroke="var(--s-path)" stroke-width="2.5" stroke-dasharray="4 6" fill="none"/>
+    <path d="M286 83H40" stroke="var(--s-path)" stroke-width="2.5" stroke-dasharray="4 6" fill="none"/>
+    <path d="M168 26l5-9 5 9M48 78l-9 5 9 5" fill="none" stroke="var(--s-path)" stroke-width="2.5" stroke-linejoin="round" stroke-linecap="round"/>
+    <g transform="translate(164 148)"><rect width="18" height="32" rx="5" fill="var(--s-me)"/><rect x="3" y="5" width="12" height="7" rx="2" fill="var(--s-ground)" opacity=".7"/></g>
+    <g transform="translate(270 74)"><rect width="32" height="18" rx="5" fill="var(--s-other)"/><rect x="4" y="3" width="7" height="12" rx="2" fill="var(--s-ground)" opacity=".7"/></g>
+    <g class="hit"><circle cx="173" cy="83" r="13" fill="none" stroke="var(--s-hit)" stroke-width="3"/><text x="194" y="64" font-size="13" font-weight="700" fill="var(--s-hit)" font-family="system-ui, sans-serif">kertasi</text></g>
+  </svg>
+</template>
+
+<script>
+(() => {
+  const VARIANTS = [
+    { key: 'a', label: 'A · Teal + lime', notes: `
+      <h2>A · Teal + lime, evolved</h2>
+      <p>The 2025 colours, made light-first: deep teal text on a sage-white page, lime only as a solid fill behind dark text, never as glowing text.</p>
+      <div class="swatches"><span style="background:var(--a-bg)"></span><span style="background:var(--a-field)"></span><span style="background:var(--a-lime)"></span><span style="background:var(--a-chip)"></span><span style="background:var(--a-ok)"></span><span style="background:var(--a-bad)"></span></div>
+      <p><b>Font:</b> Atkinson Hyperlegible Next, made by the Braille Institute for easy reading.</p>
+      <p><b>Shape:</b> a familiar app. Rounded cards, a teal "next step" panel at the bottom, one lime button.</p>
+      <p class="muted"><b>Risk:</b> the most familiar of the three, so the least memorable. In dark mode it sits close to the "dark screen + neon" look you ruled out.</p>` },
+    { key: 'b', label: 'B · Course map', notes: `
+      <h2>B · Course map</h2>
+      <p>From orienteering maps: white open ground, brown contour lines, yellow fields, and one purple line for your course.</p>
+      <p>The Program is the course. Lessons are numbered control points you visit in order. The exam is the finish circle. Road pictures are drawn as bird's-eye map views.</p>
+      <div class="swatches"><span style="background:var(--b-bg)"></span><span style="background:var(--b-purple)"></span><span style="background:var(--b-yellow)"></span><span style="background:var(--b-green)"></span><span style="background:var(--b-brown)"></span><span style="background:var(--b-blue)"></span></div>
+      <p><b>Font:</b> Barlow and Barlow Condensed, based on road-sign and number-plate lettering.</p>
+      <p><b>Shape:</b> square corners, thin black rules, tables like a control description sheet.</p>
+      <p class="muted"><b>Risk:</b> map detail must stay calm. Some learners won't know orienteering, but "a route with numbered stops" still reads.</p>` },
+    { key: 'c', label: 'C · Atšvaitas', notes: `
+      <h2>C · Atšvaitas</h2>
+      <p>From the reflectors every Lithuanian knows from KET. Each Rule is a small reflector dot. It lights up orange when it is Remembered. Home shows all ~300 Rules at a glance.</p>
+      <div class="swatches"><span style="background:var(--c-night)"></span><span style="background:var(--c-lit)"></span><span style="background:var(--c-half)"></span><span style="background:var(--c-silver)"></span><span style="background:var(--c-ok)"></span><span style="background:var(--c-bad)"></span></div>
+      <p><b>Font:</b> Archivo. One file: wide, heavy headings like safety-label lettering, normal width for reading.</p>
+      <p><b>Shape:</b> night-blue fields, reflective-tape bands, Options as full-width strips. On Landing a headlight sweep passes and the dots light up (off when the phone asks for less motion).</p>
+      <p class="muted"><b>Risk:</b> orange is near the red "wrong" colour. The icon and the word carry the difference.</p>` },
+  ];
+  const SCREENS = ['landing', 'home', 'question'];
+  const root = document.documentElement;
+  const vp = document.getElementById('viewport');
+  const notes = document.getElementById('notes');
+  let v = 0, s = 0, after = false;
+
+  // draw shared material once
+  const tpl = document.getElementById('scene-tpl');
+  document.querySelectorAll('.scene').forEach(el => el.appendChild(tpl.content.cloneNode(true)));
+  // reflector grids: 296 Rules, 38 Remembered, 21 Learning (example data)
+  document.querySelectorAll('.c-grid').forEach(g => {
+    const n = g.dataset.grid === 'landing' ? 120 : 296;
+    const lit = g.dataset.grid === 'landing' ? 46 : 38, half = g.dataset.grid === 'landing' ? 14 : 21;
+    let html = '';
+    for (let i = 0; i < n; i++) {
+      // landing: lit dots scattered, lighting left to right behind the headlight sweep; home: real counts in order
+      const r = g.dataset.grid === 'landing' ? ((i * 7919) % 120) / 120 : i / n;
+      const cls = r < lit / n ? 'l' : r < (lit + half) / n ? 'h' : '';
+      html += `<i class="${cls}" style="--d:${(i % 24) * 45}"></i>`;
+    }
+    g.innerHTML = html;
+  });
+  document.querySelectorAll('.b-strip').forEach(el => { el.innerHTML = Array.from({ length: 36 }, (_, i) => `<i class="${i < 6 ? 'done' : i === 6 ? 'now' : ''}"></i>`).join(''); });
+  document.querySelectorAll('.b-leg').forEach(el => { el.innerHTML = Array.from({ length: 22 }, (_, i) => `<i class="${i < 4 ? 'done' : ''}"></i>`).join(''); });
+  document.querySelectorAll('.c-tape').forEach(el => { el.innerHTML = Array.from({ length: 22 }, (_, i) => `<i class="${i < 4 ? 'l' : i === 4 ? 'now' : ''}"></i>`).join(''); });
+
+  // B: orienteering course over contour terrain (SVG). Controls are Lessons; finish = Theory Exam.
+  const contours = `
+    <path d="M-10 60 C60 20 140 40 200 20 S330 10 370 40" />
+    <path d="M-10 90 C70 55 150 75 210 50 S330 45 370 75" />
+    <path d="M60 210 C40 170 90 140 140 150 S210 200 180 230" />
+    <path d="M85 210 C75 180 105 165 135 172 S180 200 165 225" />
+    <path d="M250 260 C230 220 270 190 310 200 S370 240 360 270" />`;
+  const terrain = (h) => `
+    <rect width="360" height="${h}" fill="var(--b-bg)"/>
+    <path d="M0 0H130C120 40 70 55 0 70Z" fill="var(--b-yellow)"/>
+    <path d="M230 ${h}C240 ${h - 70} 300 ${h - 90} 360 ${h - 60}V${h}Z" fill="var(--b-yellow2)"/>
+    <path d="M250 30C280 10 340 20 350 60 330 90 270 80 250 30Z" fill="var(--b-green)"/>
+    <path d="M30 ${h - 70}C60 ${h - 90} 110 ${h - 60} 90 ${h - 30} 60 ${h - 20} 20 ${h - 40} 30 ${h - 70}Z" fill="var(--b-green2)"/>
+    <path d="M300 ${h * 0.55}c12-6 30-2 32 10s-18 16-30 10-12-14-2-20Z" fill="var(--b-blue)"/>
+    <g fill="none" stroke="var(--b-brown)" stroke-width="1.6">${contours}</g>
+    <path d="M0 ${h * 0.62}L360 ${h * 0.48}" stroke="var(--b-ink)" stroke-width="5"/>
+    <path d="M0 ${h * 0.62}L360 ${h * 0.48}" stroke="var(--b-bg)" stroke-width="2.4"/>`;
+  const ctrl = (x, y, n, state) => {
+    const r = state === 'now' ? 17 : 14;
+    const w = state === 'now' ? 4 : 2.6;
+    const punched = state === 'done' ? `<path d="M${x - 6} ${y}l4 5 8-10" fill="none" stroke="var(--b-purple)" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/>` : '';
+    return `<circle cx="${x}" cy="${y}" r="${r}" fill="${state === 'now' ? 'var(--b-purple-soft)' : 'none'}" stroke="var(--b-purple)" stroke-width="${w}"/>${punched}
+      <text class="lbl" x="${x + r + 4}" y="${y - r + 6}" font-size="${state === 'now' ? 22 : 17}">${n}</text>`;
+  };
+  const leg = (a, b, strong) => {
+    const dx = b[0] - a[0], dy = b[1] - a[1], d = Math.hypot(dx, dy), ux = dx / d, uy = dy / d, r = 16;
+    return `<line x1="${a[0] + ux * r}" y1="${a[1] + uy * r}" x2="${b[0] - ux * r}" y2="${b[1] - uy * r}" stroke="var(--b-purple)" stroke-width="${strong ? 4.5 : 2.6}"/>`;
+  };
+  const maps = {
+    home: () => {
+      const pts = [[44, 236], [96, 168], [70, 96], [150, 58], [212, 128], [282, 96], [318, 186]];
+      const nums = [4, 5, 6, 7, 8, 9, 10];
+      let svg = terrain(270);
+      for (let i = 0; i < pts.length - 1; i++) svg += leg(pts[i], pts[i + 1], i === 2);
+      pts.forEach((p, i) => { svg += ctrl(p[0], p[1], nums[i], i < 3 ? 'done' : i === 3 ? 'now' : ''); });
+      svg += `<text class="lbl2" x="12" y="262" font-size="13">← 1–3 įveiktos</text><text class="lbl2" x="232" y="226" font-size="13">→ ◎ 36 · egzaminas</text>`;
+      return `<svg viewBox="0 0 360 270" role="img" aria-label="Trasos dalis: pamokos 4–6 įveiktos, dabar 7 pamoka">${svg}</svg>`;
+    },
+    landing: () => {
+      const pts = [[40, 200], [100, 140], [86, 70], [170, 44], [236, 112], [300, 70]];
+      let svg = terrain(240);
+      svg += `<path d="M40 182L56 210H24Z" fill="none" stroke="var(--b-purple)" stroke-width="3"/>`;
+      for (let i = 0; i < pts.length - 1; i++) svg += leg(pts[i], pts[i + 1], false);
+      pts.slice(1, -1).forEach((p, i) => { svg += ctrl(p[0], p[1], i + 1, ''); });
+      const f = pts[pts.length - 1];
+      svg += `<circle cx="${f[0]}" cy="${f[1]}" r="15" fill="none" stroke="var(--b-purple)" stroke-width="3"/><circle cx="${f[0]}" cy="${f[1]}" r="9" fill="none" stroke="var(--b-purple)" stroke-width="3"/>`;
+      svg += `<text class="lbl" x="66" y="222" font-size="18">Šiandien</text><text class="lbl" x="250" y="40" font-size="18">Egzaminas</text>`;
+      return `<svg viewBox="0 0 360 240" role="img" aria-label="Trasa nuo šiandien iki egzamino">${svg}</svg>`;
+    },
+  };
+  document.querySelectorAll('.b-map').forEach(el => { el.innerHTML = maps[el.dataset.map](); });
+
+  function render(push) {
+    const vk = VARIANTS[v].key, sk = SCREENS[s];
+    document.querySelectorAll('.variant').forEach(el => { el.hidden = el.dataset.variant !== vk; });
+    document.querySelectorAll(`.variant[data-variant="${vk}"] .screen`).forEach(el => {
+      el.hidden = el.dataset.screen !== sk;
+      el.classList.toggle('is-after', after && el.dataset.screen === 'question');
+      el.querySelectorAll('input').forEach(i => { i.disabled = after; });
+    });
+    document.getElementById('vlabel').textContent = VARIANTS[v].label;
+    notes.innerHTML = VARIANTS[v].notes + `
+      <div class="judge"><p><b>What to judge</b></p><ul>
+      <li>First look, in one second: would a 17–21-year-old trust it?</li>
+      <li>Does the Question screen feel calm enough to think?</li>
+      <li>Steal freely: "B's map on Home with A's buttons" is a good answer.</li></ul>
+      <p class="muted" style="margin-top:10px">All numbers on Home are examples. The road picture is a rough sketch of the drawing style, not a final scene.</p></div>`;
+    document.querySelectorAll('#screens button').forEach(b => b.setAttribute('aria-pressed', String(b.dataset.go === sk)));
+    const st = document.getElementById('state');
+    st.hidden = sk !== 'question';
+    st.setAttribute('aria-pressed', String(after));
+    if (push) { try { history.replaceState(null, '', `#${vk}-${sk}${after && sk === 'question' ? '-after' : ''}`); } catch (e) {} }
+    vp.scrollTop = 0;
+  }
+  function fromHash() {
+    const m = (location.hash || '').match(/^#([abc])-(landing|home|question)(-after)?$/);
+    if (!m) return false;
+    v = VARIANTS.findIndex(x => x.key === m[1]); s = SCREENS.indexOf(m[2]); after = !!m[3];
+    return true;
+  }
+  const cycle = d => { v = (v + d + VARIANTS.length) % VARIANTS.length; render(true); };
+  document.getElementById('prev').onclick = () => cycle(-1);
+  document.getElementById('next').onclick = () => cycle(1);
+  document.querySelectorAll('#screens button').forEach(b => b.onclick = () => { s = SCREENS.indexOf(b.dataset.go); render(true); });
+  document.getElementById('state').onclick = () => { after = !after; render(true); };
+  document.querySelectorAll('[data-check]').forEach(b => b.onclick = () => { after = true; render(true); });
+  document.querySelectorAll('[data-next]').forEach(b => b.onclick = () => { after = false; render(true); });
+  // in-screen links (#a-home etc.) move between screens
+  document.addEventListener('click', e => {
+    const a = e.target.closest('a[href^="#"]');
+    if (!a) return;
+    const m = a.getAttribute('href').match(/^#([abc])-(landing|home|question)(-after)?$/);
+    if (!m) return;
+    e.preventDefault();
+    v = VARIANTS.findIndex(x => x.key === m[1]); s = SCREENS.indexOf(m[2]); after = !!m[3];
+    render(true);
+  });
+  const themes = [null, 'light', 'dark'], names = ['phone', 'light', 'dark'];
+  let t = 0;
+  document.getElementById('theme').onclick = e => {
+    t = (t + 1) % 3;
+    if (themes[t]) root.setAttribute('data-theme', themes[t]); else root.removeAttribute('data-theme');
+    e.currentTarget.textContent = 'Theme: ' + names[t];
+  };
+  document.getElementById('info').onclick = e => {
+    const on = document.body.classList.toggle('show-notes');
+    e.currentTarget.setAttribute('aria-pressed', String(on));
+  };
+  document.addEventListener('keydown', e => {
+    if (e.target.closest('input, textarea, [contenteditable]')) return;
+    if (e.key === 'ArrowLeft') cycle(-1);
+    if (e.key === 'ArrowRight') cycle(1);
+  });
+  window.addEventListener('hashchange', () => { if (fromHash()) render(false); });
+  fromHash();
+  render(false);
+})();
+</script>
