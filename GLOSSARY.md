@@ -23,7 +23,7 @@ One thing a learner must know to answer a Question correctly, such as the right-
 _Avoid_: KET point, topic (when you mean this unit)
 
 **Question**:
-A stem (text, usually with an image) plus up to four Options, of which one or more are correct. Each Question has one main Rule.
+A stem (text, usually with an image) plus the Options written for it, of which one or more are correct. Each Question has one main Rule. Each time it is shown, up to four of its Options are drawn: a Question with one correct Option always shows it, plus Distractors from its Distractor Pool; a Question with several correct Options also draws from those, so how many shown Options are correct (one to all) can change between showings.
 _Avoid_: ticket, item
 
 **Option**:
