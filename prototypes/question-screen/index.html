@@ -235,7 +235,7 @@ fieldset.q-opts { border: 0; margin: 0; min-width: 0; }
 .q-dock.one { grid-template-columns: 1fr; }
 .q-dock.even { grid-template-columns: 1fr 1fr; }
 /* B: sheet from the bottom; a line, not a shadow (One Shadow Rule) */
-.q-sheet { margin-top: 18px; max-height: 74cqh; display: flex; flex-direction: column; background: var(--surface); border-radius: 24px 24px 0 0; box-shadow: inset 0 1px 0 var(--line), 0 -1px 0 var(--line); }
+.q-sheet { margin-top: 18px; max-height: 50cqh; display: flex; flex-direction: column; background: var(--surface); border-radius: 24px 24px 0 0; box-shadow: inset 0 1px 0 var(--line), 0 -1px 0 var(--line); }
 .q-sheet-body { overflow-y: auto; overscroll-behavior: contain; padding: 20px 20px 4px; display: grid; gap: 14px; }
 .q-sheet-foot { padding: 12px 20px calc(14px + env(safe-area-inset-bottom, 0px)); display: grid; grid-template-columns: 1fr; gap: 10px; }
 .q-sheet-foot.two { grid-template-columns: 1fr 1.6fr; }
@@ -277,31 +277,40 @@ fieldset.q-opts { border: 0; margin: 0; min-width: 0; }
 /* phone layout on a tablet: keep the column readable */
 .app:not(.wide) .screen { max-width: 640px; margin-inline: auto; }
 .wide .screen.narrow { max-width: 720px; margin-inline: auto; }
-/* desktop: question, picture and "why" on the left; Options, buttons and (Mock Exam) the answer sheet on the right */
+/* desktop: one frame for every Question. Main column = the question (stem, picture in a fixed frame, Options).
+   Panel = what to do now: buttons before Check; verdict, "why" and Toliau after; time and answer sheet in a Mock Exam. */
 .d-wrap { width: 100%; max-width: 1160px; margin-inline: auto; padding: 8px 40px 48px; }
-.d-wrap > .q-top { padding: 16px 0 28px; }
-.d-wrap > .m-note { margin: -12px 0 20px; }
-.d-grid { display: grid; grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr); gap: 56px; align-items: start; }
-.d-q, .d-a { display: grid; gap: 18px; align-content: start; min-width: 0; }
-.d-q > *, .d-a > * { margin: 0; }
-.d-q > .k-chip { justify-self: start; }
-.d-q .q-stem { padding: 0; font-size: 28px; line-height: 1.25; letter-spacing: -0.01em; }
-.d-q .q-scene { background: var(--s-ground); }
-.d-q .q-scene svg { max-height: 42cqh; }
-.d-q .q-card { margin: 0; }
-.d-a .q-opts, .d-a .q-tip { padding: 0; }
-.d-actions { display: grid; grid-template-columns: 1fr 1.6fr; gap: 12px; margin-top: 4px; }
-.d-actions.res { grid-template-columns: 1fr minmax(200px, auto); align-items: center; }
-.d-keys { font-size: 16px; color: var(--ink2); }
-.d-confirm { margin: 0; }
-.d-confirm h2 { font-size: 22px; line-height: 1.3; }
-.d-sheet { display: grid; gap: 10px; padding-top: 18px; border-top: 1px solid var(--line); }
+.d-wrap > .q-top { padding: 16px 0 24px; }
+.d-grid { display: grid; grid-template-columns: minmax(0, 1fr) 380px; gap: 48px; align-items: start; }
+.d-main { display: grid; gap: 20px; align-content: start; min-width: 0; }
+.d-main > * { margin: 0; }
+.d-main .q-stem { padding: 0; font-size: 26px; line-height: 1.3; letter-spacing: -0.01em; }
+.d-main .q-scene { width: 100%; aspect-ratio: 16 / 9; max-height: 34cqh; background: var(--s-ground); display: grid; }
+.d-main .q-scene svg { width: 100%; height: 100%; }
+.d-main .q-opts { padding: 0; }
+.d-panel { position: sticky; top: 16px; max-height: calc(100cqh - 112px); display: flex; flex-direction: column; background: var(--surface); border-radius: 24px; box-shadow: inset 0 0 0 1px var(--line); }
+.d-panel-body { overflow-y: auto; overscroll-behavior: contain; padding: 22px 22px 6px; display: grid; gap: 16px; }
+.d-panel-body:empty { display: none; }
+.d-panel-foot { padding: 16px 22px 22px; display: grid; gap: 10px; }
+.d-panel .q-chip, .d-panel .q-tip { margin: 0; padding: 0; }
+.d-panel .q-chip { justify-self: start; }
+.d-panel .k-btn { padding: 0 12px; }
+.d-actions.even { grid-template-columns: 1fr 1fr; }
+.d-ctx { font-size: 17px; color: var(--ink2); }
+.d-actions { display: grid; grid-template-columns: 1fr 1.5fr; gap: 10px; }
+.d-keys { font-size: 15px; color: var(--ink2); text-align: center; }
+.d-panel h2 { font-size: 22px; line-height: 1.3; }
+.d-clock { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; }
+.d-clock .lbl { font-size: 16px; font-weight: 700; color: var(--ink2); }
+.d-clock .m-timer { font-size: 40px; line-height: 1.05; letter-spacing: -0.02em; margin: 0; }
+.d-clock .m-timer .icon { display: none; }
+.d-panel .m-note { margin: 0; }
+.d-sheet { display: grid; gap: 10px; }
 .d-sheet h3 { font-size: 16px; color: var(--ink2); display: flex; justify-content: space-between; }
 .d-sheet .m-strip { display: grid; grid-template-columns: repeat(10, minmax(0, 1fr)); gap: 6px; padding: 0; overflow: visible; }
-.d-sheet .m-strip button { width: auto; height: 40px; border-radius: 10px; }
-.d-sheet .m-strip button.done::after { bottom: 4px; width: 5px; height: 5px; }
-.d-time { display: flex; align-items: baseline; gap: 18px; margin-left: auto; }
-.d-time .m-timer { font-size: 22px; margin: 0; }
+.d-sheet .m-strip button { width: auto; height: 36px; border-radius: 10px; }
+.d-sheet .m-strip button.done::after { bottom: 3px; width: 5px; height: 5px; }
+.d-panel .m-finish { margin: 0 auto; }
 .k-opt kbd { display: none; }
 .wide .k-opt { grid-template-columns: 28px 1fr auto; }
 .wide .k-opt kbd { display: grid; place-items: center; grid-column: 3; grid-row: 1; width: 28px; height: 28px; border-radius: 8px; box-shadow: inset 0 0 0 1px var(--line); color: var(--ink2); font: 700 15px/1 "Atkinson Hyperlegible Next", system-ui, sans-serif; font-variant-numeric: tabular-nums; }
@@ -512,7 +521,9 @@ fieldset.q-opts { border: 0; margin: 0; min-width: 0; }
   /* ---------- pieces ---------- */
   const screen = (html, after, cls = '') => `<section class="screen${after ? ' is-after' : ''} ${cls}">${html}</section>`;
   // desktop: left = the question (chip, stem, picture, then the "why"); right = the answer (Options, buttons)
-  const wideQ = (top, left, right, after) => screen(`<div class="d-wrap">${top}<div class="d-grid"><div class="d-q">${left}</div><div class="d-a">${right}</div></div></div>`, after);
+  const deskQ = (top, main, body, foot, after) => screen(`<div class="d-wrap">${top}<div class="d-grid"><div class="d-main">${main}</div><aside class="d-panel"><div class="d-panel-body">${body}</div><div class="d-panel-foot">${foot}</div></aside></div></div>`, after);
+  // one line in the panel saying what kind of Question this is
+  const CTX = { new: 'Šios taisyklės dar nesimokei. Spėk, o po to ją išmoksi.', learned: 'Taisyklę ką tik perskaitei. Dabar pritaikyk ją.', due: 'Ši taisyklė grįžta, kad neužsimirštų.', return: 'Ta pati taisyklė grįžta šioje pamokoje.', reask: 'Šis klausimas grįžta su kitais variantais.' };
   const keys = (n, after, enter = 'tikrina') => `<p class="d-keys">${after ? 'Enter – toliau' : `Klavišai: 1–${n} pažymi variantą, Enter – ${enter}`}</p>`;
   const grow = '<div class="grow"></div>';
   const scene = q => q.scene ? `<figure class="q-scene scene">${SCENES[q.scene]}</figure>` : '';
@@ -575,7 +586,7 @@ fieldset.q-opts { border: 0; margin: 0; min-width: 0; }
       const dock = isPre(it)
         ? `<button class="k-btn k-btn--secondary" type="button" data-act="learn">Pirma išmokti</button><button class="k-btn" type="button" data-act="check" data-conf="pretest" data-needs disabled>Tikrinti</button>`
         : `<button class="k-btn k-btn--secondary" type="button" data-act="check" data-conf="unsure" data-needs disabled>Spėju</button><button class="k-btn" type="button" data-act="check" data-conf="sure" data-needs disabled>Tikrinti</button>`;
-      if (wide) return wideQ(lessonTop(), chip(it) + stem(q) + scene(q), tip + options(q, it.d, S.ticks, false) + `<div class="d-actions">${dock}</div>` + keys(it.d.length), false);
+      if (wide) return deskQ(lessonTop(), stem(q) + scene(q) + options(q, it.d, S.ticks, false), chip(it) + `<p class="d-ctx">${CTX[it.learned ? 'learned' : it.kind]}</p>` + tip, `<div class="d-actions${isPre(it) ? ' even' : ''}">${dock}</div>` + keys(it.d.length), false);
       return screen(head + tip + options(q, it.d, S.ticks, false) + grow + `<div class="q-dock dock${isPre(it) ? ' even' : ''}">${dock}</div>`);
     }
     // after Check
@@ -585,7 +596,7 @@ fieldset.q-opts { border: 0; margin: 0; min-width: 0; }
     const next = `<button class="k-btn" type="button" data-act="next">Toliau${ic('arrow')}</button>`;
     const blocks = learnBlocks(q, pre, right);
     const opts = options(q, it.d, S.ticks, true);
-    if (wide) return wideQ(lessonTop(), chip(it) + stem(q) + scene(q) + `<div class="q-card">${why(q, open, true)}</div>` + blocks, opts + `<div class="d-actions res">${result(right, word)}${next}</div>` + keys(0, true), true);
+    if (wide) return deskQ(lessonTop(), stem(q) + scene(q) + opts, result(right, word) + why(q, open, true) + blocks, next + keys(0, true), true);
     if (variant === 'A') return screen(head + opts + `<div class="q-after">${why(q, open, false)}${blocks}</div>` + grow + `<div class="q-dock one dock">${result(right, word, q.key)}${next}</div>`, true);
     if (variant === 'B') return screen(head + opts + grow + `<div class="q-sheet dock"><div class="q-sheet-body">${result(right, word)}${why(q, open, true)}${blocks}</div><div class="q-sheet-foot">${next}</div></div>`, true);
     return screen(lessonTop() + chip(it) + scene(q) + stem(q) + `<div class="q-card" id="card">${result(right, word)}${why(q, open, true)}</div>` + opts + `<div class="q-after">${blocks}</div>` + grow + `<div class="q-dock one dock">${next}</div>`, true);
@@ -639,11 +650,13 @@ fieldset.q-opts { border: 0; margin: 0; min-width: 0; }
     const ask = `<h2 id="mc">Baigti egzaminą?</h2><p>${un ? `Neatsakyta: ${un}. Neatsakyti klausimai skaičiuojami kaip klaidos.` : 'Atsakei į visus klausimus.'}</p>`;
     const sure = '<button class="k-btn k-btn--secondary" type="button" data-act="mcancel">Grįžti</button><button class="k-btn" type="button" data-act="mconfirm">Baigti</button>';
     if (wide) {
-      // time and position up top; the answer sheet (all numbers) next to the buttons, where the hand already is
-      const top = `<div class="q-top">${quit}<div class="d-time"><span class="q-count">${M.i + 1} iš ${MOCK.length}</span><span class="m-timer">${timer}</span></div></div>${note}`;
-      const act = M.confirm ? `<div class="q-card d-confirm" role="group" aria-labelledby="mc">${ask}<div class="d-actions">${sure}</div></div>` : `<div class="d-actions">${prev}${next}</div>`;
-      const sheet = `<div class="d-sheet"><h3><span>Atsakymų lapas</span><span>Atsakyta <span id="answered">${MOCK.length - un}</span> iš ${MOCK.length}</span></h3>${strip}${finish}</div>`;
-      return wideQ(top, stem(q) + scene(q), options(q, M.draws[M.i], ticks, false) + act + keys(M.draws[M.i].length, false, 'kitas') + sheet, false);
+      // the panel groups everything about the exam itself: time, where you are, the answer sheet, back / next
+      const top = `<div class="q-top">${quit}<span class="q-count">Bandomasis egzaminas</span></div>`;
+      const body = `<div class="d-clock"><span class="lbl">Liko laiko</span><span class="m-timer">${timer}</span></div>${note}
+        <div class="d-sheet"><h3><span>Klausimas ${M.i + 1} iš ${MOCK.length}</span><span>Atsakyta <span id="answered">${MOCK.length - un}</span></span></h3>${strip}</div>`;
+      const foot = M.confirm ? `<div role="group" aria-labelledby="mc" style="display:grid;gap:10px">${ask}<div class="d-actions">${sure}</div></div>`
+        : `<div class="d-actions">${prev}${next}</div>${finish}${keys(M.draws[M.i].length, false, 'kitas')}`;
+      return deskQ(top, stem(q) + scene(q) + options(q, M.draws[M.i], ticks, false), body, foot, false);
     }
     const top = `<div class="q-top">${quit}<span class="m-timer">${timer}</span><span class="q-count">${M.i + 1} / ${MOCK.length}</span></div>${note}${strip}`;
     const dock = M.confirm
@@ -668,7 +681,7 @@ fieldset.q-opts { border: 0; margin: 0; min-width: 0; }
     const word = ok ? 'Teisingai' : M.ans[k].size ? 'Neteisingai' : 'Neatsakyta';
     const top = `<div class="q-top"><button class="k-ibtn" type="button" data-act="mback" aria-label="Į rezultatus">${ic('list')}</button><span class="q-count">Peržiūra · ${k + 1} / ${MOCK.length}</span></div>`;
     const nav = `<button class="k-btn k-btn--secondary" type="button" data-act="mrprev"${k ? '' : ' disabled'}>${ic('back')}Atgal</button>${last ? '<button class="k-btn" type="button" data-act="mback">Į rezultatus</button>' : `<button class="k-btn" type="button" data-act="mrnext">Kitas${ic('arrow')}</button>`}`;
-    if (wide) return wideQ(top, stem(q) + scene(q) + `<div class="q-card">${why(q, true, true)}</div>` + learnBlocks(q, false, ok), result(ok, word) + options(q, M.draws[k], M.ans[k], true) + `<div class="d-actions">${nav}</div>`, true);
+    if (wide) return deskQ(top, stem(q) + scene(q) + options(q, M.draws[k], M.ans[k], true), result(ok, word) + why(q, true, true) + learnBlocks(q, false, ok), `<div class="d-actions">${nav}</div>`, true);
     return screen(top
       + scene(q) + stem(q) + `<div class="q-card">${result(ok, word)}${why(q, true, true)}</div>` + options(q, M.draws[k], M.ans[k], true)
       + `<div class="q-after">${learnBlocks(q, false, ok)}</div>` + grow
