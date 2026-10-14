@@ -1,0 +1,533 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-10-14T17:09:12+00:00",
+  "title": "Design System: KETGO",
+  "extensions": {
+    "colorMeta": {
+      "teal": {
+        "role": "primary",
+        "displayName": "Deep Teal",
+        "canonical": "#145457",
+        "oklch": "oklch(40.9% 0.062 200)",
+        "tonalRamp": [
+          "#001115",
+          "#002C30",
+          "#03494C",
+          "#2C686B",
+          "#518C8F",
+          "#75B1B4",
+          "#9BD7DA",
+          "#D0F7F9"
+        ]
+      },
+      "night-teal": {
+        "role": "primary",
+        "displayName": "Night Teal",
+        "canonical": "#142627",
+        "oklch": "oklch(25.4% 0.024 200)",
+        "tonalRamp": [
+          "#010E0F",
+          "#162829",
+          "#314445",
+          "#4E6263",
+          "#708586",
+          "#94A9AA",
+          "#B9D0D1",
+          "#DDF4F5"
+        ]
+      },
+      "teal-wash": {
+        "role": "primary",
+        "displayName": "Teal Wash",
+        "canonical": "#E0EDEA",
+        "oklch": "oklch(93.6% 0.014 181)",
+        "tonalRamp": [
+          "#050D0B",
+          "#1D2624",
+          "#384240",
+          "#55605E",
+          "#778380",
+          "#9BA8A5",
+          "#C1CECB",
+          "#E5F2EF"
+        ]
+      },
+      "teal-middle": {
+        "role": "primary",
+        "displayName": "Teal Middle",
+        "canonical": "#7DB3AC",
+        "oklch": "oklch(72.7% 0.058 186)",
+        "tonalRamp": [
+          "#00120F",
+          "#002D28",
+          "#114944",
+          "#336862",
+          "#578C85",
+          "#7BB1AA",
+          "#A0D7D0",
+          "#D2F8F2"
+        ]
+      },
+      "highlighter-lime": {
+        "role": "secondary",
+        "displayName": "Highlighter Lime",
+        "canonical": "#CCFF00",
+        "oklch": "oklch(93.1% 0.229 123)",
+        "tonalRamp": [
+          "#060F00",
+          "#1A2B00",
+          "#304A00",
+          "#496C00",
+          "#6D8F00",
+          "#95B24D",
+          "#C0D497",
+          "#E9F3D6"
+        ]
+      },
+      "right": {
+        "role": "tertiary",
+        "displayName": "Right",
+        "canonical": "#16703A",
+        "oklch": "oklch(48.1% 0.118 152)",
+        "tonalRamp": [
+          "#001300",
+          "#003200",
+          "#00501C",
+          "#15703A",
+          "#41945C",
+          "#68BA7F",
+          "#A2DBAF",
+          "#DCF7E1"
+        ]
+      },
+      "wrong": {
+        "role": "tertiary",
+        "displayName": "Wrong",
+        "canonical": "#B3261E",
+        "oklch": "oklch(50.1% 0.178 29)",
+        "tonalRamp": [
+          "#240000",
+          "#510000",
+          "#820000",
+          "#AC1D17",
+          "#D64A3D",
+          "#EC8274",
+          "#FDB6AC",
+          "#FFE5DF"
+        ]
+      },
+      "trap": {
+        "role": "tertiary",
+        "displayName": "Trap",
+        "canonical": "#7F4A00",
+        "oklch": "oklch(46.1% 0.104 65)",
+        "tonalRamp": [
+          "#1F0000",
+          "#431200",
+          "#633100",
+          "#854F0A",
+          "#AA7237",
+          "#D1975C",
+          "#F1C090",
+          "#FFEAD3"
+        ]
+      },
+      "mist": {
+        "role": "neutral",
+        "displayName": "Mist",
+        "canonical": "#F4F7F5",
+        "oklch": "oklch(97.3% 0.004 157)",
+        "tonalRamp": [
+          "#0A0C0A",
+          "#222523",
+          "#3E403F",
+          "#5C5E5D",
+          "#7E817F",
+          "#A2A5A3",
+          "#C8CBC9",
+          "#ECEFED"
+        ]
+      },
+      "surface": {
+        "role": "neutral",
+        "displayName": "Surface",
+        "canonical": "#FFFFFF",
+        "oklch": "oklch(100.0% 0.000 90)",
+        "tonalRamp": [
+          "#0B0B0B",
+          "#242424",
+          "#404040",
+          "#5D5D5D",
+          "#808080",
+          "#A4A4A4",
+          "#CACACA",
+          "#EEEEEE"
+        ]
+      },
+      "ink": {
+        "role": "neutral",
+        "displayName": "Ink",
+        "canonical": "#142627",
+        "oklch": "oklch(25.4% 0.024 200)",
+        "tonalRamp": [
+          "#010E0F",
+          "#162829",
+          "#314445",
+          "#4E6263",
+          "#708586",
+          "#94A9AA",
+          "#B9D0D1",
+          "#DDF4F5"
+        ]
+      },
+      "ink-soft": {
+        "role": "neutral",
+        "displayName": "Ink, soft",
+        "canonical": "#3E5557",
+        "oklch": "oklch(43.2% 0.028 203)",
+        "tonalRamp": [
+          "#000E10",
+          "#12282A",
+          "#2E4446",
+          "#4B6365",
+          "#6D8688",
+          "#91AAAC",
+          "#B6D0D3",
+          "#DAF5F7"
+        ]
+      },
+      "line": {
+        "role": "neutral",
+        "displayName": "Line",
+        "canonical": "#D5E0DB",
+        "oklch": "oklch(89.7% 0.014 167)",
+        "tonalRamp": [
+          "#060D0A",
+          "#1E2623",
+          "#39423E",
+          "#57605C",
+          "#79837E",
+          "#9DA7A3",
+          "#C3CDC9",
+          "#E6F2EC"
+        ]
+      },
+      "line-strong": {
+        "role": "neutral",
+        "displayName": "Line, strong",
+        "canonical": "#6B847D",
+        "oklch": "oklch(59.2% 0.031 176)",
+        "tonalRamp": [
+          "#000F0B",
+          "#122923",
+          "#2E453F",
+          "#4B645D",
+          "#6D8780",
+          "#91ABA4",
+          "#B7D1CA",
+          "#DAF6EE"
+        ]
+      },
+      "dark-mist": {
+        "role": "dark-mode",
+        "displayName": "Dark: mist",
+        "canonical": "#0E1B1C"
+      },
+      "dark-surface": {
+        "role": "dark-mode",
+        "displayName": "Dark: surface",
+        "canonical": "#162728"
+      },
+      "dark-surface-2": {
+        "role": "dark-mode",
+        "displayName": "Dark: surface 2",
+        "canonical": "#1D3233"
+      },
+      "dark-ink": {
+        "role": "dark-mode",
+        "displayName": "Dark: ink",
+        "canonical": "#EEF4F1"
+      },
+      "dark-ink-soft": {
+        "role": "dark-mode",
+        "displayName": "Dark: ink soft",
+        "canonical": "#B0C4BE"
+      },
+      "dark-line": {
+        "role": "dark-mode",
+        "displayName": "Dark: line",
+        "canonical": "#27403F"
+      },
+      "dark-line-strong": {
+        "role": "dark-mode",
+        "displayName": "Dark: line strong",
+        "canonical": "#6E8C86"
+      },
+      "dark-teal": {
+        "role": "dark-mode",
+        "displayName": "Dark: teal",
+        "canonical": "#5CC3B8"
+      },
+      "dark-teal-hover": {
+        "role": "dark-mode",
+        "displayName": "Dark: teal hover",
+        "canonical": "#74D0C6"
+      },
+      "dark-teal-press": {
+        "role": "dark-mode",
+        "displayName": "Dark: teal press",
+        "canonical": "#4AAFA4"
+      },
+      "dark-on-teal": {
+        "role": "dark-mode",
+        "displayName": "Dark: on teal",
+        "canonical": "#0E1B1C"
+      },
+      "dark-teal-wash": {
+        "role": "dark-mode",
+        "displayName": "Dark: teal wash",
+        "canonical": "#1B3536"
+      },
+      "dark-teal-wash-2": {
+        "role": "dark-mode",
+        "displayName": "Dark: teal wash 2",
+        "canonical": "#22413F"
+      },
+      "dark-teal-ink": {
+        "role": "dark-mode",
+        "displayName": "Dark: teal ink",
+        "canonical": "#8FDCD3"
+      },
+      "dark-teal-middle": {
+        "role": "dark-mode",
+        "displayName": "Dark: teal middle",
+        "canonical": "#3F8079"
+      },
+      "dark-night-teal": {
+        "role": "dark-mode",
+        "displayName": "Dark: night teal",
+        "canonical": "#1B3334"
+      },
+      "dark-night-teal-2": {
+        "role": "dark-mode",
+        "displayName": "Dark: night teal 2",
+        "canonical": "#24403F"
+      },
+      "dark-right": {
+        "role": "dark-mode",
+        "displayName": "Dark: right",
+        "canonical": "#6FDC97"
+      },
+      "dark-right-wash": {
+        "role": "dark-mode",
+        "displayName": "Dark: right wash",
+        "canonical": "#173A2A"
+      },
+      "dark-wrong": {
+        "role": "dark-mode",
+        "displayName": "Dark: wrong",
+        "canonical": "#FF8F86"
+      },
+      "dark-wrong-wash": {
+        "role": "dark-mode",
+        "displayName": "Dark: wrong wash",
+        "canonical": "#432222"
+      },
+      "dark-trap": {
+        "role": "dark-mode",
+        "displayName": "Dark: trap",
+        "canonical": "#FFC56B"
+      },
+      "dark-trap-wash": {
+        "role": "dark-mode",
+        "displayName": "Dark: trap wash",
+        "canonical": "#3A2A10"
+      }
+    },
+    "typographyMeta": {
+      "display": {
+        "displayName": "Display",
+        "purpose": "Landing headline only."
+      },
+      "headline": {
+        "displayName": "Headline",
+        "purpose": "Section titles."
+      },
+      "title": {
+        "displayName": "Title",
+        "purpose": "Question stem, card titles."
+      },
+      "body": {
+        "displayName": "Body",
+        "purpose": "Options and all running text."
+      },
+      "small": {
+        "displayName": "Small",
+        "purpose": "Meta lines, hints, notes."
+      },
+      "label": {
+        "displayName": "Label",
+        "purpose": "Chips and short captions only."
+      },
+      "countdown": {
+        "displayName": "Countdown",
+        "purpose": "Days to exam on Home."
+      }
+    },
+    "shadows": [
+      {
+        "name": "panel-lift",
+        "value": "0 -10px 30px -18px rgb(20 38 39 / .22)",
+        "purpose": "The sticky next-step panel only. Dark: rgb(0 0 0 / .5)."
+      }
+    ],
+    "motion": [
+      {
+        "name": "colour-change",
+        "value": "120ms ease-out",
+        "purpose": "Hover and press colour changes. Nothing else moves on the Question screen."
+      },
+      {
+        "name": "spinner",
+        "value": "800ms linear infinite (2.4s under reduced motion)",
+        "purpose": "Working buttons only."
+      }
+    ],
+    "breakpoints": [
+      {
+        "name": "phone",
+        "value": "320px"
+      },
+      {
+        "name": "desktop",
+        "value": "to be designed in Claude Design"
+      }
+    ]
+  },
+  "components": [
+    {
+      "name": "Primary Button",
+      "kind": "button",
+      "refersTo": "button-primary",
+      "description": "The one main action on a screen (\"Tęsti\", \"Tikrinti\"). 56 px high.",
+      "html": "<button class=\"ds-btn\">Tęsti<svg viewBox=\"0 0 24 24\" width=\"20\" height=\"20\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2.4\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M5 12h14M13 6l6 6-6 6\"/></svg></button>",
+      "css": ".ds-btn{font-family:\"Atkinson Hyperlegible Next\",\"Segoe UI\",system-ui,sans-serif;display:inline-flex;align-items:center;justify-content:center;gap:10px;width:100%;min-height:56px;padding:0 20px;border:0;border-radius:14px;background:#145457;color:#FFFFFF;font-weight:700;font-size:18px;cursor:pointer;transition:background-color .12s ease-out}.ds-btn:hover{background:#0F4346}.ds-btn:active{background:#0A3436}.ds-btn:focus-visible{outline:3px solid #145457;outline-offset:3px}.ds-btn:disabled{background:#E0EDEA;color:#3E5557;cursor:not-allowed}"
+    },
+    {
+      "name": "Secondary Button",
+      "kind": "button",
+      "refersTo": "button-secondary",
+      "description": "The second choice beside the main button (\"Spėju\").",
+      "html": "<button class=\"ds-btn-2\">Spėju</button>",
+      "css": ".ds-btn-2{font-family:\"Atkinson Hyperlegible Next\",\"Segoe UI\",system-ui,sans-serif;width:100%;min-height:56px;padding:0 20px;border:0;border-radius:14px;background:#FFFFFF;color:#142627;box-shadow:inset 0 0 0 1.5px #D5E0DB;font-weight:700;font-size:18px;cursor:pointer;transition:background-color .12s ease-out}.ds-btn-2:hover{background:#EBF1EE}.ds-btn-2:active{background:#CFE3DE}.ds-btn-2:focus-visible{outline:3px solid #145457;outline-offset:3px}"
+    },
+    {
+      "name": "Icon Button",
+      "kind": "button",
+      "refersTo": "icon-button",
+      "description": "48 px square for close, Progress and Menu.",
+      "html": "<button class=\"ds-ibtn\" aria-label=\"Uždaryti\"><svg viewBox=\"0 0 24 24\" width=\"24\" height=\"24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\"><path d=\"M6 6l12 12M18 6L6 18\"/></svg></button>",
+      "css": ".ds-ibtn{width:48px;height:48px;display:grid;place-items:center;border:0;border-radius:14px;background:#FFFFFF;color:#142627;box-shadow:inset 0 0 0 1px #D5E0DB;cursor:pointer}.ds-ibtn:hover{background:#EBF1EE}.ds-ibtn:active{background:#CFE3DE}.ds-ibtn:focus-visible{outline:3px solid #145457;outline-offset:2px}"
+    },
+    {
+      "name": "Chip",
+      "kind": "chip",
+      "refersTo": "chip",
+      "description": "Short labels: Nauja taisyklė, Kartojimas, Egzamino spąstai, Įsiminimui.",
+      "html": "<span class=\"ds-chip\">Nauja taisyklė</span> <span class=\"ds-chip ds-chip-trap\">Egzamino spąstai</span> <span class=\"ds-chip ds-chip-hook\">Įsiminimui</span>",
+      "css": ".ds-chip{font-family:\"Atkinson Hyperlegible Next\",\"Segoe UI\",system-ui,sans-serif;display:inline-flex;align-items:center;min-height:32px;padding:4px 12px;border-radius:999px;background:#E0EDEA;color:#145457;font-size:15px;font-weight:700}.ds-chip-trap{background:#FFF0D4;color:#7F4A00}.ds-chip-hook{background:#CCFF00;color:#142627}"
+    },
+    {
+      "name": "Answer Option",
+      "kind": "custom",
+      "refersTo": "option",
+      "description": "Checkbox card for every Question. Chosen state shown; after Check it turns right, missed (dashed), wrong or muted.",
+      "html": "<label class=\"ds-opt\"><input type=\"checkbox\" checked><span class=\"ds-box\"><svg viewBox=\"0 0 24 24\" width=\"18\" height=\"18\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M5 12l5 5 9-10\"/></svg></span><span>Iš dešinės artėjančioms transporto priemonėms, jeigu jų važiavimo trajektorijos kertasi.</span></label>",
+      "css": ".ds-opt{font-family:\"Atkinson Hyperlegible Next\",\"Segoe UI\",system-ui,sans-serif;position:relative;display:grid;grid-template-columns:28px 1fr;gap:14px;align-items:start;min-height:56px;padding:14px 16px;border-radius:18px;background:#FFFFFF;color:#142627;box-shadow:inset 0 0 0 1.5px #D5E0DB;font-size:18px;line-height:1.5;cursor:pointer}.ds-opt:hover{box-shadow:inset 0 0 0 1.5px #6B847D}.ds-opt input{position:absolute;opacity:0;width:1px;height:1px}.ds-box{width:28px;height:28px;border-radius:8px;border:2px solid #6B847D;display:grid;place-items:center;color:transparent;box-sizing:border-box}.ds-opt:has(input:checked){background:#E0EDEA;box-shadow:inset 0 0 0 2.5px #145457}.ds-opt:has(input:checked) .ds-box{background:#145457;border-color:#145457;color:#FFFFFF}.ds-opt:has(input:focus-visible){outline:3px solid #145457;outline-offset:2px}"
+    },
+    {
+      "name": "Result Line",
+      "kind": "custom",
+      "refersTo": "option-wrong-chosen",
+      "description": "After Check: icon + word + one line, above \"Toliau\".",
+      "html": "<div class=\"ds-result\"><span class=\"ds-ic\"><svg viewBox=\"0 0 24 24\" width=\"22\" height=\"22\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2.8\" stroke-linecap=\"round\"><path d=\"M7 7l10 10M17 7L7 17\"/></svg></span><div><b>Neteisingai</b><span>Teisingas variantas pažymėtas žaliai.</span></div></div>",
+      "css": ".ds-result{font-family:\"Atkinson Hyperlegible Next\",\"Segoe UI\",system-ui,sans-serif;display:grid;grid-template-columns:40px 1fr;gap:12px;align-items:center;color:#142627}.ds-ic{width:40px;height:40px;border-radius:50%;display:grid;place-items:center;background:#B3261E;color:#FFFFFF}.ds-result b{display:block;font-size:20px;line-height:1.2;color:#B3261E}.ds-result span{font-size:16px;color:#3E5557}"
+    },
+    {
+      "name": "Next-step Panel",
+      "kind": "card",
+      "refersTo": "next-step-panel",
+      "description": "Signature: the night-teal panel docked at the bottom of Home.",
+      "html": "<div class=\"ds-next\"><span class=\"ds-k\">Toliau · 7 pamoka iš 36</span><div class=\"ds-bar\"><i></i></div><b>Lygiareikšmių kelių sankryžos</b><p>8 naujos taisyklės · 6 kartoti · apie 18 min.</p><button class=\"ds-next-btn\">Tęsti</button></div>",
+      "css": ".ds-next{font-family:\"Atkinson Hyperlegible Next\",\"Segoe UI\",system-ui,sans-serif;display:grid;gap:6px;padding:20px;border-radius:24px 24px 0 0;background:#142627;color:#F4F7F5;box-shadow:0 -10px 30px -18px rgb(20 38 39 / .22)}.ds-k{font-size:16px;font-weight:700;color:#B9CCC4}.ds-bar{height:6px;border-radius:3px;background:#1E3A3B;overflow:hidden;margin:2px 0 6px}.ds-bar i{display:block;height:100%;width:17%;background:#5CC3B8}.ds-next b{font-size:24px;line-height:1.2}.ds-next p{margin:0 0 10px;font-size:16px;color:#B9CCC4}.ds-next-btn{font-family:\"Atkinson Hyperlegible Next\",\"Segoe UI\",system-ui,sans-serif;min-height:56px;border:0;border-radius:14px;background:#FFFFFF;color:#142627;font-weight:700;font-size:18px;cursor:pointer}.ds-next-btn:hover{background:#E0EDEA}.ds-next-btn:focus-visible{outline:3px solid #FFFFFF;outline-offset:3px}"
+    },
+    {
+      "name": "Text Field",
+      "kind": "input",
+      "refersTo": "input",
+      "description": "Email or exam date, with label and hint; teal edge on focus, red edge and error line on error.",
+      "html": "<div class=\"ds-field\"><label for=\"ds-mail\">El. paštas</label><input id=\"ds-mail\" class=\"ds-input\" type=\"email\" placeholder=\"vardas@pastas.lt\"><span>Atsiųsime 6 skaitmenų kodą.</span></div>",
+      "css": ".ds-field{font-family:\"Atkinson Hyperlegible Next\",\"Segoe UI\",system-ui,sans-serif;display:grid;gap:6px;color:#142627}.ds-field label{font-size:16px;font-weight:700}.ds-field span{font-size:16px;color:#3E5557}.ds-input{font-family:\"Atkinson Hyperlegible Next\",\"Segoe UI\",system-ui,sans-serif;box-sizing:border-box;width:100%;min-height:56px;padding:0 16px;border-radius:14px;border:1.5px solid #6B847D;background:#FFFFFF;color:#142627;font-size:18px}.ds-input::placeholder{color:#3E5557}.ds-input:hover{border-color:#3E5557}.ds-input:focus{outline:none;border-color:#145457;box-shadow:0 0 0 2px #145457}.ds-input[aria-invalid=\"true\"]{border-color:#B3261E;box-shadow:0 0 0 1px #B3261E}"
+    }
+  ],
+  "narrative": {
+    "northStar": "The Highlighted Rule",
+    "overview": "KETGO looks like a calm, well-made study space. The page is light and quiet, deep teal does the work (the main button, the chosen option, the next-step panel), and one highlighter-lime mark shows the single sentence worth remembering, the way a learner marks a textbook. Everything else stays out of the way so the Rule can be read.\n\nThe look is commercial, sleek and clean, at the craft level of Apple, Revolut or Wise. It is never a generic tech startup (no gradients, glow, neon on dark) and never an official or government site (no grey, stiff, form-heavy screens). It grew out of the 2025 dark-teal-and-lime mocks but turned them light-first and took lime off buttons. Brutalist, experimental and metaphor-led looks were tried and rejected (2026-10-14).\n\nThe Question screen is the calmest place in the app: no motion, no decoration, one clear main button at the bottom. Landing and Home may carry a little more presence, through the night-teal panel and big tabular numbers, never through ornament.",
+    "keyCharacteristics": [
+      "Light first; dark follows the phone and keeps the same contrast.",
+      "Deep teal for action, night teal for the \"next step\", lime only as a highlighter.",
+      "One font (Atkinson Hyperlegible Next), two weights.",
+      "Soft-rounded, flat surfaces with 1 px lines; one shadow in the whole system.",
+      "Right and wrong always shown by icon + word + colour."
+    ],
+    "rules": [
+      {
+        "name": "The Highlighter Rule",
+        "body": "Lime marks the one thing to remember, at most once per screen, plus the logo and the Memory Hook label. Never a button, never text colour, never a border.",
+        "section": "colors"
+      },
+      {
+        "name": "The Meaning Colours Rule",
+        "body": "Green, red and amber mean right, wrong and trap. They are never used for decoration, and they never appear without an icon and a word.",
+        "section": "colors"
+      },
+      {
+        "name": "The 16 px Floor Rule",
+        "body": "No sentence is smaller than 16 px. Label size (15 px) is for one- to four-word chips.",
+        "section": "typography"
+      },
+      {
+        "name": "The Lithuanian Text Rule",
+        "body": "Content is NFC-normalised at build time. Soft hyphens (U+00AD) are inserted at build time with `hyphen/lt` plus an exceptions list (for example `lygia·reikš·mių`, `dešinia·ran·kis`), with CSS `hyphens: manual`. Phones' own Lithuanian hyphenation is not relied on (it fails on iPhone and on Android 12 and older). Authors write plain text.",
+        "section": "typography"
+      },
+      {
+        "name": "The Font Budget Rule",
+        "body": "One self-hosted variable WOFF2, weights 400–700, subset to Basic Latin, the 18 Lithuanian letters and the punctuation used (13,340 bytes). ✓ and ✕ are not in the font: draw them as SVG icons.",
+        "section": "typography"
+      },
+      {
+        "name": "The One Shadow Rule",
+        "body": "If a new element seems to need a shadow, give it a tone or a line instead.",
+        "section": "elevation"
+      }
+    ],
+    "dos": [
+      "**Do** give every screen one Deep Teal main button, at the bottom when the screen is a task.",
+      "**Do** show right and wrong with an icon, a word and a colour, every time.",
+      "**Do** keep sentences at 16 px or larger and body text at 18 px with 1.5 line height.",
+      "**Do** check every new colour pair: 7:1 for body text, 4.5:1 minimum, 3:1 for edges and icons.",
+      "**Do** build the onboarding video from these real components as HTML/SVG animation with real-text captions and a still version for reduced motion.",
+      "**Do** keep motion to 120 ms colour changes; respect reduced motion."
+    ],
+    "donts": [
+      "**Don't** use lime on a button, as text colour, or more than once on a screen.",
+      "**Don't** add gradients, glow, glass, or neon on dark: the generic-startup look is ruled out.",
+      "**Don't** use grey, stiff, form-heavy layouts: the official or government look is ruled out.",
+      "**Don't** add brutalist or experimental treatments, or a look built on a metaphor.",
+      "**Don't** animate anything on the Question screen, and don't add points, streaks or mascots.",
+      "**Don't** say how many Options are right, and don't use radio buttons.",
+      "**Don't** add a second shadow or a coloured side stripe on cards."
+    ]
+  }
+}
