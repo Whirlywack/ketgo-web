@@ -53,6 +53,7 @@ colors:
   dark-wrong-wash: "#432222"
   dark-trap: "#FFC56B"
   dark-trap-wash: "#3A2A10"
+  dark-highlighter-lime: "#B2D62A"
 typography:
   display:
     fontFamily: "Atkinson Hyperlegible Next, Segoe UI, system-ui, sans-serif"
@@ -218,7 +219,7 @@ A teal family on a misty white page, with lime held back for one job and green, 
 - **Teal Wash** (`teal-wash`): chips, the Rule Explainer block, the chosen Option's fill, icon tiles, the disabled button.
 
 ### Secondary
-- **Highlighter Lime** (`highlighter-lime`): only behind the one sentence to remember (the "Kodėl" key line, the Landing headline word), the Memory Hook label and the "GO" of the logo. Always a solid fill behind dark text (`on-lime`).
+- **Highlighter Lime** (`highlighter-lime`): only behind the one sentence to remember (the "Kodėl" key line, the Landing headline word), the Memory Hook label and the "GO" of the logo. Always a solid fill behind dark text (`on-lime`). In dark mode it is calmer (`dark-highlighter-lime`, 9.4:1 with `on-lime`), so it never glows like neon.
 
 ### Tertiary (meaning only)
 - **Right** (`right` on `right-wash`) and **Wrong** (`wrong` on `wrong-wash`): answer states and the result line, always with ✓ or ✕ and a word.
@@ -259,7 +260,12 @@ A teal family on a misty white page, with lime held back for one job and green, 
 
 ## Layout
 
-Mobile first, one column, a 20 px side gutter. Space steps are 4, 8, 12, 16, 20, 24, 32 and 40 px: 10–12 px between Options, 18–24 px between blocks, 40 px between Landing sections, more space above a heading than below it. Every screen has one main action; on Home and in a Question it sits in a dock at the bottom of the screen, in thumb reach. Works at 320 px and at 200 % text size. The desktop layout (a wider, centred column) is designed during the build in Claude Design from these rules.
+Mobile first, one column, a 20 px side gutter. Space steps are 4, 8, 12, 16, 20, 24, 32 and 40 px: 10–12 px between Options, 18–24 px between blocks, 40 px between Landing sections, more space above a heading than below it. Every screen has one main action; on Home and in a Question it sits in a dock at the bottom of the screen, in thumb reach. Works at 320 px and at 200 % text size. The Question screen's layouts were settled in [Question screen on a phone](https://github.com/Whirlywack/ketgo-web/issues/11); other screens' desktop layouts are designed during the build in Claude Design from these rules.
+
+- **Question screen, phone:** one column (question, a quiet "Pažymėk visus teisingus" line, picture, Options). After Check the app scrolls so your pick and the right answer sit above a short bottom bar (verdict, key sentence, Toliau; about a quarter of the screen); the "why" follows below. On short screens the picture gets narrower, never cropped.
+- **Question screen, desktop (900 px and wider):** one frame for every Question, at most 1160 px wide. A main column holds the question (28 px), the quiet hint line, the picture in a frame that keeps the scene's own shape (never cropped, never letterboxed) and the Options with key hints. A 380 px sticky panel on the right holds what to do now: before Check the chip, one context line and the two buttons; after Check the verdict band, key sentence, "why", the folded Rule and "Toliau". The panel never grows past the screen: Toliau stays pinned and the panel body scrolls, with a "there is more" cue. After Check the main column scrolls so your pick and the right answer are in view. Keys: 1–4 tick, N = "Nesu tikras", Enter = the screen's main action.
+- **Mock Exam, desktop:** the same frame; the panel holds the time left, "Klausimas 2 iš 30", the answer sheet (rows of 10, answered = filled with a dot), Atgal / Kitas and "Baigti egzaminą". Leaving and finishing with unanswered Questions ask first, in the page.
+- **Single-column screens** (Mock Exam start and results, Lesson end) are a centred 720 px column; the button follows the content.
 
 ## Elevation & Depth
 
@@ -280,8 +286,8 @@ Soft, even corners that grow with the size of the element: checkbox 8 px, button
 ### Buttons
 - **Shape:** gently rounded (14 px), 56 px high, full width on phones.
 - **Primary:** Deep Teal with white bold 18 px text. Hover darker teal, pressed darker again (colour change only, 120 ms). Focus: 3 px teal ring, 3 px gap.
-- **Secondary:** white with a 1.5 px line, ink text ("Spėju" beside "Tikrinti").
-- **Disabled:** Teal Wash with soft ink text. "Tikrinti" stays disabled until at least one Option is ticked.
+- **Secondary:** white with a 1.5 px line, ink text ("Nesu tikras" beside "Tikrinti").
+- **Disabled:** Teal Wash with soft ink text. "Tikrinti" stays disabled until at least one Option is ticked. A disabled secondary is a faded outline, so it never looks tappable. A tap on a disabled button says why ("Pirma pažymėk bent vieną variantą.").
 - **Working:** a small spinner plus the action in progress ("Siunčiame kodą…").
 - **On the night-teal panel:** white button with ink text (light teal in dark mode).
 - **Text button:** teal text, 48 px high, for quiet actions ("Vėliau", "Keisti datą").
@@ -293,14 +299,16 @@ Soft, even corners that grow with the size of the element: checkbox 8 px, button
 ### Answer options
 - **Style:** a white card per Option (18 px corners), checkbox on the left (28 px, 8 px corners), 18 px text, at least 56 px high. Always checkboxes, even for one right answer, and never a count.
 - **Chosen:** Teal Wash fill, 2.5 px teal edge, teal box with a white tick.
-- **After Check (four states):** right and chosen (green fill and edge, green box, "Teisinga · tavo pasirinkimas"); right but missed (green fill, dashed green edge, empty green box, "Teisingas variantas · nepažymėjai"); wrong and chosen (red fill and edge, red box with ✕, "Neteisinga · tavo pasirinkimas"); wrong and not chosen (no mark, soft text).
-- **Result line:** after Check, a 40 px round icon with "Teisingai" or "Neteisingai" and one short line sits above "Toliau" in the dock.
+- **After Check (four states):** right and chosen (green fill and edge, green box, "Teisinga · tavo pasirinkimas"); right but missed (green fill, dashed green edge, empty green box, "Teisingas variantas · nepažymėjai"); wrong and chosen (red fill and edge, red box with ✕, "Neteisinga · tavo pasirinkimas"); wrong and not chosen (no mark, soft text; on phone also no border and 16 px). Each wrong pick and each missed right Option gets one short line saying why.
+- **Your guess (fifth state):** on a first guess at a new Rule, a wrong pick is teal (Teal Wash fill, teal edge, "Tavo spėjimas"), never red: guesses don't count.
+- **Result line:** after Check, a 40 px round icon with "Teisingai" or "Neteisingai" sits above "Toliau" in the dock, with the key sentence (lime) under it. A partly right multi-correct answer adds why it counts as wrong ("Pažymėjai ne visus teisingus."). A first guess shows a teal "Dabar sužinosi" (book icon) when wrong and a green "Atspėjai" when right; an unanswered Mock Exam Question shows a neutral dash. When the "why" below holds more, a "Kodėl ↓" or "Taisyklė ↓" text button scrolls to it.
+- **Verdict band (desktop):** in the desktop panel the result is a tinted band across the panel's top edge (Right Wash, Wrong Wash or Teal Wash; 28 px word). Flat, no shadow.
 
 ### Learning blocks
 - **Kodėl:** a teal label, the key sentence in Title weight with the lime highlighter, then the explanation and the KET point link.
 - **Rule Explainer:** Teal Wash block with a book icon and the Rule's name.
 - **Memory Hook:** white block with a line, lime "Įsiminimui" chip, one bold sentence.
-- **Exam Trap:** Trap Wash block with a warning icon and amber title.
+- **Exam Trap:** Trap Wash block with a warning icon and amber title. Shown only when the learner ticked the Option it warns about; it teaches a reading habit, not the Rule again.
 
 ### Cards / Containers
 - **Corner Style:** 20 px.
@@ -315,6 +323,7 @@ Soft, even corners that grow with the size of the element: checkbox 8 px, button
 - **Focus:** the edge turns teal with a 2 px teal ring.
 - **Error:** red edge and an error line under the field with an icon that names the problem and the fix ("Trūksta „@“. Patikrink el. pašto adresą.").
 - **Code:** six one-digit boxes, 24 px bold tabular digits.
+- **Switch:** a setting row (bold title, soft 16 px hint) with a 52 × 32 px track; on = Deep Teal. Used for settings such as "Be laiko ribos". Never use an answer Option card for a setting.
 
 ### Navigation
 - **Top bar:** logo on the left, 48 px icon buttons on the right (Progress, Menu). In a Lesson: close button, progress bar (8 px, teal on Teal Wash) and "5 / 22".
