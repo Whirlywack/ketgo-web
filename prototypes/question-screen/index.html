@@ -5,15 +5,18 @@
   Question: how should the Question screen behave on a phone (ticking, Check, "Spėju", the reveal and
   the "why", a new Rule met question-first, repeats that change, and the Mock Exam with its timer)?
   One phone layout (after Check: your pick and the right answer above a short bar with verdict, key sentence
-  and Toliau; the "why" below) and one desktop frame (main column = question, picture, Options; panel = buttons,
-  then verdict and "why"; Mock Exam: time, answer sheet, Atgal/Kitas). #mock opens the Mock Exam.
-  Revised after an /impeccable critique (26/40, 2026-10-14): A/B/C phone variants dropped for one refined A.
+  and Toliau; the "why" below) and one desktop frame (left = the question, and after Check the "why" under the
+  picture; right = a sticky "your answer" column: Options, then the buttons, then the result bar in their place;
+  Mock Exam: the answer sheet is the header's progress bar). #mock opens the Mock Exam.
+  Revised after /impeccable critiques (26 → 29 → 28/40, 2026-10-14/15). Design language reworked 2026-10-15
+  (4-pt spacing by role, shared edges, radii 4/6/12/20, weights 400/600, tonal secondary, frameless icons):
+  critique 30/40, then its P1s fixed.
   Built from DESIGN.md (Teal) on main. Content: real Own Questions (gen-0001, -0004, -0017, -0100, -0129,
   -0142, -0195, -0275, -0304); feedback notes and key sentences are prototype drafts. No persistence.
 -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible+Next:wght@400;700&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible+Next:wght@400;600&display=swap">
 <style>
 /* Layout: a phone frame on desktop with notes beside it; the bare app on a phone. KETGO Teal tokens from DESIGN.md. */
 :root {
@@ -65,6 +68,7 @@
 
 /* ---------- prototype chrome ---------- */
 html, body { height: 100%; }
+body { margin: 0; }
 body { background: var(--ui-bg); color: var(--ui-fg); display: grid; grid-template-rows: minmax(0, 1fr) auto; overflow: hidden; }
 .stage { display: flex; justify-content: center; align-items: center; gap: 40px; min-height: 0; padding-block: 16px; padding-inline: 16px; }
 .notes { width: 340px; max-height: 100%; overflow: auto; flex: none; font: 15px/1.5 system-ui, sans-serif; color: var(--ui-fg); }
@@ -104,14 +108,27 @@ body.view-desktop.show-notes .notes { display: block; }
 body.view-desktop .switcher .info { display: inline-block; }
 
 /* ---------- app mechanics ---------- */
+/* Spacing is a 4-pt grid used by role, never by eye:
+   --sp-2 inside a group (between Options), --sp-4 between parts of a block, --sp-5 between groups,
+   --sp-6/7 between sections. Radii: --r-xs highlighter, --r-sm checkbox and keycap, --r-md every control and
+   content object (Options, buttons, picture, blocks), --r-lg containers that hold other things. */
+:root {
+  --sp-1: 4px; --sp-2: 8px; --sp-3: 12px; --sp-4: 16px; --sp-5: 24px; --sp-6: 32px; --sp-7: 48px; --sp-8: 64px;
+  --gutter: 16px;
+  --r-xs: 4px; --r-sm: 6px; --r-md: 12px; --r-lg: 20px;
+  --font: "Atkinson Hyperlegible Next", "Segoe UI", system-ui, sans-serif;
+  --off: .45;
+}
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) { --off: .35; } }
+:root[data-theme="dark"] { --off: .35; }
 .app *, .app *::before, .app *::after { box-sizing: border-box; }
-.app { min-height: 100%; font-family: "Atkinson Hyperlegible Next", "Segoe UI", system-ui, sans-serif; background: var(--bg); color: var(--ink); overflow-wrap: break-word; }
+.app { min-height: 100%; font-family: var(--font); background: var(--bg); color: var(--ink); overflow-wrap: break-word; font-kerning: normal; -webkit-font-smoothing: antialiased; }
 .screen { min-height: 100%; display: flex; flex-direction: column; font-size: 18px; line-height: 1.5; }
 :where(.screen) :is(h1, h2, h3, p, figure, ol, ul) { margin: 0; }
-:where(.screen) :is(h1, h2, h3) { text-wrap: balance; }
+:where(.screen) :is(h1, h2, h3) { text-wrap: balance; font-weight: 600; }
 :where(.screen) button { font: inherit; cursor: pointer; }
 :where(.screen) :is(ol, ul) { padding: 0; list-style: none; }
-fieldset.q-opts { border: 0; margin: 0; min-width: 0; }
+fieldset.q-opts { border: 0; min-width: 0; margin-inline: 0; margin-bottom: 0; }
 .grow { flex: 1; }
 .dock { position: sticky; bottom: 0; z-index: 5; }
 .k-opt input { position: absolute; opacity: 0; width: 1px; height: 1px; }
@@ -121,190 +138,197 @@ fieldset.q-opts { border: 0; margin: 0; min-width: 0; }
 .sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); }
 .icon { width: 24px; height: 24px; stroke: currentColor; fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; flex: none; }
 .num { font-variant-numeric: tabular-nums; }
-.app mark { background: var(--lime); color: var(--on-lime); border-radius: 4px; padding: 0 .12em; -webkit-box-decoration-break: clone; box-decoration-break: clone; }
+.app mark { background: var(--lime); color: var(--on-lime); border-radius: var(--r-xs); padding: 0 .12em; -webkit-box-decoration-break: clone; box-decoration-break: clone; }
+
+/* ---------- type roles (one family, two weights: 400 and 600) ---------- */
+.t-label { font-size: 15px; font-weight: 600; line-height: 1.3; letter-spacing: .01em; color: var(--ink2); }
+.q-stem { font-size: 24px; font-weight: 600; line-height: 1.25; letter-spacing: -.015em; }
+.q-stem:focus { outline: none; }
 
 /* ---------- components (from DESIGN.md) ---------- */
-.k-btn { display: inline-flex; align-items: center; justify-content: center; gap: 10px; width: 100%; min-height: 56px; padding: 0 20px; border-radius: 14px; border: 0; background: var(--teal); color: var(--on-teal); font-weight: 700; font-size: 18px; line-height: 1.2; transition: background-color .12s ease-out, color .12s ease-out; -webkit-tap-highlight-color: transparent; }
+.k-btn { display: inline-flex; align-items: center; justify-content: center; gap: var(--sp-2); width: 100%; min-height: 56px; padding: 0 var(--sp-4); border-radius: var(--r-md); border: 0; background: var(--teal); color: var(--on-teal); font-weight: 600; font-size: 18px; line-height: 1.2; transition: background-color .12s ease-out, color .12s ease-out, opacity .12s ease-out; -webkit-tap-highlight-color: transparent; }
 .k-btn:hover { background: var(--teal-hover); }
 .k-btn:active { background: var(--teal-press); }
 .k-btn:focus-visible { outline: 3px solid var(--focus); outline-offset: 3px; }
-.k-btn .icon { width: 20px; height: 20px; stroke-width: 2.4; }
-.k-btn--secondary { background: var(--surface); color: var(--ink); box-shadow: inset 0 0 0 1.5px var(--line); }
-.k-btn--secondary:hover { background: var(--surface-2); }
+.k-btn .icon { width: 20px; height: 20px; stroke-width: 2.2; }
+/* secondary is tonal: a quiet teal wash, so the one solid teal button always leads */
+.k-btn--secondary { background: var(--teal-soft); color: var(--teal-ink); }
+.k-btn--secondary:hover { background: var(--teal-soft-2); }
 .k-btn--secondary:active { background: var(--teal-soft-2); }
-.k-btn--text { width: auto; min-height: 48px; padding: 0 12px; background: transparent; color: var(--teal-ink); }
+.k-btn--text { width: auto; min-height: 48px; padding: 0 var(--sp-3); background: transparent; color: var(--teal-ink); }
 .k-btn--text:hover { background: var(--teal-soft); }
 .k-btn--text:active { background: var(--teal-soft-2); }
-.k-btn:is(:disabled, [aria-disabled="true"]), .k-btn:is(:disabled, [aria-disabled="true"]):hover { background: var(--teal-soft); color: var(--ink2); box-shadow: none; cursor: not-allowed; }
-/* a disabled secondary is visibly inert (faded outline), so it never looks tappable */
-.k-btn--secondary:is(:disabled, [aria-disabled="true"]), .k-btn--secondary:is(:disabled, [aria-disabled="true"]):hover { background: transparent; color: var(--ink2); box-shadow: inset 0 0 0 1.5px var(--line); opacity: .55; }
+/* inactive keeps its own colour, faded: it reads as "the main button, not ready yet" */
+.k-btn:is(:disabled, [aria-disabled="true"]), .k-btn:is(:disabled, [aria-disabled="true"]):is(:hover, :active) { opacity: var(--off); cursor: not-allowed; }
+.k-btn--secondary:is(:disabled, [aria-disabled="true"]):is(:hover, :active) { background: var(--teal-soft); }
+.k-btn:not(.k-btn--secondary, .k-btn--text):is(:disabled, [aria-disabled="true"]):is(:hover, :active) { background: var(--teal); }
 /* says why a tap did nothing */
-.q-need { grid-column: 1 / -1; margin: 0; font-size: 16px; font-weight: 700; color: var(--ink); }
+.q-need { grid-column: 1 / -1; margin: 0; font-size: 16px; font-weight: 600; color: var(--ink); }
 .q-need:empty { display: none; }
-.k-ibtn { width: 48px; height: 48px; flex: none; display: grid; place-items: center; border-radius: 14px; border: 0; background: var(--surface); color: var(--ink); box-shadow: inset 0 0 0 1px var(--line); transition: background-color .12s ease-out; }
+/* icon button: no frame, the icon alone; a wash on hover */
+.k-ibtn { width: 48px; height: 48px; padding: 0; flex: none; display: grid; place-items: center; border-radius: var(--r-md); border: 0; background: transparent; color: var(--ink); transition: background-color .12s ease-out; }
 .k-ibtn:hover { background: var(--surface-2); }
-.k-ibtn:focus-visible { outline: 3px solid var(--focus); outline-offset: 2px; }
-.k-chip { display: inline-flex; align-items: center; gap: 6px; align-self: flex-start; min-height: 32px; padding: 4px 12px; border-radius: 999px; background: var(--teal-soft); color: var(--teal-ink); font-size: 15px; font-weight: 700; line-height: 1.3; }
-.k-chip .icon { width: 16px; height: 16px; stroke-width: 2.4; }
-.k-chip--plain { background: var(--surface); color: var(--ink); box-shadow: inset 0 0 0 1.5px var(--line); }
+.k-ibtn:focus-visible { outline: 3px solid var(--focus); outline-offset: 0; }
+.k-chip { display: inline-flex; align-items: center; gap: var(--sp-1); align-self: flex-start; justify-self: start; min-height: 28px; padding: var(--sp-1) var(--sp-3); border-radius: 999px; background: var(--teal-soft); color: var(--teal-ink); font-size: 15px; font-weight: 600; line-height: 1.3; letter-spacing: .01em; }
+.k-chip .icon { width: 16px; height: 16px; stroke-width: 2.2; }
+.k-chip--plain { background: transparent; color: var(--ink2); box-shadow: inset 0 0 0 1px var(--line); }
 .k-chip--hook { background: var(--lime); color: var(--on-lime); }
-.k-chip--ok { background: var(--ok-bg); color: var(--ok); }
-.k-chip--bad { background: var(--bad-bg); color: var(--bad); }
-.k-block > .k-chip, .k-why > .k-chip { justify-self: start; }
-.k-progress { flex: 1; height: 8px; border-radius: 999px; background: var(--teal-soft); overflow: hidden; }
+.k-progress { flex: 1; height: 6px; border-radius: 999px; background: var(--teal-soft); overflow: hidden; }
 .k-progress i { display: block; height: 100%; border-radius: 999px; background: var(--teal); }
+/* keycap, desktop hints only */
+.app kbd { display: inline-grid; place-items: center; min-width: 24px; height: 24px; padding: 0 var(--sp-1); border-radius: var(--r-sm); box-shadow: inset 0 0 0 1px var(--line), inset 0 -1px 0 var(--line); font: 600 15px/1 var(--font); color: var(--ink2); font-variant-numeric: tabular-nums; }
+
 /* option: always a checkbox card */
-.k-opt { position: relative; display: grid; grid-template-columns: 28px 1fr; gap: 6px 14px; align-items: start; min-height: 56px; padding: 14px 16px; border-radius: 18px; background: var(--surface); box-shadow: inset 0 0 0 1.5px var(--line); cursor: pointer; transition: box-shadow .12s ease-out, background-color .12s ease-out; -webkit-tap-highlight-color: transparent; }
-.k-opt:hover { box-shadow: inset 0 0 0 1.5px var(--line-strong); }
-.k-opt .box { width: 28px; height: 28px; border-radius: 8px; border: 2px solid var(--line-strong); background: var(--surface); color: transparent; display: grid; place-items: center; }
-.k-opt .box .icon { width: 18px; height: 18px; stroke-width: 2.8; }
+.k-opt { position: relative; display: grid; grid-template-columns: 24px 1fr; gap: var(--sp-1) var(--sp-3); align-items: start; min-height: 56px; padding: var(--sp-3) var(--sp-4); border-radius: var(--r-md); background: var(--surface); box-shadow: inset 0 0 0 1px var(--line); cursor: pointer; transition: box-shadow .12s ease-out, background-color .12s ease-out; -webkit-tap-highlight-color: transparent; }
+.k-opt .txt { min-width: 0; line-height: 1.45; }
+.k-opt:hover { box-shadow: inset 0 0 0 1px var(--line-strong); }
+/* the box sits on the first line of text (26 px line, 24 px box) */
+.k-opt .box { width: 24px; height: 24px; margin-top: 1px; border-radius: var(--r-sm); border: 1.5px solid var(--line-strong); background: var(--surface); color: transparent; display: grid; place-items: center; }
+.k-opt .box .icon { width: 16px; height: 16px; stroke-width: 3; }
 .k-opt .box .x { display: none; }
-.k-opt:has(input:checked) { background: var(--teal-soft); box-shadow: inset 0 0 0 2.5px var(--teal); }
+.k-opt:has(input:checked) { background: var(--teal-soft); box-shadow: inset 0 0 0 2px var(--teal); }
 .k-opt:has(input:checked) .box { background: var(--teal); border-color: var(--teal); color: var(--on-teal); }
 .k-opt:has(input:focus-visible) { outline: 3px solid var(--focus); outline-offset: 2px; }
 .k-opt:has(input:disabled) { cursor: default; }
-.k-opt .verdict { grid-column: 2; display: none; align-items: center; gap: 6px; font-size: 16px; font-weight: 700; line-height: 1.3; }
-.k-opt .verdict .icon { width: 18px; height: 18px; stroke-width: 2.6; }
+.k-opt .verdict { grid-column: 2; display: none; align-items: center; gap: var(--sp-1); margin-top: var(--sp-1); font-size: 16px; font-weight: 600; line-height: 1.3; }
+.k-opt .verdict .icon { width: 16px; height: 16px; stroke-width: 2.6; }
 .k-opt .note { grid-column: 2; font-size: 16px; line-height: 1.45; color: var(--ink); }
-.is-after .k-opt, .is-after .k-opt:hover { background: var(--surface); box-shadow: inset 0 0 0 1.5px var(--line); }
+.k-opt kbd { display: none; }
+.is-after .k-opt, .is-after .k-opt:hover { background: var(--surface); box-shadow: inset 0 0 0 1px var(--line); }
 .is-after .k-opt.muted .txt { color: var(--ink2); }
-.is-after .k-opt.hit { background: var(--ok-bg); box-shadow: inset 0 0 0 2.5px var(--ok); }
+.is-after .k-opt.hit { background: var(--ok-bg); box-shadow: inset 0 0 0 2px var(--ok); }
 .is-after .k-opt.hit .box { background: var(--ok); border-color: var(--ok); color: var(--on-ok); }
-.is-after .k-opt.missed { background: var(--ok-bg); box-shadow: none; outline: 2.5px dashed var(--ok); outline-offset: -2.5px; }
+.is-after .k-opt.missed { background: var(--ok-bg); box-shadow: none; outline: 2px dashed var(--ok); outline-offset: -2px; }
 .is-after .k-opt.missed .box { border-color: var(--ok); background: var(--surface); color: transparent; }
-.is-after .k-opt.bad { background: var(--bad-bg); box-shadow: inset 0 0 0 2.5px var(--bad); }
+.is-after .k-opt.bad { background: var(--bad-bg); box-shadow: inset 0 0 0 2px var(--bad); }
 .is-after .k-opt.bad .box { background: var(--bad); border-color: var(--bad); color: var(--on-bad); }
 .is-after .k-opt.bad .box .ck { display: none; }
 .is-after .k-opt.bad .box .x { display: block; }
 .is-after .k-opt.hit .verdict, .is-after .k-opt.missed .verdict { display: flex; color: var(--ok); }
 .is-after .k-opt.bad .verdict { display: flex; color: var(--bad); }
 /* a first guess is not graded red: the picked wrong Option is "your guess" in teal */
-.is-after .k-opt.guess, .is-after .k-opt.guess:hover { background: var(--teal-soft); box-shadow: inset 0 0 0 2.5px var(--teal); }
+.is-after .k-opt.guess, .is-after .k-opt.guess:hover { background: var(--teal-soft); box-shadow: inset 0 0 0 2px var(--teal); }
 .is-after .k-opt.guess .box { background: var(--teal); border-color: var(--teal); color: var(--on-teal); }
 .is-after .k-opt.guess .verdict { display: flex; color: var(--teal-ink); }
-/* result line */
-.k-result { display: grid; grid-template-columns: 40px 1fr; gap: 12px; align-items: center; }
+
+/* result: where the main button was. A tinted strip carries the verdict; the key sentence sits under it on a plain
+   ground, so the lime highlighter never lands on pink or green. The icon centres on the Options' checkbox column and
+   the words start on the Options' text edge (Option padding 16 + box 24 + gap 12 = 52; icon 32 at 12 + gap 8 = 52). */
+.res-ok { --res-bg: var(--ok-bg); --res-fg: var(--ok); --res-on: var(--on-ok); }
+.res-bad { --res-bg: var(--bad-bg); --res-fg: var(--bad); --res-on: var(--on-bad); }
+.res-neutral { --res-bg: var(--teal-soft); --res-fg: var(--teal-ink); --res-on: var(--on-teal); }
+.res-skip { --res-bg: var(--surface-2); --res-fg: var(--ink); --res-on: var(--ink); }
+.k-result { display: grid; }
 .k-result:focus { outline: none; }
-.k-result .ic { width: 40px; height: 40px; border-radius: 50%; display: grid; place-items: center; }
-.k-result .ic .icon { width: 22px; height: 22px; stroke-width: 2.8; }
-.k-result b { display: block; font-size: 22px; line-height: 1.2; }
-.k-result span:not(.ic) { display: block; font-size: 16px; line-height: 1.4; color: var(--ink); font-weight: 700; margin-top: 2px; }
-.k-result--ok .ic { background: var(--ok); color: var(--on-ok); }
-.k-result--ok b { color: var(--ok); }
-.k-result--bad .ic { background: var(--bad); color: var(--on-bad); }
-.k-result--bad b { color: var(--bad); }
-.k-result--neutral .ic { background: var(--teal); color: var(--on-teal); }
-.k-result--neutral b { color: var(--teal-ink); }
-.k-result--skip .ic { background: var(--surface-2); color: var(--ink); box-shadow: inset 0 0 0 1.5px var(--line-strong); }
-.k-result--skip b { color: var(--ink); }
-.k-result small { display: block; font-size: 16px; line-height: 1.4; color: var(--ink); margin-top: 2px; }
-.k-result:has(.r-more) { grid-template-columns: 40px 1fr auto; }
-.k-result .r-more { min-height: 44px; padding: 0 8px; gap: 4px; font-size: 16px; align-self: start; }
+.k-result .band { display: grid; grid-template-columns: 32px minmax(0, 1fr) auto; column-gap: var(--sp-2); align-items: center; background: var(--res-bg); }
+.k-result .ic { width: 32px; height: 32px; border-radius: 50%; display: grid; place-items: center; background: var(--res-fg); color: var(--res-on); }
+.res-neutral .k-result .ic { background: var(--teal); }
+.res-skip .k-result .ic { background: transparent; box-shadow: inset 0 0 0 1.5px var(--line-strong); }
+.k-result .ic .icon { width: 18px; height: 18px; stroke-width: 2.8; }
+.k-result b { display: block; font-size: 22px; font-weight: 600; line-height: 1.3; letter-spacing: -.01em; color: var(--res-fg); }
+.k-result small { display: block; font-size: 16px; line-height: 1.45; color: var(--ink); }
+.k-result .key { font-size: 18px; line-height: 1.45; font-weight: 600; color: var(--ink); text-wrap: balance; }
+.k-result .r-more { min-height: 40px; padding: 0 var(--sp-2); gap: var(--sp-1); font-size: 16px; color: var(--ink); }
+.k-result .r-more:hover { background: rgb(0 0 0 / .05); }
 .k-result .r-more .icon { width: 18px; height: 18px; }
-/* desktop: the verdict is the hero — a tinted band across the top of the panel (flat wash, no shadow) */
-.d-panel .k-result { margin: -21px -21px 0; padding: 20px 21px; border-radius: 23px 23px 0 0; grid-template-columns: 44px 1fr; }
-.d-panel .k-result .ic { width: 44px; height: 44px; }
-.d-panel .k-result b { font-size: 28px; }
-.d-panel .k-result--ok { background: var(--ok-bg); }
-.d-panel .k-result--bad { background: var(--bad-bg); }
-.d-panel .k-result--neutral { background: var(--teal-soft); }
-.d-panel .k-result--skip { background: var(--surface-2); }
+
 /* learning blocks */
-.k-why { display: grid; gap: 8px; }
-.k-why h3 { font-size: 16px; color: var(--teal-ink); }
-.k-why .key { font-size: 22px; line-height: 1.4; font-weight: 700; }
-.ket { font-weight: 700; color: var(--teal-ink); white-space: nowrap; }
-.k-disc summary, .k-more summary { list-style: none; cursor: pointer; display: flex; align-items: center; gap: 8px; min-height: 48px; font-weight: 700; color: var(--teal-ink); -webkit-tap-highlight-color: transparent; }
+.k-why { display: grid; gap: var(--sp-2); }
+.k-why h3 { font-size: 15px; font-weight: 600; line-height: 1.3; letter-spacing: .01em; color: var(--teal-ink); }
+.k-why .key { font-size: 22px; line-height: 1.35; font-weight: 600; letter-spacing: -.01em; }
+.ket { font-weight: 600; color: var(--teal-ink); white-space: nowrap; }
+.k-disc summary, .k-more summary { list-style: none; cursor: pointer; display: flex; align-items: center; gap: var(--sp-2); min-height: 48px; font-weight: 600; color: var(--teal-ink); -webkit-tap-highlight-color: transparent; }
 .k-disc summary::-webkit-details-marker, .k-more summary::-webkit-details-marker { display: none; }
-.k-disc summary:focus-visible, .k-more summary:focus-visible { outline: 3px solid var(--focus); outline-offset: 2px; border-radius: 14px; }
+.k-disc summary:focus-visible, .k-more summary:focus-visible { outline: 3px solid var(--focus); outline-offset: 2px; border-radius: var(--r-md); }
 .k-disc .chev, .k-more .chev { width: 20px; height: 20px; transition: transform .12s ease-out; }
 .k-disc[open] .chev, .k-more[open] .chev { transform: rotate(90deg); }
-.k-disc[open] summary { margin-bottom: 4px; }
-.k-more { border-radius: 18px; background: var(--teal-soft); }
-.k-more summary { padding: 4px 16px; min-height: 56px; color: var(--ink); }
+.k-more { border-radius: var(--r-md); background: var(--teal-soft); }
+.k-more summary { padding: var(--sp-1) var(--sp-4); min-height: 56px; color: var(--ink); }
 .k-more summary .t { flex: 1; }
 .k-more summary .icon:first-child { color: var(--teal-ink); width: 20px; height: 20px; }
-.k-more > .in { padding: 0 18px 18px; display: grid; gap: 12px; }
-.k-more > .in > p { font-size: 18px; color: var(--ink2); }
-.k-block { padding: 18px; border-radius: 18px; display: grid; gap: 8px; }
-.k-block h3 { font-size: 18px; line-height: 1.3; display: flex; align-items: center; gap: 8px; }
-.k-block p { font-size: 18px; }
+.k-more > .in { padding: 0 var(--sp-4) var(--sp-4); display: grid; gap: var(--sp-3); }
+.k-more > .in > p { color: var(--ink2); }
+.k-block { padding: var(--sp-4); border-radius: var(--r-md); display: grid; gap: var(--sp-2); }
+.k-block h3 { font-size: 18px; line-height: 1.3; display: flex; align-items: center; gap: var(--sp-2); }
+.k-block h3:focus { outline: none; }
 .k-explainer { background: var(--teal-soft); }
 .k-explainer h3 .icon { color: var(--teal-ink); width: 20px; height: 20px; }
-.k-explainer p { color: var(--ink2); }
-.k-hook { background: var(--surface); box-shadow: inset 0 0 0 1.5px var(--line); }
-.k-hook p { font-size: 18px; font-weight: 700; line-height: 1.4; }
+.k-explainer p { color: var(--ink); }
+.k-hook { background: var(--surface); box-shadow: inset 0 0 0 1px var(--line); }
+.k-hook p { font-weight: 600; line-height: 1.4; }
 .k-trap { background: var(--warn-bg); }
 .k-trap h3 { color: var(--warn); }
 .k-trap h3 .icon { width: 20px; height: 20px; }
-.k-note { display: flex; gap: 10px; align-items: flex-start; font-size: 16px; line-height: 1.45; color: var(--ink2); }
+.k-note { display: flex; gap: var(--sp-2); align-items: flex-start; font-size: 16px; line-height: 1.45; color: var(--ink2); }
 .k-note .icon { width: 20px; height: 20px; margin-top: 1px; }
-.k-row { display: flex; align-items: center; gap: 14px; width: 100%; min-height: 72px; padding: 12px 14px 12px 12px; border: 0; border-radius: 20px; background: var(--surface); box-shadow: inset 0 0 0 1px var(--line); color: var(--ink); text-align: left; transition: background-color .12s ease-out; }
+.k-row { display: flex; align-items: center; gap: var(--sp-3); width: 100%; min-height: 72px; padding: var(--sp-3) var(--sp-4) var(--sp-3) var(--sp-3); border: 0; border-radius: var(--r-md); background: var(--surface); box-shadow: inset 0 0 0 1px var(--line); color: var(--ink); text-align: left; transition: background-color .12s ease-out; }
 .k-row:hover { background: var(--surface-2); }
 .k-row:focus-visible { outline: 3px solid var(--focus); outline-offset: 2px; }
-.k-row .tile { width: 48px; height: 48px; border-radius: 14px; display: grid; place-items: center; flex: none; }
-.k-row .tile.ok { background: var(--ok-bg); color: var(--ok); }
-.k-row .tile.bad { background: var(--bad-bg); color: var(--bad); }
+.k-row .tile { width: 44px; height: 44px; border-radius: var(--r-md); display: grid; place-items: center; flex: none; background: var(--teal-soft); color: var(--teal-ink); }
 .k-row .txt { flex: 1; display: grid; min-width: 0; }
-.k-row .txt b { font-size: 18px; line-height: 1.35; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+.k-row .txt b { font-size: 18px; font-weight: 600; line-height: 1.35; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
 .k-row small { color: var(--ink2); font-size: 16px; }
 .k-row > .icon { color: var(--ink2); }
 
-/* ---------- question screen ---------- */
-.q-top { display: flex; align-items: center; gap: 12px; padding: 12px 20px; }
-.q-count { font-size: 16px; font-weight: 700; color: var(--ink2); font-variant-numeric: tabular-nums; }
-.q-chip { margin: 4px 20px 12px; }
-.q-scene { margin: 0 20px 14px; border-radius: 18px; overflow: hidden; }
-/* phone: on short screens the picture gets narrower (never cropped), so two Options fit in the first view */
-.app:not(.wide) .q-scene { width: min(calc(100% - 40px), calc(22cqh * var(--ar))); margin-inline: auto; }
-.app:not(.wide) .q-top { padding-block: 8px; }
-.app:not(.wide) .q-chip { margin-bottom: 8px; }
-.q-stem { padding: 8px 20px 4px; font-size: 22px; line-height: 1.3; }
-.q-stem:focus { outline: none; }
-/* permanent and quiet: several Options can be right, without saying how many */
-.q-hint { padding: 0 20px 14px; font-size: 16px; color: var(--ink2); }
-.d-main .q-hint { padding: 0; margin-top: -12px; }
-.q-ctx { padding: 0 20px 10px; margin-top: -4px; font-size: 16px; color: var(--ink2); }
-.q-count .icon { width: 16px; height: 16px; vertical-align: -3px; margin-right: 4px; }
-.k-opt .txt { min-width: 0; }
+/* ---------- phone: one column on the gutter; tight inside a group, wider between groups ---------- */
+.app:not(.wide) .screen { max-width: 640px; margin-inline: auto; padding-inline: var(--gutter); }
+.q-top { display: flex; align-items: center; gap: var(--sp-3); min-height: 64px; }
+/* the close icon hangs in the gutter so its glyph, not its tap area, lines up with the text */
+.q-top > :is(.k-ibtn, .k-btn--text):first-child { margin-left: -12px; }
+.q-count { font-size: 16px; font-weight: 600; color: var(--ink2); font-variant-numeric: tabular-nums; }
+.q-count .icon { width: 16px; height: 16px; vertical-align: -3px; margin-right: var(--sp-1); }
+.q-chip { margin-top: var(--sp-2); }
+.q-stem { margin-top: var(--sp-3); }
+.q-hint { margin-top: var(--sp-1); font-size: 16px; color: var(--ink2); }
+.q-scene { margin-top: var(--sp-4); border-radius: var(--r-md); overflow: hidden; }
+/* on short phones the picture gets narrower (never cropped), so two Options fit in the first view */
+.app:not(.wide) .q-scene { width: min(100%, calc(22cqh * var(--ar))); margin-inline: auto; }
+.q-opts { display: grid; gap: var(--sp-2); margin-top: var(--sp-4); padding: 0; }
+.q-tip { margin-top: var(--sp-4); }
+.q-after { padding-top: var(--sp-6); display: grid; gap: var(--sp-4); }
 /* phone, after Check: an Option you didn't pick and that is wrong stays readable but quiet */
-.app:not(.wide) .is-after .k-opt.muted { min-height: 48px; padding: 10px 16px; box-shadow: none; background: transparent; }
+.app:not(.wide) .is-after .k-opt.muted { min-height: 48px; padding-block: var(--sp-2); box-shadow: none; background: transparent; }
 .app:not(.wide) .is-after .k-opt.muted .txt { font-size: 16px; }
-.q-dock > .k-result { grid-column: 1 / -1; }
-.q-dock .k-btn { padding: 0 12px; }
-.q-tip { padding: 0 20px 14px; }
-.q-opts { display: grid; gap: 10px; padding: 0 20px; }
-.q-after { padding: 22px 20px 0; display: grid; gap: 14px; }
-.q-dock { padding: 14px 20px calc(14px + env(safe-area-inset-bottom, 0px)); background: var(--bg); box-shadow: 0 -1px 0 var(--line); display: grid; grid-template-columns: 1fr 1.6fr; gap: 12px 10px; margin-top: 18px; }
+/* dock: full bleed past the gutter */
+.q-dock { margin: var(--sp-5) calc(-1 * var(--gutter)) 0; padding: var(--sp-3) var(--gutter) calc(var(--sp-3) + env(safe-area-inset-bottom, 0px)); background: var(--bg); box-shadow: 0 -1px 0 var(--line); display: grid; grid-template-columns: 1fr 1fr; gap: var(--sp-3) var(--sp-2); }
 .q-dock.one { grid-template-columns: 1fr; }
-.q-dock.even { grid-template-columns: 1fr 1fr; }
+.q-dock > .k-result { grid-column: 1 / -1; margin-inline: calc(-1 * var(--gutter)); }
+.q-dock.res { padding-top: 0; }
+.q-dock .k-result .band { padding: var(--sp-3) var(--gutter) var(--sp-3) calc(var(--gutter) + 12px); }
+.q-dock .k-result .key { padding: var(--sp-3) var(--gutter) 0 calc(var(--gutter) + 52px); }
+/* very short screens (200 % zoom on a laptop): the dock stops floating so it never covers the answer */
+@container (max-height: 480px) { .app:not(.wide) .dock { position: static; } }
 /* in-page confirm sheet (Mock Exam on phone); a line, not a shadow (One Shadow Rule) */
-.q-sheet { margin-top: 18px; max-height: 50cqh; display: flex; flex-direction: column; background: var(--surface); border-radius: 24px 24px 0 0; box-shadow: inset 0 1px 0 var(--line), 0 -1px 0 var(--line); }
-.q-sheet-body { overflow-y: auto; overscroll-behavior: contain; padding: 20px 20px 4px; display: grid; gap: 14px; }
-.q-sheet-foot { padding: 12px 20px calc(14px + env(safe-area-inset-bottom, 0px)); display: grid; grid-template-columns: 1fr; gap: 10px; }
-.q-sheet-foot.two { grid-template-columns: 1fr; }
-.q-sheet-foot.two > :first-child { order: 2; }
-.q-sheet h2 { font-size: 22px; line-height: 1.3; }
+.q-sheet { margin: var(--sp-5) calc(-1 * var(--gutter)) 0; max-height: 50cqh; display: flex; flex-direction: column; background: var(--surface); border-radius: var(--r-lg) var(--r-lg) 0 0; box-shadow: 0 -1px 0 var(--line); }
+.q-sheet-body { overflow-y: auto; overscroll-behavior: contain; padding: var(--sp-5) var(--gutter) var(--sp-1); display: grid; gap: var(--sp-2); }
+.q-sheet-foot { padding: var(--sp-4) var(--gutter) calc(var(--sp-3) + env(safe-area-inset-bottom, 0px)); display: grid; gap: var(--sp-2); }
+.q-sheet-foot > :first-child { order: 2; }
+.q-sheet h2, .d-dialog h2 { font-size: 22px; line-height: 1.3; letter-spacing: -.01em; }
+.q-sheet p, .d-dialog p { color: var(--ink2); }
 
 /* ---------- mock exam ---------- */
-.m-timer { display: inline-flex; align-items: center; gap: 6px; font-weight: 700; font-size: 22px; font-variant-numeric: tabular-nums; margin-right: auto; }
+.m-timer { display: inline-flex; align-items: center; gap: var(--sp-2); font-weight: 600; font-size: 22px; letter-spacing: -.01em; font-variant-numeric: tabular-nums; margin-right: auto; }
 .m-timer .icon { width: 20px; height: 20px; color: var(--ink2); }
-.m-note { margin: 0 20px 10px; padding: 10px 14px; border-radius: 14px; background: var(--teal-soft); font-weight: 700; font-size: 16px; }
+.m-note { margin-top: var(--sp-2); padding: var(--sp-2) var(--sp-4); border-radius: var(--r-md); background: var(--teal-soft); font-weight: 600; font-size: 16px; }
 .m-note:empty { display: none; }
-.m-strip { display: flex; gap: 8px; overflow-x: auto; padding: 2px 20px 12px; scrollbar-width: none; }
-.m-strip button { flex: none; width: 48px; height: 48px; border-radius: 14px; border: 0; background: var(--surface); box-shadow: inset 0 0 0 1.5px var(--line); color: var(--ink); font-weight: 700; font-variant-numeric: tabular-nums; display: grid; place-items: center; position: relative; }
-.m-strip button.done { background: var(--teal-soft); box-shadow: inset 0 0 0 1.5px var(--teal-soft-2); }
-.m-strip button.done::after { content: ""; position: absolute; bottom: 6px; width: 6px; height: 6px; border-radius: 50%; background: var(--teal); }
-.m-strip button[aria-current] { box-shadow: inset 0 0 0 2.5px var(--teal); }
+.m-strip { display: flex; gap: var(--sp-1); overflow-x: auto; margin-inline: calc(-1 * var(--gutter)); padding: var(--sp-1) var(--gutter); scrollbar-width: none; }
+.m-strip button { flex: none; width: 44px; height: 44px; padding: 0; border-radius: var(--r-sm); border: 0; background: transparent; box-shadow: inset 0 0 0 1px var(--line); color: var(--ink); font-size: 16px; font-weight: 600; font-variant-numeric: tabular-nums; display: grid; place-items: center; position: relative; }
+.m-strip button:hover { background: var(--surface-2); }
+.m-strip button.done { background: var(--teal-soft); box-shadow: none; color: var(--teal-ink); }
+.m-strip button.done::after { content: ""; position: absolute; bottom: 5px; width: 4px; height: 4px; border-radius: 50%; background: var(--teal); }
+.m-strip button[aria-current] { box-shadow: inset 0 0 0 2px var(--teal); }
 .m-strip button:focus-visible { outline: 3px solid var(--focus); outline-offset: 2px; }
-.m-finish { margin: 14px auto 0; }
-.m-start, .e-wrap { padding: 24px 20px 0; display: grid; gap: 16px; }
-.m-start h1, .e-wrap h1 { font-size: 28px; line-height: 1.2; letter-spacing: -0.01em; }
-.m-start > p, .e-wrap > p { color: var(--ink2); }
-.m-facts { display: grid; gap: 12px; }
-.m-facts li { display: flex; align-items: center; gap: 14px; }
-.k-switch { display: flex; align-items: center; gap: 16px; min-height: 72px; padding: 14px 16px; border-radius: 20px; background: var(--surface); box-shadow: inset 0 0 0 1px var(--line); cursor: pointer; }
+.m-finish { justify-self: start; margin: var(--sp-1) 0 0 calc(-1 * var(--sp-3)); }
+.app:not(.wide) .m-finish { align-self: center; margin: var(--sp-2) 0 0; }
+.m-start, .e-wrap, .m-res { padding-top: var(--sp-6); display: grid; gap: var(--sp-4); }
+:is(.m-start, .e-wrap) h1 { font-size: 28px; line-height: 1.2; letter-spacing: -.015em; }
+:is(.m-start, .e-wrap) > p { color: var(--ink2); }
+.m-facts { display: grid; gap: var(--sp-3); margin-block: var(--sp-2); }
+.m-facts li { display: flex; align-items: center; gap: var(--sp-3); }
+.m-facts .t { width: 44px; height: 44px; border-radius: var(--r-md); background: var(--teal-soft); color: var(--teal-ink); display: grid; place-items: center; flex: none; font-weight: 600; font-variant-numeric: tabular-nums; }
+.k-switch { display: flex; align-items: center; gap: var(--sp-4); min-height: 72px; padding: var(--sp-3) var(--sp-4); border-radius: var(--r-md); background: var(--surface); box-shadow: inset 0 0 0 1px var(--line); cursor: pointer; }
 .k-switch .txt { flex: 1; display: grid; gap: 2px; min-width: 0; }
+.k-switch b { font-weight: 600; }
 .k-switch small { font-size: 16px; color: var(--ink2); }
 .k-switch input { position: absolute; opacity: 0; width: 1px; height: 1px; }
 .k-switch .track { width: 52px; height: 32px; flex: none; border-radius: 999px; background: var(--surface-2); box-shadow: inset 0 0 0 1.5px var(--line-strong); position: relative; transition: background-color .12s ease-out; }
@@ -312,86 +336,93 @@ fieldset.q-opts { border: 0; margin: 0; min-width: 0; }
 .k-switch input:checked + .track { background: var(--teal); box-shadow: none; }
 .k-switch input:checked + .track::after { left: 24px; background: var(--on-teal); }
 .k-switch:has(input:focus-visible) { outline: 3px solid var(--focus); outline-offset: 2px; }
-.m-facts .t { width: 44px; height: 44px; border-radius: 14px; background: var(--teal-soft); color: var(--teal-ink); display: grid; place-items: center; flex: none; font-weight: 700; font-variant-numeric: tabular-nums; }
-.m-res { padding: 24px 20px 0; display: grid; gap: 16px; }
-.m-score { display: grid; gap: 6px; }
-.m-score h1 { display: flex; align-items: center; gap: 10px; font-size: 28px; line-height: 1.2; }
-.m-score h1 .icon { width: 32px; height: 32px; padding: 6px; border-radius: 50%; stroke-width: 2.8; }
+.m-score { display: grid; gap: var(--sp-1); }
+.m-score h1 { display: flex; align-items: center; gap: var(--sp-3); font-size: 28px; line-height: 1.2; letter-spacing: -.015em; }
+.m-score h1:focus { outline: none; }
+.m-score h1 .icon { width: 32px; height: 32px; padding: var(--sp-2); border-radius: 50%; stroke-width: 2.8; }
 .m-score h1.ok { color: var(--ok); } .m-score h1.ok .icon { background: var(--ok); color: var(--on-ok); }
 .m-score h1.bad { color: var(--bad); } .m-score h1.bad .icon { background: var(--bad); color: var(--on-bad); }
-.m-score .lbl { margin-top: 10px; font-size: 16px; font-weight: 700; color: var(--ink2); }
-.m-score .big { font-size: 64px; font-weight: 700; line-height: 1.05; letter-spacing: -0.03em; font-variant-numeric: tabular-nums; }
+.m-score .lbl { margin-top: var(--sp-4); }
+.m-score .big { font-size: 64px; font-weight: 600; line-height: 1.05; letter-spacing: -.03em; font-variant-numeric: tabular-nums; }
 .m-score .big span { font-size: 28px; color: var(--ink2); letter-spacing: 0; }
 .m-score .sub { color: var(--ink2); }
-.m-res .k-row .tile { background: var(--teal-soft); color: var(--teal-ink); }
 .m-all { background: var(--surface); box-shadow: inset 0 0 0 1px var(--line); }
-.m-res h2 { font-size: 22px; margin-top: 8px; }
-.m-list { display: grid; gap: 10px; }
-.e-list { display: grid; gap: 10px; }
-.e-list li { display: flex; justify-content: space-between; align-items: center; gap: 12px; padding: 12px 16px; border-radius: 18px; background: var(--surface); box-shadow: inset 0 0 0 1px var(--line); font-size: 18px; }
-.e-list .k-chip { flex: none; }
-.e-ic { width: 56px; height: 56px; border-radius: 18px; background: var(--teal-soft); color: var(--teal-ink); display: grid; place-items: center; }
-.dock-col { display: grid; gap: 4px; justify-items: center; }
+.m-res h2 { font-size: 22px; line-height: 1.3; letter-spacing: -.01em; margin-top: var(--sp-4); }
+.m-list, .e-list { display: grid; gap: var(--sp-2); }
+.e-list li { display: flex; justify-content: space-between; align-items: center; gap: var(--sp-3); min-height: 56px; padding: var(--sp-2) var(--sp-4); border-radius: var(--r-md); background: var(--surface); box-shadow: inset 0 0 0 1px var(--line); }
+.e-list .k-chip { flex: none; align-self: center; }
+.e-ic { width: 56px; height: 56px; border-radius: var(--r-lg); background: var(--teal-soft); color: var(--teal-ink); display: grid; place-items: center; }
 
-/* ---------- wider than a phone ---------- */
-/* phone layout on a tablet: keep the column readable */
-.app:not(.wide) .screen { max-width: 640px; margin-inline: auto; }
-.wide .screen.narrow { max-width: 720px; margin-inline: auto; }
-/* desktop single-column screens: the button follows the content, no dead gap */
+/* ---------- desktop (900 px and wider) ---------- */
+/* single-column screens (start, results, Lesson end, reading a Rule): a centred 720 px column; the button follows the content */
+.wide .screen.narrow { width: 100%; max-width: 720px; margin-inline: auto; padding-inline: var(--sp-6); }
 .wide .screen.narrow > .grow { display: none; }
-.wide .screen.narrow > .q-dock { position: static; box-shadow: none; background: transparent; margin-top: 8px; }
-/* desktop: one frame for every Question. Main column = the question (stem, picture in a fixed frame, Options).
-   Panel = what to do now: buttons before Check; verdict, "why" and Toliau after; time and answer sheet in a Mock Exam. */
-.d-wrap { width: 100%; max-width: 1160px; margin-inline: auto; padding: 8px 40px 48px; }
-.d-wrap > .q-top { padding: 16px 0 24px; }
-.d-grid { display: grid; grid-template-columns: minmax(0, 1fr) 380px; gap: 48px; align-items: start; }
-.d-main { display: grid; gap: 20px; align-content: start; min-width: 0; }
-.d-main > * { margin: 0; }
-.d-main .q-stem { padding: 0; font-size: 28px; line-height: 1.3; letter-spacing: -0.01em; }
+.wide .screen.narrow > .q-dock { position: static; box-shadow: none; background: transparent; margin: var(--sp-6) 0 var(--sp-7); padding: 0; grid-template-columns: minmax(0, 320px); }
+.wide .screen.narrow > .q-dock > .k-btn--text { justify-self: start !important; margin-left: calc(-1 * var(--sp-3)); }
+/* one frame for every Question, on a 2-track grid that every edge snaps to:
+   left = the question (and after Check the "why", next to the picture it explains);
+   right = your answer (Options, then the buttons; after Check the result where the buttons were) */
+.d-wrap { --top-h: 80px; --top-gap: clamp(var(--sp-4), 6cqh - 24px, var(--sp-8)); width: 100%; max-width: 1280px; margin-inline: auto; padding: 0 var(--sp-7) var(--sp-8); }
+.wide .q-top { min-height: var(--top-h); gap: var(--sp-4); }
+/* the close glyph (6 px inside its 24 px icon, 12 px inside the 48 px button) lines up with the text edge */
+.wide .q-top > :is(.k-ibtn, .k-btn--text):first-child { margin-left: -18px; }
+.d-grid { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); grid-template-rows: auto 1fr; grid-template-areas: "q a" "w a"; column-gap: var(--sp-8); row-gap: var(--sp-6); margin-top: var(--top-gap); }
+.d-q { grid-area: q; display: grid; align-content: start; }
+.d-q > .q-stem { font-size: 28px; line-height: 1.25; }
+.d-q > .q-stem:first-child { margin-top: 0; }
+.d-q > .q-chip, .d-q > .t-label { margin: 0 0 var(--sp-1); }
+.d-q > .q-scene { margin-top: var(--sp-5); }
+.l-blocks { display: grid; gap: var(--sp-4); margin-top: var(--sp-4); }
 /* the frame keeps the scene's own shape; on short screens it gets narrower instead of being cropped */
-.d-main .q-scene { width: min(100%, calc(38cqh * var(--ar))); }
-.d-main .q-opts { padding: 0; }
-.d-panel { position: sticky; top: 16px; max-height: calc(100cqh - 112px); display: flex; flex-direction: column; background: var(--surface); border-radius: 24px; box-shadow: inset 0 0 0 1px var(--line); }
-.d-panel-body { overflow-y: auto; overscroll-behavior: contain; padding: 22px 22px 6px; display: grid; gap: 16px; }
-.d-panel-body:empty { display: none; }
-.d-panel-foot { padding: 16px 22px 22px; display: grid; gap: 10px; }
-.d-panel .q-chip { margin: 0; justify-self: start; }
-.d-panel .q-tip { margin: 0; padding: 0; }
-.d-panel .k-btn { padding: 0 12px; }
-.d-actions.even { grid-template-columns: 1fr 1fr; }
-.d-ctx { font-size: 16px; color: var(--ink2); }
-.d-actions { display: grid; grid-template-columns: 1fr 1.5fr; gap: 10px; }
-.d-keys { font-size: 16px; color: var(--ink2); text-align: center; }
+.wide .q-scene { width: min(100%, calc((100cqh - 280px) * var(--ar))); }
+.d-w { grid-area: w; display: grid; gap: var(--sp-4); align-content: start; }
+/* sticky exactly where it starts, so it never moves when the page scrolls to the "why" */
+.d-a { grid-area: a; position: sticky; top: calc(var(--top-h) + var(--top-gap)); align-self: start; max-height: calc(100cqh - var(--top-h) - var(--top-gap) - var(--sp-5)); display: flex; flex-direction: column; }
+/* 4 px of padding keeps focus rings inside the scroll box */
+.d-a-body { overflow-y: auto; overscroll-behavior: contain; display: grid; gap: var(--sp-2); padding: var(--sp-1); margin: calc(-1 * var(--sp-1)); }
+.d-a-body > .q-hint { margin: 0 0 var(--sp-1); }
+.d-a-body > .q-opts { margin: 0; }
+.d-a-body > .q-tip { margin: var(--sp-2) 0 0; }
+.d-a-foot { margin-top: var(--sp-5); display: grid; gap: var(--sp-3); }
+/* after Check: the result block takes the buttons' place — tinted verdict strip with Toliau, key sentence below */
+.d-res { border: 1px solid var(--line); border-radius: var(--r-lg); background: var(--surface); overflow: hidden; }
+.d-res .band { min-height: 76px; padding: var(--sp-3) var(--sp-3) var(--sp-3) 11px; }
+.d-res .band > .k-btn { width: auto; min-width: 160px; }
+.d-res .key { padding: var(--sp-4) var(--sp-5) var(--sp-4) 51px; }
+.wide .k-btn { min-height: 52px; }
+.d-actions { display: grid; grid-template-columns: 1fr 1.5fr; gap: var(--sp-2); }
 .d-actions.stack { grid-template-columns: 1fr; }
 .d-actions.stack > :first-child { order: 2; }
-/* the panel never grows past the screen: Toliau stays pinned, the body scrolls, and a cue says there is more */
-.d-more { display: none; align-items: center; justify-content: center; gap: 6px; font-size: 16px; font-weight: 700; color: var(--teal-ink); }
-.d-more .icon { width: 18px; height: 18px; }
-.d-panel.more .d-more { display: flex; }
-.d-panel.more .d-panel-body { -webkit-mask-image: linear-gradient(to bottom, #000 82%, transparent); mask-image: linear-gradient(to bottom, #000 82%, transparent); }
-.d-panel h2 { font-size: 22px; line-height: 1.3; }
-.d-clock { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; }
-.d-clock .lbl { font-size: 16px; font-weight: 700; color: var(--ink2); }
-.d-clock .m-timer { font-size: 28px; line-height: 1.2; letter-spacing: -0.01em; margin: 0; }
-.d-clock .m-timer .icon { display: none; }
-.d-panel .m-note { margin: 0; }
-.d-sheet { display: grid; gap: 10px; }
-.d-sheet h3 { font-size: 16px; color: var(--ink2); display: flex; justify-content: space-between; }
-.d-sheet .m-strip { display: grid; grid-template-columns: repeat(10, minmax(0, 1fr)); gap: 6px; padding: 0; overflow: visible; }
-.d-sheet .m-strip button { width: auto; height: 40px; border-radius: 8px; }
-.d-sheet .m-strip button.done::after { bottom: 4px; width: 5px; height: 5px; }
-.d-panel .m-finish { margin: 0 auto; }
-.k-opt kbd { display: none; }
-.wide .k-opt { grid-template-columns: 28px 1fr auto; }
-.wide .k-opt kbd { display: grid; place-items: center; grid-column: 3; grid-row: 1; width: 28px; height: 28px; border-radius: 8px; box-shadow: inset 0 0 0 1px var(--line); color: var(--ink2); font: 700 15px/1 "Atkinson Hyperlegible Next", system-ui, sans-serif; font-variant-numeric: tabular-nums; }
+/* the key that triggers a button sits inside it */
+.k-btn kbd { margin-left: var(--sp-1); color: inherit; opacity: .8; box-shadow: inset 0 0 0 1px currentColor; }
+/* the answer column never grows past the screen: the buttons stay put, the Options scroll, and a fade shows only while more is below */
+.d-a.more .d-a-body { -webkit-mask-image: linear-gradient(to bottom, #000 85%, transparent); mask-image: linear-gradient(to bottom, #000 85%, transparent); }
+.d-dialog { display: grid; gap: var(--sp-2); padding: var(--sp-5); border-radius: var(--r-lg); background: var(--surface); box-shadow: inset 0 0 0 1px var(--line); }
+.d-dialog .d-actions { margin-top: var(--sp-3); }
+.wide .k-opt { grid-template-columns: 24px 1fr auto; padding: var(--sp-4); }
+.wide .k-opt kbd { display: inline-grid; grid-column: 3; grid-row: 1; margin-top: 1px; box-shadow: none; color: var(--ink2); }
+.wide .k-opt:hover kbd, .wide .k-opt:has(input:checked) kbd { box-shadow: inset 0 0 0 1px var(--line-strong); }
 .wide .is-after .k-opt kbd { visibility: hidden; }
+/* Mock Exam: the answer sheet is the header's progress bar; a full 30-Question exam wraps into two rows of 15 */
+.wide .q-top .m-strip { flex: 1; display: grid; grid-template-columns: repeat(var(--n), minmax(0, 40px)); margin: 0; padding: 0; overflow: visible; gap: var(--sp-1); }
+.wide .q-top .m-strip.long { grid-template-columns: repeat(15, minmax(0, 40px)); }
+.wide .q-top .m-strip button { width: auto; height: 32px; font-size: 15px; }
+.wide .q-top .m-strip.long button { height: 28px; }
+.wide .q-top:has(.m-strip.long) { padding-block: var(--sp-2); }
+.wide .q-top .m-timer { margin: 0 0 0 var(--sp-4); font-size: 22px; }
+.wide .q-top .m-finish { margin: 0 -12px 0 var(--sp-2); }
+.d-a-body > .m-note { margin: 0 0 var(--sp-2); }
+/* short laptops: a slimmer header leaves the answer column more room */
+@container (max-height: 700px) { .d-wrap { --top-h: 64px; --top-gap: 0px; } }
+/* mid-size windows: the same grid, tighter */
+@media (max-width: 1100px) { .d-wrap { padding-inline: var(--sp-6); } .d-grid { column-gap: var(--sp-7); } }
 </style>
 
 <main class="stage">
   <aside class="notes" id="notes">
     <h2>Question screen</h2>
     <p>A clickable prototype of how the KETGO Question screen behaves. App text is Lithuanian, as in the app.</p>
-    <p><b>Desktop</b> (a wide window): the question, the picture and the Options on the left; a panel on the right with the buttons, and after Check the verdict and "why". Keys: 1–4 tick, Enter does the main action, N = "Nesu tikras". Use "Phone view" to see the phone.</p>
+    <p><b>Desktop</b> (a wide window): the question and the picture on the left; your answer on the right (Options, then the buttons). After Check the result takes the buttons' place and the "why" appears under the picture. Keys: 1–4 tick, Enter does the main action, N = "Nesu tikras" (shown on the buttons). Use "Phone view" to see the phone.</p>
     <p><b>Phone:</b> one layout. After Check, your pick and the right answer stay above a short bottom bar with the verdict, the key sentence and "Toliau". The "why" follows below.</p>
     <h3>Try this</h3>
     <ol>
@@ -444,14 +475,14 @@ fieldset.q-opts { border: 0; margin: 0; min-width: 0; }
       <path d="M168 26l5-9 5 9M48 78l-9 5 9 5" fill="none" stroke="var(--s-path)" stroke-width="2.5" stroke-linejoin="round" stroke-linecap="round"/>
       <g transform="translate(164 148)"><rect width="18" height="32" rx="5" fill="var(--s-me)"/><rect x="3" y="5" width="12" height="7" rx="2" fill="var(--s-ground)" opacity=".7"/></g>
       <g transform="translate(270 74)"><rect width="32" height="18" rx="5" fill="var(--s-other)"/><rect x="4" y="3" width="7" height="12" rx="2" fill="var(--s-ground)" opacity=".7"/></g>
-      <g class="hit"><circle cx="173" cy="83" r="13" fill="none" stroke="var(--s-key)" stroke-width="3" stroke-dasharray="6 4"/><text x="194" y="64" font-size="13" font-weight="700" fill="var(--s-key)" font-family="Atkinson Hyperlegible Next, system-ui, sans-serif">kertasi</text></g></svg>`,
+      <g class="hit"><circle cx="173" cy="83" r="13" fill="none" stroke="var(--s-key)" stroke-width="3" stroke-dasharray="6 4"/><text x="194" y="64" font-size="13" font-weight="600" fill="var(--s-key)" font-family="Atkinson Hyperlegible Next, system-ui, sans-serif">kertasi</text></g></svg>`,
     // sign 533 drawn after KET annex 1; sign colours are the sign's own, the same in both themes
     sign533: `<svg viewBox="0 0 320 170" role="img" aria-label="Kelio ženklas: mėlynas kvadratas, jame baltas trikampis su pėsčiuoju ant zebro">
       <rect width="320" height="170" fill="var(--s-ground)"/><rect x="157" y="112" width="6" height="58" fill="var(--s-pole)"/>
       <g transform="translate(110 14)"><rect width="100" height="100" rx="9" fill="#FFFFFF"/><rect x="4" y="4" width="92" height="92" rx="7" fill="#1E5EAD"/><path d="M50 12L90 86H10Z" fill="#FFFFFF"/>
       <path d="M22 80h9M37 80h9M52 80h9M67 80h9" stroke="#142627" stroke-width="5"/><circle cx="52" cy="33" r="5" fill="#142627"/>
       <path d="M51 40l-3 15 6 7 1 9M48 55l-6 15M50 44l-8 8M52 44l8 7" stroke="#142627" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/></g>
-      <g class="hit"><rect x="102" y="6" width="116" height="116" rx="14" fill="none" stroke="var(--s-key)" stroke-width="3" stroke-dasharray="7 6"/><text x="226" y="36" font-size="13" font-weight="700" fill="var(--s-key)" font-family="Atkinson Hyperlegible Next, system-ui, sans-serif">kvadratas</text></g></svg>`,
+      <g class="hit"><rect x="102" y="6" width="116" height="116" rx="14" fill="none" stroke="var(--s-key)" stroke-width="3" stroke-dasharray="7 6"/><text x="226" y="36" font-size="13" font-weight="600" fill="var(--s-key)" font-family="Atkinson Hyperlegible Next, system-ui, sans-serif">kvadratas</text></g></svg>`,
   };
 
   const RULES = {
@@ -586,12 +617,13 @@ fieldset.q-opts { border: 0; margin: 0; min-width: 0; }
 
   /* ---------- pieces ---------- */
   const screen = (html, after, cls = '') => `<section class="screen${after ? ' is-after' : ''} ${cls}">${html}</section>`;
-  // desktop: main column = the question; panel = what to do now (buttons, then verdict and "why")
-  const deskQ = (top, main, body, foot, after) => screen(`<div class="d-wrap">${top}<div class="d-grid"><div class="d-main">${main}</div><aside class="d-panel"><div class="d-panel-body">${body}</div><div class="d-panel-foot">${foot}</div></aside></div></div>`, after);
+  // desktop: left = the question (after Check also the "why", under the picture it explains);
+  // right = your answer: Options, then the buttons; after Check the result bar takes the buttons' place
+  const deskQ = (top, q, a, foot, { w = '', after = false } = {}) => screen(`<div class="d-wrap">${top}<div class="d-grid"><div class="d-q">${q}</div><div class="d-a"><div class="d-a-body">${a}</div><div class="d-a-foot">${foot}</div></div>${w ? `<div class="d-w">${w}</div>` : ''}</div></div>`, after);
+  const label = t => `<p class="t-label">${t}</p>`;
   // one line saying what kind of Question this is
   const CTX = { new: 'Šios taisyklės dar nesimokei. Spėk, o po to ją išmoksi.', learned: 'Taisyklę ką tik perskaitei. Dabar pritaikyk ją.', due: 'Ši taisyklė grįžta, kad neužsimirštų.', return: 'Ta pati taisyklė grįžta šioje pamokoje.', reask: 'Šis klausimas grįžta dar kartą.' };
   // keyboard hint: says exactly what Enter does on this screen
-  const keys = (n, enter, extra = '') => `<p class="d-keys">${n ? `1–${n} pažymi · ` : ''}Enter – ${enter}${extra}</p>`;
   const grow = '<div class="grow"></div>';
   const MARKS = { cross: 'Pažymėta vieta, kur jūsų keliai kertasi.', sign533: 'Pažymėta, kad ženklas yra kvadratinis.' };
   const AR = { cross: 320 / 190, sign533: 320 / 170 };
@@ -626,10 +658,12 @@ fieldset.q-opts { border: 0; margin: 0; min-width: 0; }
   }
   // kind: ok / bad / neutral (a first guess at a new Rule is not graded red: it doesn't count)
   // note: why a partly right answer still counts as wrong; more: a phone pointer to the "why" below the bar
-  function result(kind, word, sub, marked, note = '', more = '') {
+  // slot: a button on the verdict strip ("Kodėl ↓" on phone, Toliau on desktop)
+  function result(kind, word, sub, marked, note = '', slot = '') {
     const icon = { ok: 'ck', bad: 'x', neutral: 'book', skip: 'dash' }[kind];
-    return `<div class="k-result k-result--${kind}" role="status" tabindex="-1" id="res"><span class="ic">${ic(icon)}</span><div><b>${word}</b>${note ? `<small>${note}</small>` : ''}${sub ? `<span>${marked ? `<mark>${sub}</mark>` : sub}</span>` : ''}</div>${more ? `<button class="k-btn k-btn--text r-more" type="button" data-act="tomore">${more}${ic('down')}</button>` : ''}</div>`;
+    return `<div class="k-result" tabindex="-1" id="res"><div class="band"><span class="ic">${ic(icon)}</span><div role="status"><b>${word}</b>${note ? `<small>${note}</small>` : ''}</div>${slot}</div>${sub ? `<p class="key">${marked ? `<mark>${sub}</mark>` : sub}</p>` : ''}</div>`;
   }
+  const more = t => t ? `<button class="k-btn k-btn--text r-more" type="button" data-act="tomore">${t}${ic('down')}</button>` : '';
   // all or nothing: explain a partly right answer in one line
   function partial(q, d, ticks) {
     const hits = d.filter(oi => q.opts[oi].ok && ticks.has(oi)).length, bad = d.filter(oi => !q.opts[oi].ok && ticks.has(oi)).length;
@@ -661,10 +695,11 @@ fieldset.q-opts { border: 0; margin: 0; min-width: 0; }
     const it = cur(), q = QS[it.q], r = RULES[q.rule];
     if (S.phase === 'learn') {
       const go = `<button class="k-btn" type="button" data-act="toq" data-enter>Į klausimą${ic('arrow')}</button>`;
-      const blocks = explainer(r) + hook(r) + trap(r);
+      // the Exam Trap would give away a distractor before answering, so it waits until it is earned
+      const blocks = explainer(r) + hook(r);
       const newChip = `<span class="k-chip q-chip">${ic('spark')}Nauja taisyklė</span>`;
-      if (wide) return deskQ(lessonTop(), blocks, newChip + '<p class="d-ctx">Perskaityk taisyklę, tada atsakyk į klausimą.</p>', go + keys(0, 'į klausimą'), false);
-      return screen(lessonTop() + newChip + `<div class="q-after" style="padding-top:4px">${blocks}</div>${grow}<div class="q-dock one dock">${go}</div>`);
+      if (wide) return deskQ(lessonTop(), newChip + `<div class="l-blocks">${blocks}</div>`, '<p class="q-hint">Perskaityk taisyklę, tada atsakyk į klausimą.</p>', go);
+      return screen(lessonTop() + newChip + `<div class="q-after">${blocks}</div>${grow}<div class="q-dock one dock">${go}</div>`);
     }
     const ctxKey = it.learned ? 'learned' : it.kind;
     if (S.phase === 'ask') {
@@ -676,8 +711,8 @@ fieldset.q-opts { border: 0; margin: 0; min-width: 0; }
       // explained once, the first time "Nesu tikras" appears
       const confTip = pre || S.confTipSeen ? '' : `<p class="k-note q-tip">${ic('info')}Nesi tikras? Spausk „Nesu tikras“, ir paaiškinimas bus parodytas plačiau.</p>`;
       const opts = options(q, it.d, S.ticks, false);
-      if (wide) return deskQ(lessonTop(), `<p class="sr">${CTX[ctxKey]}</p>` + stem(q) + hint + scene(q) + opts, chip(it) + `<p class="d-ctx">${CTX[ctxKey]}</p>` + confTip, need + `<div class="d-actions even">${btns}</div>` + keys(n, 'tikrinti', pre ? '' : ' · N – nesu tikras'), false);
-      return screen(lessonTop() + chip(it) + stem(q) + hint + scene(q) + opts + (confTip ? `<div class="q-after" style="padding-top:14px">${confTip}</div>` : '') + grow + `<div class="q-dock dock even">${need}${btns}</div>`);
+      if (wide) return deskQ(lessonTop(), chip(it) + `<p class="sr">${CTX[ctxKey]}</p>` + stem(q) + scene(q), hint + opts + confTip, `<div class="d-actions">${btns}</div>` + need);
+      return screen(lessonTop() + chip(it) + stem(q) + hint + scene(q) + opts + confTip + grow + `<div class="q-dock dock">${need}${btns}</div>`);
     }
     // after Check
     const { right, conf } = S.last, pre = conf === 'pretest';
@@ -688,9 +723,10 @@ fieldset.q-opts { border: 0; margin: 0; min-width: 0; }
     const next = `<button class="k-btn" type="button" data-act="next" data-enter>Toliau${ic('arrow')}</button>`;
     const opts = options(q, it.d, S.ticks, true, pre);
     const note = right || pre ? '' : partial(q, it.d, S.ticks);
-    if (wide) return deskQ(lessonTop(), stem(q) + '<p class="q-hint" aria-hidden="true" style="visibility:hidden">Pažymėk visus teisingus.</p>' + scene(q, true) + opts, result(kind, word, '', false, note) + feedback(q, S.ticks, pre, open, true), next + '<p class="d-more">Slink panelę žemyn: yra daugiau' + ic('down') + '</p>' + keys(0, 'toliau'), true);
+    // desktop: the result bar (verdict, key sentence, Toliau) sits where the buttons were; the "why" goes under the picture
+    if (wide) return deskQ(lessonTop(), chip(it) + stem(q) + scene(q, true), '<p class="q-hint">Tavo atsakymas</p>' + opts, `<div class="d-res res-${kind}">${result(kind, word, q.key, true, note, next)}</div>`, { w: feedback(q, S.ticks, pre, open, false), after: true });
     // phone: your pick and the right answer stay above a short bar (verdict + key sentence + Toliau); the "why" follows below
-    return screen(lessonTop() + chip(it) + stem(q) + scene(q, true) + opts + `<div class="q-after">${feedback(q, S.ticks, pre, open, false)}</div>` + grow + `<div class="q-dock one dock">${result(kind, word, q.key, true, note, open ? (pre ? 'Taisyklė' : 'Kodėl') : '')}${next}</div>`, true);
+    return screen(lessonTop() + chip(it) + stem(q) + scene(q, true) + opts + `<div class="q-after">${feedback(q, S.ticks, pre, open, false)}</div>` + grow + `<div class="q-dock one dock res res-${kind}">${result(kind, word, q.key, true, note, more(open ? (pre ? 'Taisyklė' : 'Kodėl') : ''))}${next}</div>`, true);
   }
   function endView() {
     const seen = [...new Map(LESSON.filter(([, k]) => k !== 'return').map(([id, k]) => [id, k])).entries()];
@@ -703,6 +739,15 @@ fieldset.q-opts { border: 0; margin: 0; min-width: 0; }
   function fitMarked() {
     const m = [...app.querySelectorAll('.k-opt.hit, .k-opt.bad, .k-opt.missed, .k-opt.guess')], dock = app.querySelector('.q-dock');
     if (!m.length) return;
+    if (wide) {
+      m.at(-1).scrollIntoView({ block: 'nearest' }); m[0].scrollIntoView({ block: 'nearest' });
+      // the "why" sits under the picture: scroll until it starts mid-screen, but never past the picture's top
+      const w = app.querySelector('.d-w'), pic = app.querySelector('.d-q .q-scene'), v = vp.getBoundingClientRect();
+      if (!w) return;
+      const wt = w.getBoundingClientRect().top, need = wt - (v.top + v.height * .5);
+      if (wt > v.top + v.height * .7) vp.scrollTop += Math.min(need, pic ? pic.getBoundingClientRect().top - v.top - 16 : need);
+      return;
+    }
     const v = vp.getBoundingClientRect(), top = m[0].getBoundingClientRect().top, bottom = m.at(-1).getBoundingClientRect().bottom, limit = dock ? dock.getBoundingClientRect().top : v.bottom;
     if (top >= v.top + 8 && bottom <= limit - 8) return;
     vp.scrollTop += Math.min(bottom - (limit - 12), top - (v.top + 12));
@@ -724,6 +769,7 @@ fieldset.q-opts { border: 0; margin: 0; min-width: 0; }
     render(true);
     fitMarked();
     $('#res')?.focus({ preventScroll: true });
+    S.enterAt = performance.now() + 600;
   }
 
   /* ---------- mock exam ---------- */
@@ -741,13 +787,12 @@ fieldset.q-opts { border: 0; margin: 0; min-width: 0; }
     const timer = M.untimed ? 'Be laiko ribos' : `${ic('clock')}<span id="timer" aria-label="Liko laiko">${fmt(M.left)}</span>`;
     const note = `<p class="m-note" id="mnote" role="status">${M.notice}</p>`;
     const quit = `<button class="k-ibtn" type="button" data-act="mquit" aria-label="Nutraukti egzaminą">${ic('close')}</button>`;
-    const strip = `<nav class="m-strip" aria-label="Klausimai">${MOCK.map((_, k) => `<button type="button" data-act="mgo" data-k="${k}" class="${M.ans[k].size ? 'done' : ''}"${k === M.i ? ' aria-current="step"' : ''} aria-label="${k + 1} klausimas${M.ans[k].size ? ', atsakytas' : ''}">${k + 1}</button>`).join('')}</nav>`;
+    const strip = `<nav class="m-strip${MOCK.length > 15 ? ' long' : ''}" style="--n:${MOCK.length}" aria-label="Klausimai">${MOCK.map((_, k) => `<button type="button" data-act="mgo" data-k="${k}" class="${M.ans[k].size ? 'done' : ''}"${k === M.i ? ' aria-current="step"' : ''} aria-label="${k + 1} klausimas${M.ans[k].size ? ', atsakytas' : ''}">${k + 1}</button>`).join('')}</nav>`;
     const prev = `<button class="k-btn k-btn--secondary" type="button" data-act="mprev"${M.i ? '' : ' disabled'}>${ic('back')}Atgal</button>`;
     // on the last Question the main button finishes only when everything is answered; otherwise it goes to the first unanswered one
     const next = !last ? `<button class="k-btn" type="button" data-act="mnext" data-enter>Kitas${ic('arrow')}</button>`
       : other.length ? `<button class="k-btn" type="button" data-act="mgo" data-k="${other[0] - 1}" data-enter>${other[0]} klausimas${ic('arrow')}</button>`
       : '<button class="k-btn" type="button" data-act="mfinish" data-enter>Baigti</button>';
-    const enterIs = !last ? 'kitas' : other.length ? `${other[0]} klausimas` : 'baigti';
     const finish = last && !other.length ? '' : '<button class="k-btn k-btn--text m-finish" type="button" data-act="mfinish">Baigti egzaminą</button>';
     // two in-page confirmations: leaving the exam, and finishing with unanswered Questions
     let dialog = '', dBtns = '';
@@ -763,13 +808,12 @@ fieldset.q-opts { border: 0; margin: 0; min-width: 0; }
     }
     const opts = options(q, M.draws[M.i], ticks, false);
     if (wide) {
-      // the panel groups everything about the exam itself: time, where you are, the answer sheet, back / next
-      const top = `<div class="q-top">${quit}<span class="q-count">Bandomasis egzaminas</span></div>`;
-      const body = `<div class="d-clock"><span class="lbl">Liko laiko</span><span class="m-timer">${timer}</span></div>${note}
-        <div class="d-sheet"><h3><span>Klausimas ${M.i + 1} iš ${MOCK.length}</span><span>Atsakyta <span id="answered">${MOCK.length - un.length}</span></span></h3>${strip}</div>`;
-      const foot = dialog ? `<div role="dialog" aria-labelledby="mc" style="display:grid;gap:10px">${dialog}<div class="d-actions stack">${dBtns}</div></div>`
-        : `<div class="d-actions">${prev}${next}</div>${finish}${keys(M.draws[M.i].length, enterIs)}`;
-      return deskQ(top, stem(q) + hint + scene(q) + opts, body, foot, false);
+      // the answer sheet is the header's progress bar; time on the right, where the Lesson shows "1 / 7"
+      const top = `<div class="q-top">${quit}${strip}<span class="m-timer">${M.untimed ? timer : `<span class="sr">Liko laiko </span>${timer}`}</span>${finish}</div>`;
+      const pos = label(`Klausimas ${M.i + 1} iš ${MOCK.length} · atsakyta <span id="answered">${MOCK.length - un.length}</span>`);
+      const foot = dialog ? `<div class="d-dialog" role="dialog" aria-labelledby="mc">${dialog}<div class="d-actions stack">${dBtns}</div></div>`
+        : `<div class="d-actions">${prev}${next}</div>`;
+      return deskQ(top, pos + stem(q) + scene(q), note + hint + opts, foot);
     }
     const top = `<div class="q-top">${quit}<span class="m-timer">${timer}</span><span class="q-count">${M.i + 1} / ${MOCK.length}</span></div>${note}${strip}`;
     const dock = dialog
@@ -809,9 +853,9 @@ fieldset.q-opts { border: 0; margin: 0; min-width: 0; }
     const nav = `<button class="k-btn k-btn--secondary" type="button" data-act="mrprev"${pos ? '' : ' disabled'}>${ic('back')}Atgal</button>${last ? '<button class="k-btn" type="button" data-act="mback" data-enter>Į rezultatus</button>' : `<button class="k-btn" type="button" data-act="mrnext" data-enter>Kitas${ic('arrow')}</button>`}`;
     const opts = options(q, M.draws[k], M.ans[k], true);
     const note = ok ? '' : partial(q, M.draws[k], M.ans[k]);
-    if (wide) return deskQ(top, stem(q) + scene(q, true) + opts, result(kind, word, '', false, note) + feedback(q, M.ans[k], false, true, true), `<div class="d-actions">${nav}</div>` + keys(0, last ? 'į rezultatus' : 'kitas'), true);
+    if (wide) return deskQ(top, stem(q) + scene(q, true), '<p class="q-hint">Tavo atsakymas</p>' + opts, `<div class="d-res res-${kind}">${result(kind, word, q.key, true, note)}</div><div class="d-actions">${nav}</div>`, { w: feedback(q, M.ans[k], false, true, false), after: true });
     return screen(top + stem(q) + scene(q, true) + opts + `<div class="q-after">${feedback(q, M.ans[k], false, true, false)}</div>` + grow
-      + `<div class="q-dock dock">${result(kind, word, q.key, true, note, 'Kodėl')}${nav}</div>`, true);
+      + `<div class="q-dock dock res res-${kind}">${result(kind, word, q.key, true, note, more('Kodėl'))}${nav}</div>`, true);
   }
   function mFinish(timeUp) {
     M.phase = 'results'; M.timeUp = timeUp; M.confirm = false; M.quitAsk = false;
@@ -849,8 +893,12 @@ fieldset.q-opts { border: 0; margin: 0; min-width: 0; }
     app.classList.toggle('wide', wide);
     app.innerHTML = mode === 'mock' ? mockView() : lessonView();
     vp.scrollTop = keep ? y : 0;
-    const pb = $('.d-panel-body');
-    if (pb) $('.d-panel').classList.toggle('more', pb.scrollHeight > pb.clientHeight + 4);
+    if (wide) {
+      app.querySelectorAll('[data-enter]').forEach(b => b.insertAdjacentHTML('beforeend', '<kbd aria-hidden="true">Enter</kbd>'));
+      app.querySelectorAll('[data-conf=unsure]').forEach(b => b.insertAdjacentHTML('beforeend', '<kbd aria-hidden="true">N</kbd>'));
+    }
+    const ab = $('.d-a-body');
+    if (ab) { const fade = () => $('.d-a').classList.toggle('more', ab.scrollTop + ab.clientHeight < ab.scrollHeight - 4); fade(); ab.addEventListener('scroll', fade, { passive: true }); }
     document.querySelectorAll('[data-mode]').forEach(b => b.setAttribute('aria-pressed', String(b.dataset.mode === mode)));
     $('#ff').hidden = !(mode === 'mock' && M.phase === 'exam' && !M.untimed);
     renderLog();
@@ -908,10 +956,13 @@ fieldset.q-opts { border: 0; margin: 0; min-width: 0; }
   $('#ff').onclick = () => { M.left = M.left > 301 ? 301 : M.left > 61 ? 61 : 4; const t = $('#timer'); if (t) t.textContent = fmt(M.left); };
   // desktop keys: 1–9 tick the n-th Option shown, N = "Nesu tikras", Enter = the screen's main action (marked data-enter)
   document.addEventListener('keydown', e => {
+    // Esc closes an in-page confirm
+    if (e.key === 'Escape' && mode === 'mock' && (M.quitAsk || M.confirm)) { (M.quitAsk ? ACT.mquitno : ACT.mcancel)(); return; }
     if (!wide || e.target.closest('textarea, [contenteditable]') || e.metaKey || e.ctrlKey || e.altKey) return;
     const n = +e.key;
     if (n >= 1 && n <= 9) { if (!$('#mc')) app.querySelectorAll('.q-opts input:not(:disabled)')[n - 1]?.click(); return; }
     if (e.key.toLowerCase() === 'n') { app.querySelector('[data-conf=unsure]')?.click(); return; }
+    if (e.key === 'Enter' && performance.now() < (S.enterAt || 0)) { e.preventDefault(); return; }
     if (e.key === 'Enter' && !e.target.closest('#app button, #app a, #app summary')) { app.querySelector('[data-enter]:not(:disabled)')?.click(); e.preventDefault(); }
   });
   // re-lay out when the window crosses the desktop width
