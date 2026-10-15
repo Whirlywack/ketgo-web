@@ -44,7 +44,7 @@
   --bad: #FF8F86; --bad-bg: #432222; --on-bad: #0E1B1C;
   --warn: #FFC56B; --warn-bg: #3A2A10;
   --focus: #8FDCD3;
-  --s-ground: #1F3A39; --s-road: #375253; --s-edge: #4B6868; --s-mark: #6A8685; --s-me: #5CC3B8; --s-other: #D5E3DD; --s-path: #EEF4F1; --s-hit: #FF8F86; --s-key: #8FDCD3; --s-pole: #6E8C86;
+  --s-ground: #1F3A39; --s-road: #375253; --s-edge: #4B6868; --s-mark: #6A8685; --s-me: #5CC3B8; --s-other: #9DB5A9; --s-path: #EEF4F1; --s-hit: #FF8F86; --s-key: #8FDCD3; --s-pole: #6E8C86;
   color-scheme: dark;
 } }
 :root[data-theme="dark"] {
@@ -59,7 +59,7 @@
   --bad: #FF8F86; --bad-bg: #432222; --on-bad: #0E1B1C;
   --warn: #FFC56B; --warn-bg: #3A2A10;
   --focus: #8FDCD3;
-  --s-ground: #1F3A39; --s-road: #375253; --s-edge: #4B6868; --s-mark: #6A8685; --s-me: #5CC3B8; --s-other: #D5E3DD; --s-path: #EEF4F1; --s-hit: #FF8F86; --s-key: #8FDCD3; --s-pole: #6E8C86;
+  --s-ground: #1F3A39; --s-road: #375253; --s-edge: #4B6868; --s-mark: #6A8685; --s-me: #5CC3B8; --s-other: #9DB5A9; --s-path: #EEF4F1; --s-hit: #FF8F86; --s-key: #8FDCD3; --s-pole: #6E8C86;
   color-scheme: dark;
 }
 
@@ -135,9 +135,12 @@ fieldset.q-opts { border: 0; margin: 0; min-width: 0; }
 .k-btn--text { width: auto; min-height: 48px; padding: 0 12px; background: transparent; color: var(--teal-ink); }
 .k-btn--text:hover { background: var(--teal-soft); }
 .k-btn--text:active { background: var(--teal-soft-2); }
-.k-btn:disabled, .k-btn:disabled:hover { background: var(--teal-soft); color: var(--ink2); box-shadow: none; cursor: not-allowed; }
-/* a disabled secondary stays a quiet outline, so the waiting main button is the one that stands out */
-.k-btn--secondary:disabled, .k-btn--secondary:disabled:hover { background: var(--surface); color: var(--ink2); box-shadow: inset 0 0 0 1.5px var(--line); }
+.k-btn:is(:disabled, [aria-disabled="true"]), .k-btn:is(:disabled, [aria-disabled="true"]):hover { background: var(--teal-soft); color: var(--ink2); box-shadow: none; cursor: not-allowed; }
+/* a disabled secondary is visibly inert (faded outline), so it never looks tappable */
+.k-btn--secondary:is(:disabled, [aria-disabled="true"]), .k-btn--secondary:is(:disabled, [aria-disabled="true"]):hover { background: transparent; color: var(--ink2); box-shadow: inset 0 0 0 1.5px var(--line); opacity: .55; }
+/* says why a tap did nothing */
+.q-need { grid-column: 1 / -1; margin: 0; font-size: 16px; font-weight: 700; color: var(--ink); }
+.q-need:empty { display: none; }
 .k-ibtn { width: 48px; height: 48px; flex: none; display: grid; place-items: center; border-radius: 14px; border: 0; background: var(--surface); color: var(--ink); box-shadow: inset 0 0 0 1px var(--line); transition: background-color .12s ease-out; }
 .k-ibtn:hover { background: var(--surface-2); }
 .k-ibtn:focus-visible { outline: 3px solid var(--focus); outline-offset: 2px; }
@@ -175,6 +178,10 @@ fieldset.q-opts { border: 0; margin: 0; min-width: 0; }
 .is-after .k-opt.bad .box .x { display: block; }
 .is-after .k-opt.hit .verdict, .is-after .k-opt.missed .verdict { display: flex; color: var(--ok); }
 .is-after .k-opt.bad .verdict { display: flex; color: var(--bad); }
+/* a first guess is not graded red: the picked wrong Option is "your guess" in teal */
+.is-after .k-opt.guess, .is-after .k-opt.guess:hover { background: var(--teal-soft); box-shadow: inset 0 0 0 2.5px var(--teal); }
+.is-after .k-opt.guess .box { background: var(--teal); border-color: var(--teal); color: var(--on-teal); }
+.is-after .k-opt.guess .verdict { display: flex; color: var(--teal-ink); }
 /* result line */
 .k-result { display: grid; grid-template-columns: 40px 1fr; gap: 12px; align-items: center; }
 .k-result:focus { outline: none; }
@@ -190,6 +197,18 @@ fieldset.q-opts { border: 0; margin: 0; min-width: 0; }
 .k-result--neutral b { color: var(--teal-ink); }
 .k-result--skip .ic { background: var(--surface-2); color: var(--ink); box-shadow: inset 0 0 0 1.5px var(--line-strong); }
 .k-result--skip b { color: var(--ink); }
+.k-result small { display: block; font-size: 16px; line-height: 1.4; color: var(--ink); margin-top: 2px; }
+.k-result:has(.r-more) { grid-template-columns: 40px 1fr auto; }
+.k-result .r-more { min-height: 44px; padding: 0 8px; gap: 4px; font-size: 16px; align-self: start; }
+.k-result .r-more .icon { width: 18px; height: 18px; }
+/* desktop: the verdict is the hero — a tinted band across the top of the panel (flat wash, no shadow) */
+.d-panel .k-result { margin: -21px -21px 0; padding: 20px 21px; border-radius: 23px 23px 0 0; grid-template-columns: 44px 1fr; }
+.d-panel .k-result .ic { width: 44px; height: 44px; }
+.d-panel .k-result b { font-size: 28px; }
+.d-panel .k-result--ok { background: var(--ok-bg); }
+.d-panel .k-result--bad { background: var(--bad-bg); }
+.d-panel .k-result--neutral { background: var(--teal-soft); }
+.d-panel .k-result--skip { background: var(--surface-2); }
 /* learning blocks */
 .k-why { display: grid; gap: 8px; }
 .k-why h3 { font-size: 16px; color: var(--teal-ink); }
@@ -240,7 +259,6 @@ fieldset.q-opts { border: 0; margin: 0; min-width: 0; }
 .app:not(.wide) .q-scene { width: min(calc(100% - 40px), calc(22cqh * var(--ar))); margin-inline: auto; }
 .app:not(.wide) .q-top { padding-block: 8px; }
 .app:not(.wide) .q-chip { margin-bottom: 8px; }
-@container (max-width: 380px) { .q-stem { font-size: 20px; } }
 .q-stem { padding: 8px 20px 4px; font-size: 22px; line-height: 1.3; }
 .q-stem:focus { outline: none; }
 /* permanent and quiet: several Options can be right, without saying how many */
@@ -333,8 +351,8 @@ fieldset.q-opts { border: 0; margin: 0; min-width: 0; }
 /* the frame keeps the scene's own shape; on short screens it gets narrower instead of being cropped */
 .d-main .q-scene { width: min(100%, calc(38cqh * var(--ar))); }
 .d-main .q-opts { padding: 0; }
-.d-panel { position: sticky; top: 16px; display: flex; flex-direction: column; background: var(--surface); border-radius: 24px; box-shadow: inset 0 0 0 1px var(--line); }
-.d-panel-body { padding: 22px 22px 6px; display: grid; gap: 16px; }
+.d-panel { position: sticky; top: 16px; max-height: calc(100cqh - 112px); display: flex; flex-direction: column; background: var(--surface); border-radius: 24px; box-shadow: inset 0 0 0 1px var(--line); }
+.d-panel-body { overflow-y: auto; overscroll-behavior: contain; padding: 22px 22px 6px; display: grid; gap: 16px; }
 .d-panel-body:empty { display: none; }
 .d-panel-foot { padding: 16px 22px 22px; display: grid; gap: 10px; }
 .d-panel .q-chip { margin: 0; justify-self: start; }
@@ -343,7 +361,14 @@ fieldset.q-opts { border: 0; margin: 0; min-width: 0; }
 .d-actions.even { grid-template-columns: 1fr 1fr; }
 .d-ctx { font-size: 16px; color: var(--ink2); }
 .d-actions { display: grid; grid-template-columns: 1fr 1.5fr; gap: 10px; }
-.d-keys { font-size: 15px; color: var(--ink2); text-align: center; }
+.d-keys { font-size: 16px; color: var(--ink2); text-align: center; }
+.d-actions.stack { grid-template-columns: 1fr; }
+.d-actions.stack > :first-child { order: 2; }
+/* the panel never grows past the screen: Toliau stays pinned, the body scrolls, and a cue says there is more */
+.d-more { display: none; align-items: center; justify-content: center; gap: 6px; font-size: 16px; font-weight: 700; color: var(--teal-ink); }
+.d-more .icon { width: 18px; height: 18px; }
+.d-panel.more .d-more { display: flex; }
+.d-panel.more .d-panel-body { -webkit-mask-image: linear-gradient(to bottom, #000 82%, transparent); mask-image: linear-gradient(to bottom, #000 82%, transparent); }
 .d-panel h2 { font-size: 22px; line-height: 1.3; }
 .d-clock { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; }
 .d-clock .lbl { font-size: 16px; font-weight: 700; color: var(--ink2); }
@@ -406,7 +431,7 @@ fieldset.q-opts { border: 0; margin: 0; min-width: 0; }
     spark: '<path d="M12 3l2.2 5.8L20 11l-5.8 2.2L12 19l-2.2-5.8L4 11l5.8-2.2z"/>',
     again: '<path d="M20 11a8 8 0 0 0-14.3-4.9L4 8M4 4v4h4M4 13a8 8 0 0 0 14.3 4.9L20 16M20 20v-4h-4"/>',
     alert: '<path d="M12 4l9 16H3zM12 10v4M12 17.5v.01"/>', clock: '<circle cx="12" cy="12" r="8.5"/><path d="M12 7.5V12l3 2"/>',
-    info: '<circle cx="12" cy="12" r="9"/><path d="M12 11v5M12 7.5v.01"/>', dash: '<path d="M6 12h12"/>', list: '<path d="M9 6h11M9 12h11M9 18h11M4 6h.01M4 12h.01M4 18h.01"/>',
+    info: '<circle cx="12" cy="12" r="9"/><path d="M12 11v5M12 7.5v.01"/>', down: '<path d="M12 5v14M6 13l6 6 6-6"/>', dash: '<path d="M6 12h12"/>', list: '<path d="M9 6h11M9 12h11M9 18h11M4 6h.01M4 12h.01M4 18h.01"/>',
   };
   const ic = (k, c = '') => `<svg class="icon ${c}" viewBox="0 0 24 24" aria-hidden="true">${IC[k]}</svg>`;
 
@@ -433,7 +458,7 @@ fieldset.q-opts { border: 0; margin: 0; min-width: 0; }
     r155: { name: 'Dešinės rankos taisyklė', text: 'Kai sankryžoje nėra ženklų, šviesoforo ir reguliuotojo, keliai yra lygiareikšmiai. Tik tada galioja dešinės rankos taisyklė.', trap: 'Egzamine dažnai pakeičiamas vienas žodis: „visada“ vietoj „jei kertasi“. Skaityk sąlygą iki galo.' },
     r739: { name: 'Geltonas mirksintis signalas', text: 'Mirksintis geltonas reiškia, kad šviesoforas eismo nereguliuoja. Važiuok pagal ženklus, o jei jų nėra, pagal dešinės rankos taisyklę.' },
     r116: { name: 'Kur negalima apsisukti', text: 'Apsisukti draudžiama perėjose, pervažose, tuneliuose, ant tiltų, estakadų, viadukų ir po jais, taip pat ten, kur kelias bent viena kryptimi matomas mažiau kaip 100 m.' },
-    r150: { name: 'Sustoti, kai kelias blogai matomas', text: 'Kur kelias blogai matomas, sustojusio automobilio kiti gali laiku nepamatyti ir nespėti sustoti.', hook: 'Gyvenvietėje 50, už jos dvigubai: 100.' },
+    r150: { name: 'Sustoti, kai kelias blogai matomas', text: 'Ne gyvenvietėje sustoti ir stovėti draudžiama, kur kelias matomas mažiau kaip 100 m, gyvenvietėje – mažiau kaip 50 m. Kitaip kiti gali laiku nepamatyti ir nespėti sustoti.', hook: 'Gyvenvietėje 50, už jos dvigubai: 100.' },
     r533: { name: 'Ženklas „Pėsčiųjų perėja“', text: 'Mėlynas kvadratinis ženklas su pėsčiuoju žymi pačią perėją. Trikampis įspėjamasis ženklas tik įspėja, kad perėja artėja.' },
     r30: { name: 'Nereguliuojama pėsčiųjų perėja', text: 'Artėdamas prie nereguliuojamos perėjos sulėtini greitį arba sustoji ir praleidi pėsčiąjį, kuris įžengė, žengia arba laukia prie pat perėjos.' },
     r32: { name: 'Kada negalima įvažiuoti į perėją', text: 'Nevažiuok į perėją, kol pėstieji neišėjo iš tavo eismo juostos, ir kai už perėjos yra kliūtis, dėl kurios tektų sustoti perėjoje.' },
@@ -550,7 +575,7 @@ fieldset.q-opts { border: 0; margin: 0; min-width: 0; }
     S.ticks = new Set(); S.phase = 'ask'; S.t0 = performance.now();
   }
   function resetMock() {
-    Object.assign(M, { phase: 'start', untimed: false, i: 0, ans: MOCK.map(() => new Set()), draws: MOCK.map(id => QS[id].draws[0]), left: 1800, timeUp: false, confirm: false, quitAsk: false, rev: 0, notice: '', res: [] });
+    Object.assign(M, { phase: 'start', untimed: false, i: 0, ans: MOCK.map(() => new Set()), draws: MOCK.map(id => QS[id].draws[0]), left: 1800, timeUp: false, confirm: false, quitAsk: false, rev: 0, revList: [], notice: '', res: [] });
   }
   const cur = () => S.queue[S.i];
   const isPre = it => it.kind === 'new' && !it.learned;
@@ -564,7 +589,7 @@ fieldset.q-opts { border: 0; margin: 0; min-width: 0; }
   // desktop: main column = the question; panel = what to do now (buttons, then verdict and "why")
   const deskQ = (top, main, body, foot, after) => screen(`<div class="d-wrap">${top}<div class="d-grid"><div class="d-main">${main}</div><aside class="d-panel"><div class="d-panel-body">${body}</div><div class="d-panel-foot">${foot}</div></aside></div></div>`, after);
   // one line saying what kind of Question this is
-  const CTX = { new: 'Šios taisyklės dar nesimokei. Spėk, o po to ją išmoksi.', learned: 'Taisyklę ką tik perskaitei. Dabar pritaikyk ją.', due: 'Ši taisyklė grįžta, kad neužsimirštų.', return: 'Ta pati taisyklė grįžta šioje pamokoje.', reask: 'Šis klausimas grįžta su kitais variantais.' };
+  const CTX = { new: 'Šios taisyklės dar nesimokei. Spėk, o po to ją išmoksi.', learned: 'Taisyklę ką tik perskaitei. Dabar pritaikyk ją.', due: 'Ši taisyklė grįžta, kad neužsimirštų.', return: 'Ta pati taisyklė grįžta šioje pamokoje.', reask: 'Šis klausimas grįžta dar kartą.' };
   // keyboard hint: says exactly what Enter does on this screen
   const keys = (n, enter, extra = '') => `<p class="d-keys">${n ? `1–${n} pažymi · ` : ''}Enter – ${enter}${extra}</p>`;
   const grow = '<div class="grow"></div>';
@@ -585,13 +610,14 @@ fieldset.q-opts { border: 0; margin: 0; min-width: 0; }
     if (it.kind === 'due') return '<span class="k-chip k-chip--plain q-chip">Kartojimas</span>';
     return `<span class="k-chip k-chip--plain q-chip">${ic('again')}${it.kind === 'return' ? 'Vėl ši taisyklė' : 'Dar kartą'}</span>`;
   }
-  function options(q, d, ticks, after) {
+  function options(q, d, ticks, after, guess) {
     return `<fieldset class="q-opts"><legend class="sr">Pažymėk visus teisingus variantus</legend>${d.map((oi, idx) => {
       const o = q.opts[oi], on = ticks.has(oi);
       let cls = '', v = '', note = '';
       if (after) {
         if (o.ok && on) { cls = 'hit'; v = `${ic('ck')}Teisinga · tavo pasirinkimas`; }
         else if (o.ok) { cls = 'missed'; v = `${ic('ck')}Teisingas variantas · nepažymėjai`; note = o.n; }
+        else if (on && guess) { cls = 'guess'; v = `${ic('spark')}Tavo spėjimas`; note = o.n; }
         else if (on) { cls = 'bad'; v = `${ic('x')}Neteisinga · tavo pasirinkimas`; note = o.n; }
         else cls = 'muted';
       }
@@ -599,9 +625,16 @@ fieldset.q-opts { border: 0; margin: 0; min-width: 0; }
     }).join('')}</fieldset>`;
   }
   // kind: ok / bad / neutral (a first guess at a new Rule is not graded red: it doesn't count)
-  function result(kind, word, sub, marked) {
+  // note: why a partly right answer still counts as wrong; more: a phone pointer to the "why" below the bar
+  function result(kind, word, sub, marked, note = '', more = '') {
     const icon = { ok: 'ck', bad: 'x', neutral: 'book', skip: 'dash' }[kind];
-    return `<div class="k-result k-result--${kind}" role="status" tabindex="-1" id="res"><span class="ic">${ic(icon)}</span><div><b>${word}</b>${sub ? `<span>${marked ? `<mark>${sub}</mark>` : sub}</span>` : ''}</div></div>`;
+    return `<div class="k-result k-result--${kind}" role="status" tabindex="-1" id="res"><span class="ic">${ic(icon)}</span><div><b>${word}</b>${note ? `<small>${note}</small>` : ''}${sub ? `<span>${marked ? `<mark>${sub}</mark>` : sub}</span>` : ''}</div>${more ? `<button class="k-btn k-btn--text r-more" type="button" data-act="tomore">${more}${ic('down')}</button>` : ''}</div>`;
+  }
+  // all or nothing: explain a partly right answer in one line
+  function partial(q, d, ticks) {
+    const hits = d.filter(oi => q.opts[oi].ok && ticks.has(oi)).length, bad = d.filter(oi => !q.opts[oi].ok && ticks.has(oi)).length;
+    if (!hits) return '';
+    return bad ? (bad === 1 ? 'Vienas pažymėtas variantas neteisingas.' : 'Keli pažymėti variantai neteisingi.') : 'Pažymėjai ne visus teisingus.';
   }
   // open = the full "why"; folded = key line stays, explanation one tap away (sure + right only)
   function why(q, open, withKey) {
@@ -610,7 +643,7 @@ fieldset.q-opts { border: 0; margin: 0; min-width: 0; }
     return open ? `<div class="k-why"><h3>Kodėl</h3>${key}${txt}</div>`
       : `<div class="k-why">${key}<details class="k-disc"><summary>Kodėl?${ic('chev', 'chev')}</summary>${txt}</details></div>`;
   }
-  const explainer = r => `<div class="k-block k-explainer"><h3>${ic('book')}${r.name}</h3><p>${r.text}</p></div>`;
+  const explainer = r => `<div class="k-block k-explainer"><h3 tabindex="-1">${ic('book')}${r.name}</h3><p>${r.text}</p></div>`;
   const hook = r => r.hook ? `<div class="k-block k-hook"><span class="k-chip k-chip--hook">Įsiminimui</span><p>${r.hook}</p></div>` : '';
   const trap = r => r.trap ? `<div class="k-block k-trap"><h3>${ic('alert')}Egzamino spąstai</h3><p>${r.trap}</p></div>` : '';
   // after Check: verdict → key sentence → one short "why". After a first guess the Rule Explainer IS the "why".
@@ -637,13 +670,14 @@ fieldset.q-opts { border: 0; margin: 0; min-width: 0; }
     if (S.phase === 'ask') {
       const pre = isPre(it), n = it.d.length;
       const btns = pre
-        ? `<button class="k-btn k-btn--secondary" type="button" data-act="learn">Pirma išmokti</button><button class="k-btn" type="button" data-act="check" data-conf="pretest" data-needs data-enter disabled>Tikrinti</button>`
-        : `<button class="k-btn k-btn--secondary" type="button" data-act="check" data-conf="unsure" data-needs disabled>Nesu tikras</button><button class="k-btn" type="button" data-act="check" data-conf="sure" data-needs data-enter disabled>Tikrinti</button>`;
+        ? `<button class="k-btn k-btn--secondary" type="button" data-act="learn">Pirma išmokti</button><button class="k-btn" type="button" data-act="check" data-conf="pretest" data-needs data-enter aria-disabled="true">Tikrinti</button>`
+        : `<button class="k-btn k-btn--secondary" type="button" data-act="check" data-conf="unsure" data-needs aria-disabled="true">Nesu tikras</button><button class="k-btn" type="button" data-act="check" data-conf="sure" data-needs data-enter aria-disabled="true">Tikrinti</button>`;
+      const need = '<p class="q-need" id="need" role="status"></p>';
       // explained once, the first time "Nesu tikras" appears
       const confTip = pre || S.confTipSeen ? '' : `<p class="k-note q-tip">${ic('info')}Nesi tikras? Spausk „Nesu tikras“, ir paaiškinimas bus parodytas plačiau.</p>`;
       const opts = options(q, it.d, S.ticks, false);
-      if (wide) return deskQ(lessonTop(), `<p class="sr">${CTX[ctxKey]}</p>` + stem(q) + hint + scene(q) + opts, chip(it) + `<p class="d-ctx">${CTX[ctxKey]}</p>` + confTip, `<div class="d-actions even">${btns}</div>` + keys(n, 'tikrinti', pre ? '' : ' · N – nesu tikras'), false);
-      return screen(lessonTop() + chip(it) + stem(q) + hint + scene(q) + opts + (confTip ? `<div class="q-after" style="padding-top:14px">${confTip}</div>` : '') + grow + `<div class="q-dock dock even">${btns}</div>`);
+      if (wide) return deskQ(lessonTop(), `<p class="sr">${CTX[ctxKey]}</p>` + stem(q) + hint + scene(q) + opts, chip(it) + `<p class="d-ctx">${CTX[ctxKey]}</p>` + confTip, need + `<div class="d-actions even">${btns}</div>` + keys(n, 'tikrinti', pre ? '' : ' · N – nesu tikras'), false);
+      return screen(lessonTop() + chip(it) + stem(q) + hint + scene(q) + opts + (confTip ? `<div class="q-after" style="padding-top:14px">${confTip}</div>` : '') + grow + `<div class="q-dock dock even">${need}${btns}</div>`);
     }
     // after Check
     const { right, conf } = S.last, pre = conf === 'pretest';
@@ -652,10 +686,11 @@ fieldset.q-opts { border: 0; margin: 0; min-width: 0; }
     const word = pre ? (right ? 'Atspėjai' : 'Dabar sužinosi') : (right ? 'Teisingai' : 'Neteisingai');
     const open = !(right && conf === 'sure');
     const next = `<button class="k-btn" type="button" data-act="next" data-enter>Toliau${ic('arrow')}</button>`;
-    const opts = options(q, it.d, S.ticks, true);
-    if (wide) return deskQ(lessonTop(), stem(q) + '<p class="q-hint" aria-hidden="true" style="visibility:hidden">Pažymėk visus teisingus.</p>' + scene(q, true) + opts, result(kind, word) + feedback(q, S.ticks, pre, open, true), next + keys(0, 'toliau'), true);
+    const opts = options(q, it.d, S.ticks, true, pre);
+    const note = right || pre ? '' : partial(q, it.d, S.ticks);
+    if (wide) return deskQ(lessonTop(), stem(q) + '<p class="q-hint" aria-hidden="true" style="visibility:hidden">Pažymėk visus teisingus.</p>' + scene(q, true) + opts, result(kind, word, '', false, note) + feedback(q, S.ticks, pre, open, true), next + '<p class="d-more">Slink panelę žemyn: yra daugiau' + ic('down') + '</p>' + keys(0, 'toliau'), true);
     // phone: your pick and the right answer stay above a short bar (verdict + key sentence + Toliau); the "why" follows below
-    return screen(lessonTop() + chip(it) + stem(q) + scene(q, true) + opts + `<div class="q-after">${feedback(q, S.ticks, pre, open, false)}</div>` + grow + `<div class="q-dock one dock">${result(kind, word, q.key, true)}${next}</div>`, true);
+    return screen(lessonTop() + chip(it) + stem(q) + scene(q, true) + opts + `<div class="q-after">${feedback(q, S.ticks, pre, open, false)}</div>` + grow + `<div class="q-dock one dock">${result(kind, word, q.key, true, note, open ? (pre ? 'Taisyklė' : 'Kodėl') : '')}${next}</div>`, true);
   }
   function endView() {
     const seen = [...new Map(LESSON.filter(([, k]) => k !== 'return').map(([id, k]) => [id, k])).entries()];
@@ -664,11 +699,11 @@ fieldset.q-opts { border: 0; margin: 0; min-width: 0; }
       <ul class="e-list">${seen.map(([id, k]) => `<li>${RULES[QS[id].rule].name}${k === 'new' ? `<span class="k-chip">Nauja</span>` : '<span class="k-chip k-chip--plain">Kartojimas</span>'}</li>`).join('')}</ul></div>
       ${grow}<div class="q-dock one dock"><button class="k-btn" type="button" data-act="tomock" data-enter>Bandomasis egzaminas${ic('arrow')}</button><button class="k-btn k-btn--text" type="button" data-act="relesson" style="justify-self:center">Kartoti pamoką</button></div>`, false, 'narrow');
   }
-  // phone: after Check, scroll just enough that your pick and the right answer sit above the bottom bar
+  // after Check, scroll just enough that your pick and the right answer are in view (above the bottom bar on phone)
   function fitMarked() {
-    const m = [...app.querySelectorAll('.k-opt.hit, .k-opt.bad, .k-opt.missed')], dock = app.querySelector('.q-dock');
-    if (!m.length || !dock) return;
-    const v = vp.getBoundingClientRect(), top = m[0].getBoundingClientRect().top, bottom = m.at(-1).getBoundingClientRect().bottom, limit = dock.getBoundingClientRect().top;
+    const m = [...app.querySelectorAll('.k-opt.hit, .k-opt.bad, .k-opt.missed, .k-opt.guess')], dock = app.querySelector('.q-dock');
+    if (!m.length) return;
+    const v = vp.getBoundingClientRect(), top = m[0].getBoundingClientRect().top, bottom = m.at(-1).getBoundingClientRect().bottom, limit = dock ? dock.getBoundingClientRect().top : v.bottom;
     if (top >= v.top + 8 && bottom <= limit - 8) return;
     vp.scrollTop += Math.min(bottom - (limit - 12), top - (v.top + 12));
   }
@@ -687,7 +722,7 @@ fieldset.q-opts { border: 0; margin: 0; min-width: 0; }
     LOG.push({ where: 'Lesson', q: it.q, kind: it.kind, d: it.d, ticks: [...S.ticks], right, conf, secs: ((performance.now() - S.t0) / 1000).toFixed(1), next,
       fsrs: it.kind === 'due' ? `counts as ${right ? 'right' : 'wrong'}` : isPre(it) ? 'not counted (pretest guess)' : it.kind === 'new' ? 'not counted (first meeting, Rule read first)' : 'not counted (same day)' });
     render(true);
-    if (!wide) fitMarked();
+    fitMarked();
     $('#res')?.focus({ preventScroll: true });
   }
 
@@ -717,13 +752,13 @@ fieldset.q-opts { border: 0; margin: 0; min-width: 0; }
     // two in-page confirmations: leaving the exam, and finishing with unanswered Questions
     let dialog = '', dBtns = '';
     if (M.quitAsk) {
-      dialog = '<h2 id="mc">Nutraukti egzaminą?</h2><p>Atsakymai nebus įskaityti.</p>';
+      dialog = '<h2 id="mc" tabindex="-1">Nutraukti egzaminą?</h2><p>Atsakymai nebus įskaityti.</p>';
       dBtns = '<button class="k-btn k-btn--secondary" type="button" data-act="mquitok">Nutraukti</button><button class="k-btn" type="button" data-act="mquitno" data-enter>Tęsti egzaminą</button>';
     } else if (M.confirm && un.length) {
-      dialog = `<h2 id="mc">Neatsakyta: ${un.length}</h2><p>Klausimai ${listLt(un)} bus įskaityti kaip klaidos.</p>`;
+      dialog = `<h2 id="mc" tabindex="-1">Neatsakyta: ${un.length}</h2><p>Klausimai ${listLt(un)} bus įskaityti kaip klaidos.</p>`;
       dBtns = `<button class="k-btn k-btn--secondary" type="button" data-act="mconfirm">Vis tiek baigti</button><button class="k-btn" type="button" data-act="mgo" data-k="${un[0] - 1}" data-enter>Atsakyti į ${un[0]}</button>`;
     } else if (M.confirm) {
-      dialog = '<h2 id="mc">Baigti egzaminą?</h2><p>Atsakei į visus klausimus.</p>';
+      dialog = '<h2 id="mc" tabindex="-1">Baigti egzaminą?</h2><p>Atsakei į visus klausimus.</p>';
       dBtns = '<button class="k-btn k-btn--secondary" type="button" data-act="mcancel">Grįžti</button><button class="k-btn" type="button" data-act="mconfirm" data-enter>Baigti</button>';
     }
     const opts = options(q, M.draws[M.i], ticks, false);
@@ -732,13 +767,13 @@ fieldset.q-opts { border: 0; margin: 0; min-width: 0; }
       const top = `<div class="q-top">${quit}<span class="q-count">Bandomasis egzaminas</span></div>`;
       const body = `<div class="d-clock"><span class="lbl">Liko laiko</span><span class="m-timer">${timer}</span></div>${note}
         <div class="d-sheet"><h3><span>Klausimas ${M.i + 1} iš ${MOCK.length}</span><span>Atsakyta <span id="answered">${MOCK.length - un.length}</span></span></h3>${strip}</div>`;
-      const foot = dialog ? `<div role="group" aria-labelledby="mc" style="display:grid;gap:10px">${dialog}<div class="d-actions">${dBtns}</div></div>`
+      const foot = dialog ? `<div role="dialog" aria-labelledby="mc" style="display:grid;gap:10px">${dialog}<div class="d-actions stack">${dBtns}</div></div>`
         : `<div class="d-actions">${prev}${next}</div>${finish}${keys(M.draws[M.i].length, enterIs)}`;
       return deskQ(top, stem(q) + hint + scene(q) + opts, body, foot, false);
     }
     const top = `<div class="q-top">${quit}<span class="m-timer">${timer}</span><span class="q-count">${M.i + 1} / ${MOCK.length}</span></div>${note}${strip}`;
     const dock = dialog
-      ? `<div class="q-sheet dock" role="group" aria-labelledby="mc"><div class="q-sheet-body">${dialog}</div><div class="q-sheet-foot two">${dBtns}</div></div>`
+      ? `<div class="q-sheet dock" role="dialog" aria-labelledby="mc"><div class="q-sheet-body">${dialog}</div><div class="q-sheet-foot two">${dBtns}</div></div>`
       : `<div class="q-dock dock">${prev}${next}</div>`;
     return screen(top + stem(q) + hint + scene(q) + opts + finish + grow + dock);
   }
@@ -749,13 +784,13 @@ fieldset.q-opts { border: 0; margin: 0; min-width: 0; }
     const byRule = {};
     wrong.forEach(k => { (byRule[QS[MOCK[k]].rule] ||= []).push(k); });
     const rules = Object.entries(byRule);
-    const rows = rules.map(([r, ks]) => `<button class="k-row" type="button" data-act="mrev" data-k="${ks[0]}"><span class="tile">${ic('book')}</span><span class="txt"><b>${RULES[r].name}</b><small>${ks.length === 1 ? 'Klausimas' : 'Klausimai'} ${listLt(ks.map(k => k + 1))}</small></span>${ic('chev')}</button>`).join('');
+    const rows = rules.map(([r, ks]) => `<button class="k-row" type="button" data-act="mrev" data-k="${ks[0]}" data-list="wrong"><span class="tile">${ic('book')}</span><span class="txt"><b>${RULES[r].name}</b><small>${ks.length === 1 ? 'Klausimas' : 'Klausimai'} ${listLt(ks.map(k => k + 1))}</small></span>${ic('chev')}</button>`).join('');
     const all = MOCK.map((id, k) => {
       const ok = M.res[k];
       return `<button class="k-row" type="button" data-act="mrev" data-k="${k}"><span class="tile">${ic(ok ? 'ck' : M.ans[k].size ? 'x' : 'dash')}</span><span class="txt"><b>${k + 1}. ${QS[id].stem}</b><small>${ok ? 'Teisingai' : M.ans[k].size ? 'Neteisingai' : 'Neatsakyta'}</small></span>${ic('chev')}</button>`;
     }).join('');
     return screen(`<div class="m-res">
-      <div class="m-score"><h1 class="${pass ? 'ok' : 'bad'}">${ic(pass ? 'ck' : 'x')}${pass ? 'Išlaikei' : 'Dar neišlaikei'}</h1>
+      <div class="m-score"><h1 tabindex="-1" class="${pass ? 'ok' : 'bad'}">${ic(pass ? 'ck' : 'x')}${pass ? 'Išlaikei' : 'Dar neišlaikei'}</h1>
         <p class="lbl">Teisingi atsakymai</p><p class="big num">${right} <span>iš ${n}</span></p>
         <p class="sub">${pass ? `Reikėjo ${need}. Egzamine reikia 24 iš 30.` : `Reikėjo ${need}, trūko ${need - right}. Šios taisyklės grįš tavo kartojimuose.`}</p></div>
       ${M.timeUp ? `<p class="k-note">${ic('clock')}Laikas baigėsi. Neatsakyti klausimai įskaityti kaip klaidos.</p>` : ''}
@@ -763,19 +798,20 @@ fieldset.q-opts { border: 0; margin: 0; min-width: 0; }
       ${rules.length ? `<h2>${pass ? 'Dar verta pakartoti' : 'Pakartok šias taisykles'}</h2><div class="m-list">${rows}</div>` : '<p>Visi atsakymai teisingi.</p>'}
       <details class="k-more m-all"><summary>${ic('list')}<span class="t">Visi klausimai (${n})</span>${ic('chev', 'chev')}</summary><div class="in m-list">${all}</div></details></div>
       ${grow}<div class="q-dock one dock">${pass
-        ? `<button class="k-btn" type="button" data-act="tolesson" data-enter>Tęsti mokymąsi${ic('arrow')}</button>${rules.length ? `<button class="k-btn k-btn--secondary" type="button" data-act="mrev" data-k="${wrong[0]}">Peržiūrėti klaidas</button>` : ''}`
-        : `<button class="k-btn" type="button" data-act="mrev" data-k="${wrong[0]}" data-enter>Peržiūrėti klaidas${ic('arrow')}</button><button class="k-btn k-btn--secondary" type="button" data-act="tolesson">Tęsti mokymąsi</button>`}<button class="k-btn k-btn--text" type="button" data-act="mretry" style="justify-self:center">Bandyti dar kartą</button></div>`, false, 'narrow');
+        ? `<button class="k-btn" type="button" data-act="tolesson" data-enter>Tęsti mokymąsi${ic('arrow')}</button>${rules.length ? `<button class="k-btn k-btn--secondary" type="button" data-act="mrev" data-k="${wrong[0]}" data-list="wrong">Peržiūrėti klaidas</button>` : ''}`
+        : `<button class="k-btn" type="button" data-act="mrev" data-k="${wrong[0]}" data-list="wrong" data-enter>Peržiūrėti klaidas${ic('arrow')}</button><button class="k-btn k-btn--secondary" type="button" data-act="tolesson">Tęsti mokymąsi</button>`}<button class="k-btn k-btn--text" type="button" data-act="mretry" style="justify-self:center">Bandyti dar kartą</button></div>`, false, 'narrow');
   }
   function reviewView() {
-    const k = M.rev, id = MOCK[k], q = QS[id], ok = M.res[k], last = k === MOCK.length - 1;
+    const k = M.rev, id = MOCK[k], q = QS[id], ok = M.res[k], list = M.revList, pos = list.indexOf(k), last = pos === list.length - 1;
     const word = ok ? 'Teisingai' : M.ans[k].size ? 'Neteisingai' : 'Neatsakyta';
-    const top = `<div class="q-top"><button class="k-btn k-btn--text" type="button" data-act="mback">${ic('back')}Rezultatai</button><span class="q-count" style="margin-left:auto">Peržiūra · ${k + 1} / ${MOCK.length}</span></div>`;
+    const top = `<div class="q-top"><button class="k-btn k-btn--text" type="button" data-act="mback">${ic('back')}Rezultatai</button><span class="q-count" style="margin-left:auto">${list.length < MOCK.length ? `Klaida ${pos + 1} iš ${list.length}` : `Peržiūra · ${k + 1} / ${MOCK.length}`}</span></div>`;
     const kind = ok ? 'ok' : M.ans[k].size ? 'bad' : 'skip';
-    const nav = `<button class="k-btn k-btn--secondary" type="button" data-act="mrprev"${k ? '' : ' disabled'}>${ic('back')}Atgal</button>${last ? '<button class="k-btn" type="button" data-act="mback" data-enter>Į rezultatus</button>' : `<button class="k-btn" type="button" data-act="mrnext" data-enter>Kitas${ic('arrow')}</button>`}`;
+    const nav = `<button class="k-btn k-btn--secondary" type="button" data-act="mrprev"${pos ? '' : ' disabled'}>${ic('back')}Atgal</button>${last ? '<button class="k-btn" type="button" data-act="mback" data-enter>Į rezultatus</button>' : `<button class="k-btn" type="button" data-act="mrnext" data-enter>Kitas${ic('arrow')}</button>`}`;
     const opts = options(q, M.draws[k], M.ans[k], true);
-    if (wide) return deskQ(top, stem(q) + scene(q, true) + opts, result(kind, word) + feedback(q, M.ans[k], false, true, true), `<div class="d-actions">${nav}</div>` + keys(0, last ? 'į rezultatus' : 'kitas'), true);
+    const note = ok ? '' : partial(q, M.draws[k], M.ans[k]);
+    if (wide) return deskQ(top, stem(q) + scene(q, true) + opts, result(kind, word, '', false, note) + feedback(q, M.ans[k], false, true, true), `<div class="d-actions">${nav}</div>` + keys(0, last ? 'į rezultatus' : 'kitas'), true);
     return screen(top + stem(q) + scene(q, true) + opts + `<div class="q-after">${feedback(q, M.ans[k], false, true, false)}</div>` + grow
-      + `<div class="q-dock dock">${result(kind, word, q.key, true)}${nav}</div>`, true);
+      + `<div class="q-dock dock">${result(kind, word, q.key, true, note, 'Kodėl')}${nav}</div>`, true);
   }
   function mFinish(timeUp) {
     M.phase = 'results'; M.timeUp = timeUp; M.confirm = false; M.quitAsk = false;
@@ -813,39 +849,44 @@ fieldset.q-opts { border: 0; margin: 0; min-width: 0; }
     app.classList.toggle('wide', wide);
     app.innerHTML = mode === 'mock' ? mockView() : lessonView();
     vp.scrollTop = keep ? y : 0;
+    const pb = $('.d-panel-body');
+    if (pb) $('.d-panel').classList.toggle('more', pb.scrollHeight > pb.clientHeight + 4);
     document.querySelectorAll('[data-mode]').forEach(b => b.setAttribute('aria-pressed', String(b.dataset.mode === mode)));
     $('#ff').hidden = !(mode === 'mock' && M.phase === 'exam' && !M.untimed);
     renderLog();
     try { history.replaceState(null, '', `#${mode}`); } catch (e) {}
   }
+  const focus = sel => app.querySelector(sel)?.focus({ preventScroll: true });
   const ACT = {
     check: b => check(b.dataset.conf),
-    learn: () => { cur().learned = true; S.phase = 'learn'; render(); },
-    toq: () => { S.phase = 'ask'; S.t0 = performance.now(); render(); },
+    learn: () => { cur().learned = true; S.phase = 'learn'; render(); focus('.k-explainer h3'); },
+    toq: () => { S.phase = 'ask'; S.t0 = performance.now(); render(); focus('.q-stem'); },
+    tomore: () => app.querySelector('.q-after')?.scrollIntoView({ block: 'start' }),
     next: () => { S.i++; enter(); render(); $('.q-stem')?.focus({ preventScroll: true }); },
     quit: () => { S.prev = S.phase; S.phase = 'paused'; render(); },
     resume: () => { S.phase = S.prev; render(); },
     relesson: () => { resetLesson(); render(); },
     tomock: () => { mode = 'mock'; resetMock(); render(); },
     tolesson: () => { mode = 'lesson'; render(); },
-    mstart: () => { M.phase = 'exam'; render(); },
-    mquit: () => { M.quitAsk = true; M.confirm = false; render(true); },
-    mquitno: () => { M.quitAsk = false; render(true); },
+    mstart: () => { M.phase = 'exam'; render(); focus('.q-stem'); },
+    mquit: () => { M.quitAsk = true; M.confirm = false; render(true); focus('#mc'); },
+    mquitno: () => { M.quitAsk = false; render(true); focus('[data-act=mquit]'); },
     mquitok: () => { resetMock(); render(); },
-    mprev: () => { M.i--; render(); },
-    mnext: () => { M.i++; render(); },
-    mgo: b => { M.i = +b.dataset.k; M.confirm = false; render(); },
-    mfinish: () => { M.confirm = true; render(true); },
-    mcancel: () => { M.confirm = false; render(true); },
-    mconfirm: () => mFinish(false),
-    mrev: b => { M.rev = +b.dataset.k; M.phase = 'review'; render(); },
-    mrprev: () => { M.rev--; render(); },
-    mrnext: () => { M.rev++; render(); },
-    mback: () => { M.phase = 'results'; render(); },
+    mprev: () => { M.i--; render(); focus('.q-stem'); },
+    mnext: () => { M.i++; render(); focus('.q-stem'); },
+    mgo: b => { M.i = +b.dataset.k; M.confirm = false; render(); focus('.q-stem'); },
+    mfinish: () => { M.confirm = true; render(true); focus('#mc'); },
+    mcancel: () => { M.confirm = false; render(true); focus('[data-act=mfinish]'); },
+    mconfirm: () => { mFinish(false); focus('.m-score h1'); },
+    mrev: b => { M.revList = b.dataset.list ? MOCK.map((_, k) => k).filter(k => !M.res[k]) : MOCK.map((_, k) => k); M.rev = +b.dataset.k; M.phase = 'review'; render(); focus('.q-stem'); },
+    mrprev: () => { M.rev = M.revList[M.revList.indexOf(M.rev) - 1]; render(); focus('.q-stem'); },
+    mrnext: () => { M.rev = M.revList[M.revList.indexOf(M.rev) + 1]; render(); focus('.q-stem'); },
+    mback: () => { M.phase = 'results'; render(); focus('.m-score h1'); },
     mretry: () => { resetMock(); render(); },
   };
   app.addEventListener('click', e => {
     const b = e.target.closest('[data-act]');
+    if (b?.getAttribute('aria-disabled') === 'true') { const n = $('#need'); if (n) n.textContent = 'Pirma pažymėk bent vieną variantą.'; return; }
     if (b && !b.disabled) ACT[b.dataset.act]?.(b);
   });
   app.addEventListener('change', e => {
@@ -854,7 +895,8 @@ fieldset.q-opts { border: 0; margin: 0; min-width: 0; }
     if (!inp) return;
     const set = mode === 'mock' ? M.ans[M.i] : S.ticks, oi = +inp.dataset.o;
     inp.checked ? set.add(oi) : set.delete(oi);
-    app.querySelectorAll('[data-needs]').forEach(b => { b.disabled = !set.size; });
+    app.querySelectorAll('[data-needs]').forEach(b => b.setAttribute('aria-disabled', String(!set.size)));
+    if (set.size && $('#need')) $('#need').textContent = '';
     const sq = app.querySelector(`.m-strip [data-k="${M.i}"]`);
     if (mode === 'mock' && $('#answered')) $('#answered').textContent = M.ans.filter(x => x.size).length;
     if (mode === 'mock' && sq) { sq.classList.toggle('done', set.size > 0); sq.setAttribute('aria-label', `${M.i + 1} klausimas${set.size ? ', atsakytas' : ''}`); }
@@ -869,7 +911,7 @@ fieldset.q-opts { border: 0; margin: 0; min-width: 0; }
     if (!wide || e.target.closest('textarea, [contenteditable]') || e.metaKey || e.ctrlKey || e.altKey) return;
     const n = +e.key;
     if (n >= 1 && n <= 9) { if (!$('#mc')) app.querySelectorAll('.q-opts input:not(:disabled)')[n - 1]?.click(); return; }
-    if (e.key.toLowerCase() === 'n') { app.querySelector('[data-conf=unsure]:not(:disabled)')?.click(); return; }
+    if (e.key.toLowerCase() === 'n') { app.querySelector('[data-conf=unsure]')?.click(); return; }
     if (e.key === 'Enter' && !e.target.closest('#app button, #app a, #app summary')) { app.querySelector('[data-enter]:not(:disabled)')?.click(); e.preventDefault(); }
   });
   // re-lay out when the window crosses the desktop width
